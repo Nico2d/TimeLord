@@ -26,14 +26,16 @@ export const Countdown: React.FC<TimerProps> = ({
   const seconds = getDualDigital(time % 60);
 
   useEffect(() => {
-    if (isRunning) {
-      setTimeout(() => {
-        setTime((time) => --time);
-      }, 1000);
+    const interval = setInterval(() => {
+      setTime((time) => (time > 0 ? --time : 0));
+    }, 1000);
 
-      if (time === 0) setIsRunning(false);
+    if (isRunning === false) {
+      clearInterval(interval);
     }
-  });
+
+    return () => clearInterval(interval);
+  }, [isRunning]);
 
   return (
     <CountdownWrapper>

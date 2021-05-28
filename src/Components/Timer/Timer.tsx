@@ -16,7 +16,7 @@ export const Timer: React.FC<TimerProps> = () => {
   return (
     <Container>
       <Countdown
-        countdown={60}
+        countdown={10}
         isRunning={isRunning}
         setIsRunning={setIsRunning}
       />
