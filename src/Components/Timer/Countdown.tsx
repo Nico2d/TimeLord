@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getDualDigital } from "../../Hooks/getDualDigital";
+import { RunningModes } from "./RunningModes.types";
 
 type TimerProps = {
   countdown: number;
-  isRunning?: boolean;
-  setIsRunning: (isRunning: boolean) => void;
+  isRunning: RunningModes;
+  getElapsedTime: (v: number) => void;
+  restart?: () => void;
 };
 
 export const Countdown: React.FC<TimerProps> = ({
   countdown,
-  isRunning = false,
-  setIsRunning,
+  isRunning,
+  getElapsedTime,
 }) => {
   const [time, setTime] = useState(countdown);
-  //   const [isRunning, setIsRunning] = useState(false);
-
   const RADIUS = 150;
   const PERCENT = (time / countdown) * 100;
   const radiusOffset = RADIUS + 10;
@@ -26,16 +26,33 @@ export const Countdown: React.FC<TimerProps> = ({
   const seconds = getDualDigital(time % 60);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTime((time) => (time > 0 ? --time : 0));
-    }, 1000);
+    const CountdownTimeHandler = () => {
+      setTime((time) => {
+        if (time === 0) {
+          getElapsedTime(countdown - time);
+        }
 
-    if (isRunning === false) {
+        if (time > 0) return --time;
+        return countdown;
+      });
+    };
+
+    const interval = setInterval(CountdownTimeHandler, 1000);
+
+    if (isRunning !== RunningModes.running) {
       clearInterval(interval);
     }
 
     return () => clearInterval(interval);
-  }, [isRunning]);
+  }, [countdown, getElapsedTime, isRunning]);
+
+  useEffect(() => {
+    setTime(countdown);
+  }, [countdown]);
+
+  if (isRunning === RunningModes.finished) {
+    getElapsedTime(countdown - time);
+  }
 
   return (
     <CountdownWrapper>
@@ -53,11 +70,12 @@ export const Countdown: React.FC<TimerProps> = ({
     </CountdownWrapper>
   );
 };
+
 const StyledCircle = styled.circle`
   transition: 0.35s stroke-dashoffset;
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
-  stroke-width: 10;
+  stroke-width: 6;
   stroke: white;
   stroke-linecap: round;
 `;
