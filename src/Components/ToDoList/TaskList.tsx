@@ -11,7 +11,7 @@ export const TaskList: React.FC<TaskListProps> = ({ taskList }) => {
     <Container>
       {taskList.map((task) => {
         console.log(task);
-        return <Task key={task.id} />;
+        return <Task key={task.id} task={task} />;
       })}
     </Container>
   );
