@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { MainSection } from "./Components/Main/MainSection";
 import { Sidebar } from "./Components/Sidebar/Sidebar";
+import { Complementary } from "./Components/Complementary/Complementary";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
       <GlobalStyle whiteColor />
       <Sidebar />
       <MainSection />
+      <Complementary />
     </Container>
   );
 }
@@ -27,5 +29,6 @@ export default App;
 
 const Container = styled.div`
   display: flex;
+  justify-content: space-between;
   background: #121212;
 `;
