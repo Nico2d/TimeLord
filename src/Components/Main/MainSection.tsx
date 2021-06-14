@@ -51,6 +51,4 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   padding: 0 20px;
-  height: 100vh;
-  background: #121212;
 `;
