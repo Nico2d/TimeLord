@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
-import { Dashboard } from "./Components/Dashboard";
-import { LandingPage } from "./Components/LandingPage";
+import { Dashboard } from "./Pages/Dashboard";
+import { LandingPage } from "./Pages/LandingPage";
 
 const GlobalStyle = createGlobalStyle`
     body {
