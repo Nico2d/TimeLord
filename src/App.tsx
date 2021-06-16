@@ -1,26 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import styled, { createGlobalStyle } from "styled-components";
 
 function App() {
+  const GlobalStyle = createGlobalStyle`
+    body {
+      margin: 0;
+      font-family: -apple-system, Roboto, 'Segoe UI', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background-color: #121212;
+      color: white;
+    }
+
+    code {
+      font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
+    }
+  `;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <GlobalStyle />
+      <Header>Tutaj jest landing page</Header>
+
+      <button>Przejdź do panelu</button>
+    </Container>
   );
 }
 
 export default App;
+
+const Container = styled.div`
+  width: 100vw;
+  text-align: center;
+`;
+
+const Header = styled.h1`
+  margin-top: 0;
+`;
