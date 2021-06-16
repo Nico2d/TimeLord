@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { UserType } from "../../Types/User.type";
+import { Sidebar } from "../Shared/StyledComponents/Sidebar";
 
 type SidebarProps = {
   userID: number;
@@ -31,11 +32,11 @@ export const NavigationSidebar: React.FC<SidebarProps> = ({ userID }) => {
   }, [userID]);
 
   if (user === null) {
-    <Container>Loading...</Container>;
+    <Sidebar location="left">Loading...</Sidebar>;
   }
 
   return (
-    <Container>
+    <Sidebar location="left">
       <Title>Witaj {user?.username}!</Title>
       <Heading>Projekty</Heading>
 
@@ -44,7 +45,7 @@ export const NavigationSidebar: React.FC<SidebarProps> = ({ userID }) => {
         <Heading>Ustawienia</Heading>
         <Heading>Wyloguj</Heading>
       </NavWrapper>
-    </Container>
+    </Sidebar>
   );
 };
 
@@ -61,44 +62,4 @@ const Heading = styled.h1`
 const Title = styled.p`
   font-size: 20px;
   text-align: center;
-`;
-
-const Container = styled.div`
-  position: relative;
-  display: flex;
-  flex-flow: column;
-  background: #202020;
-  color: white;
-  width: 200px;
-  height: 100vh;
-  padding: 0 1.5rem;
-
-  ::before {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    right: 0;
-    content: "";
-
-    background: linear-gradient(
-      to bottom,
-      #df6d6d,
-      #f9c182,
-      #fafa9a,
-      #85e099,
-      #80c8ff,
-      #bf80ff
-    );
-
-    background: linear-gradient(
-      to bottom,
-      red,
-      orange,
-      yellow,
-      green,
-      blue,
-      purple
-    );
-  }
 `;
