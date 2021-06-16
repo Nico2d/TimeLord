@@ -1,8 +1,10 @@
 import React from "react";
+import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
+import { Dashboard } from "./Components/Dashboard";
+import { LandingPage } from "./Components/LandingPage";
 
-function App() {
-  const GlobalStyle = createGlobalStyle`
+const GlobalStyle = createGlobalStyle`
     body {
       margin: 0;
       font-family: -apple-system, Roboto, 'Segoe UI', 'Oxygen',
@@ -20,12 +22,21 @@ function App() {
     }
   `;
 
+function App() {
   return (
     <Container>
       <GlobalStyle />
-      <Header>Tutaj jest landing page</Header>
 
-      <button>Przejdź do panelu</button>
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <LandingPage />
+          </Route>
+          <Route path="/dashboard">
+            <Dashboard />
+          </Route>
+        </Switch>
+      </Router>
     </Container>
   );
 }
@@ -35,8 +46,4 @@ export default App;
 const Container = styled.div`
   width: 100vw;
   text-align: center;
-`;
-
-const Header = styled.h1`
-  margin-top: 0;
 `;
