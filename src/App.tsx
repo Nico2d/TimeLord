@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
 import { Dashboard } from "./Pages/Dashboard";
 import { LandingPage } from "./Pages/LandingPage";
@@ -33,6 +33,9 @@ function App() {
             <LandingPage />
           </Route>
           <Route path="/dashboard">
+            <Dashboard />
+          </Route>
+          <Route path="/settings">
             <Dashboard />
           </Route>
         </Switch>

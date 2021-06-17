@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { UserType } from "../../Types/User.type";
 import { Sidebar } from "../Shared/StyledComponents/Sidebar";
+import { ProjectsList } from "./ProjectsList/ProjectsList";
+import { IoMdStats, IoMdSettings, IoIosPower } from "react-icons/io";
+import { RowItem } from "../Shared/StyledComponents/RowItem";
 
 type SidebarProps = {
   userID: number;
@@ -9,13 +13,6 @@ type SidebarProps = {
 
 export const NavigationSidebar: React.FC<SidebarProps> = ({ userID }) => {
   const [user, setUser] = useState<UserType | null>(null);
-
-  const projectsList = [
-    { id: 1, name: "kanapkozercy.pl", status: "dev" },
-    { id: 2, name: "Time Lord", status: "dev" },
-    { id: 3, name: "Studia", status: "dev" },
-    { id: 4, name: "X-info", status: "dev" },
-  ];
 
   useEffect(() => {
     const API_URL = "https://general-strapi.herokuapp.com";
@@ -37,13 +34,31 @@ export const NavigationSidebar: React.FC<SidebarProps> = ({ userID }) => {
 
   return (
     <Sidebar location="left">
+      <Avatar
+        src={user?.avatar.url}
+        width="100px"
+        height="100px"
+        alt="User avatar"
+      />
       <Title>Witaj {user?.username}!</Title>
-      <Heading>Projekty</Heading>
+      <RowItem as={NavLink} to="/projects">
+        Projekty
+      </RowItem>
+      <ProjectsList projectsList={user?.time_lord_projects} />
 
       <NavWrapper>
-        <Heading>Statystyki</Heading>
-        <Heading>Ustawienia</Heading>
-        <Heading>Wyloguj</Heading>
+        <RowItem as={NavLink} to="/statistics">
+          <IoMdStats />
+          Statystyki
+        </RowItem>
+        <RowItem as={NavLink} to="/settings">
+          <IoMdSettings />
+          Ustawienia
+        </RowItem>
+        <RowItem>
+          <IoIosPower />
+          Wyloguj
+        </RowItem>
       </NavWrapper>
     </Sidebar>
   );
@@ -54,12 +69,14 @@ const NavWrapper = styled.nav`
   margin-bottom: 1rem;
 `;
 
-const Heading = styled.h1`
-  font-size: 18px;
-  font-weight: 400;
-`;
-
 const Title = styled.p`
   font-size: 20px;
   text-align: center;
+`;
+
+const Avatar = styled.img`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 1rem auto 0;
 `;
