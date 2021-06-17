@@ -8,43 +8,23 @@ import { IoMdStats, IoMdSettings, IoIosPower } from "react-icons/io";
 import { RowItem } from "../Shared/StyledComponents/RowItem";
 
 type SidebarProps = {
-  userID: number;
+  user: UserType;
 };
 
-export const NavigationSidebar: React.FC<SidebarProps> = ({ userID }) => {
-  const [user, setUser] = useState<UserType | null>(null);
-
-  useEffect(() => {
-    const API_URL = "https://general-strapi.herokuapp.com";
-    // process.env.NODE_ENV === "development"
-    //   ? "http://localhost:1337"
-    //   : "https://general-strapi.herokuapp.com";
-
-    fetch(`${API_URL}/time-lord-users/${userID}`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setUser(data);
-      });
-  }, [userID]);
-
-  if (user === null) {
-    <Sidebar location="left">Loading...</Sidebar>;
-  }
-
+export const NavigationSidebar: React.FC<SidebarProps> = ({ user }) => {
   return (
     <Sidebar location="left">
       <Avatar
-        src={user?.avatar.url}
+        src={user.avatar.url}
         width="100px"
         height="100px"
         alt="User avatar"
       />
-      <Title>Witaj {user?.username}!</Title>
+      <Title>Witaj {user.username}!</Title>
       <RowItem as={NavLink} to="/projects">
         Projekty
       </RowItem>
-      <ProjectsList projectsList={user?.time_lord_projects} />
+      <ProjectsList projectsList={user.time_lord_projects} />
 
       <NavWrapper>
         <RowItem as={NavLink} to="/statistics">
