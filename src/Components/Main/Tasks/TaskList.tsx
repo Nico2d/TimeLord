@@ -1,16 +1,27 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { API_URL } from "../../../constants";
 import { TaskType } from "../../../Types/Task.type";
 import { Task } from "./Task";
 
 type TaskListProps = {
-  taskList: Array<TaskType>;
+  projectID: number;
 };
 
-export const TaskList: React.FC<TaskListProps> = ({ taskList }) => {
+export const TaskList: React.FC<TaskListProps> = ({ projectID }) => {
+  const [taskList, setTaskList] = useState<Array<TaskType>>([]);
+
+  useEffect(() => {
+    fetch(`${API_URL}/time-lord-projects/${projectID}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setTaskList(data.time_lord_tasks);
+      });
+  }, [projectID]);
+
   return (
     <Container>
       {taskList.map((task) => {
-        console.log(task);
         return <Task key={task.id} task={task} />;
       })}
     </Container>

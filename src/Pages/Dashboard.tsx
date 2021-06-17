@@ -5,17 +5,13 @@ import { NavigationSidebar } from "../Components/NavigationSidebar/NavigationSid
 import { BrowserRouter } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { UserType } from "../Types/User.type";
+import { API_URL } from "../constants";
 
 export const Dashboard = () => {
   const userID = 1;
   const [user, setUser] = useState<UserType>({} as UserType);
 
   useEffect(() => {
-    const API_URL = "https://general-strapi.herokuapp.com";
-    // process.env.NODE_ENV === "development"
-    //   ? "http://localhost:1337"
-    //   : "https://general-strapi.herokuapp.com";
-
     fetch(`${API_URL}/time-lord-users/${userID}`)
       .then((response) => response.json())
       .then((data) => {

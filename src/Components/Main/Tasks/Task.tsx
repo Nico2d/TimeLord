@@ -12,10 +12,9 @@ type TaskProps = {
 };
 
 export const Task: React.FC<TaskProps> = ({ task }) => {
+  console.log(task);
   const [isCompleted, setIsCompleted] = useState(task.isCompleted);
   const clickHandler = () => {
-    console.log("Siema clicked task");
-
     setIsCompleted((isCompleted) => !isCompleted);
   };
 
