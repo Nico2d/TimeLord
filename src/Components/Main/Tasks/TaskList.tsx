@@ -19,6 +19,10 @@ export const TaskList: React.FC<TaskListProps> = ({ projectID }) => {
       });
   }, [projectID]);
 
+  if (taskList.length === 0) {
+    return <Container>Loading...</Container>;
+  }
+
   return (
     <Container>
       {taskList.map((task) => {

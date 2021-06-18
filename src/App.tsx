@@ -35,6 +35,9 @@ function App() {
           <Route path="/dashboard">
             <Dashboard />
           </Route>
+          <Route path="/projects">
+            <Dashboard />
+          </Route>
           <Route path="/settings">
             <Dashboard />
           </Route>
