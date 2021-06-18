@@ -6,30 +6,48 @@ import { ProjectType } from "../../../Types/Project.type";
 import { RowItem } from "../../Shared/StyledComponents/RowItem";
 
 type ProjectProps = {
-  projectsList: Array<ProjectType> | undefined;
+  projectsList: Array<ProjectType>;
 };
 
 export const ProjectsList: React.FC<ProjectProps> = ({ projectsList }) => {
   return (
     <Container>
-      <RowItem as={NavLink} to={`/projects/add-new`}>
-        <MdAdd /> Dodaj projekt
-      </RowItem>
-      {projectsList?.map((projectItem) => (
+      <RowItem
+        icon={<MdAdd />}
+        text="Dodaj projekt"
+        link={`/projects/add-new`}
+      />
+
+      {projectsList.map((projectItem) => (
         <RowItem
           key={projectItem.id}
-          as={NavLink}
-          to={`/projects/${projectItem.name}`}
-        >
-          <MdBusinessCenter /> {projectItem.name}
-        </RowItem>
+          icon={<MdBusinessCenter />}
+          text={projectItem.name}
+          link={`/projects/${projectItem.name}`}
+        />
       ))}
-      <RowItem as={NavLink} to={`/projects/manage`}>
-        <MdMoreHoriz /> Zarządzaj projektami
-      </RowItem>
+      <RowItem
+        text="Zarządzaj projektami"
+        icon={<MdMoreHoriz />}
+        link={`/projects/manage`}
+      />
     </Container>
   );
 };
+
+const IconWrapper = styled.div`
+  width: 24px;
+  margin-right: 10px;
+`;
+
+const RowItemText = styled.span`
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+
+  /* Needed to make it work */
+  overflow: hidden;
+  white-space: nowrap;
+`;
 
 const Container = styled.div`
   display: flex;

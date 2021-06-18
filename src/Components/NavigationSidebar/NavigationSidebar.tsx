@@ -21,24 +21,26 @@ export const NavigationSidebar: React.FC<SidebarProps> = ({ user }) => {
         alt="User avatar"
       />
       <Title>Witaj {user.username}!</Title>
-      <RowItem as={NavLink} to="/projects">
-        Projekty
-      </RowItem>
+
+      <RowItem text="Projekty" link="/projects"></RowItem>
       <ProjectsList projectsList={user.time_lord_projects} />
 
       <NavWrapper>
-        <RowItem as={NavLink} to="/statistics">
-          <IoMdStats />
-          Statystyki
-        </RowItem>
-        <RowItem as={NavLink} to="/settings">
-          <IoMdSettings />
-          Ustawienia
-        </RowItem>
-        <RowItem>
-          <IoIosPower />
-          Wyloguj
-        </RowItem>
+        <RowItem
+          icon={<IoMdStats />}
+          text="Statystyki"
+          link="/statistics"
+        ></RowItem>
+        <RowItem
+          icon={<IoMdSettings />}
+          text="Ustawienia"
+          link="/settings"
+        ></RowItem>
+        <RowItem
+          icon={<IoIosPower />}
+          text="Wyloguj"
+          link="/settings"
+        ></RowItem>
       </NavWrapper>
     </Sidebar>
   );

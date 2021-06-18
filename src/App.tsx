@@ -5,6 +5,19 @@ import { Dashboard } from "./Pages/Dashboard";
 import { LandingPage } from "./Pages/LandingPage";
 
 const GlobalStyle = createGlobalStyle`
+    *{
+      box-sizing: border-box;
+      
+    }
+
+    li {
+      list-style: none;
+    }
+
+    ul{
+      padding: 0;
+    }
+
     body {
       margin: 0;
       font-family: -apple-system, Roboto, 'Segoe UI', 'Oxygen',
@@ -19,6 +32,11 @@ const GlobalStyle = createGlobalStyle`
     code {
       font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: bold;
     }
   `;
 

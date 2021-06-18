@@ -11,6 +11,8 @@ type TaskListProps = {
 export const TaskList: React.FC<TaskListProps> = ({ projectID }) => {
   const [taskList, setTaskList] = useState<Array<TaskType>>([]);
 
+  console.log(projectID);
+
   useEffect(() => {
     fetch(`${API_URL}/time-lord-projects/${projectID}`)
       .then((response) => response.json())
@@ -20,7 +22,7 @@ export const TaskList: React.FC<TaskListProps> = ({ projectID }) => {
   }, [projectID]);
 
   if (taskList.length === 0) {
-    return <Container>Loading...</Container>;
+    return <Container>Lista zadań jest pusta</Container>;
   }
 
   return (

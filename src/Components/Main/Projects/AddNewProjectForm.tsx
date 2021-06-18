@@ -30,7 +30,6 @@ async function postData(url = "", data = {}) {
 
 export const AddNewProjectForm = () => {
   const [selectedIcon, setSelectedIcon] = useState<string>("");
-
   const { register, handleSubmit } = useForm();
 
   const selectIconHandler = (iconName: string) => {
@@ -39,10 +38,9 @@ export const AddNewProjectForm = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     data.time_lord_users = 1; //user_ID
-    console.log(data);
 
     postData(`${API_URL}/time-lord-projects`, data).then((data) => {
-      console.log(data);
+      console.log("response:", data);
     });
   };
 
@@ -50,67 +48,111 @@ export const AddNewProjectForm = () => {
     <div>
       <h1>Chcesz stworzyć coś wspaniałego?</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          type="text"
-          placeholder="Nazwij projekt"
-          {...register("name", { required: true })}
-        />
+        <Section>
+          <StyledInput
+            type="text"
+            placeholder="Nazwij projekt"
+            {...register("name", { required: true })}
+          />
+        </Section>
 
-        <h2>Wybierz ikonkę</h2>
-        <IconWrapper>
-          {Object.entries(IconsArray).map((iconItem) => {
-            const [iconName, Icon] = iconItem;
+        <Section>
+          <StyledLabel>Wybierz ikonkę</StyledLabel>
+          <IconsContainer>
+            {Object.entries(IconsArray).map((iconItem) => {
+              const [iconName, Icon] = iconItem;
 
-            return (
-              <Icon
-                key={iconName}
-                onClick={() => selectIconHandler(iconName)}
-                className={selectedIcon === iconName ? "isActive" : ""}
-              />
-            );
-          })}
-        </IconWrapper>
-        <input
-          type="text"
-          value={selectedIcon}
-          readOnly
-          {...register("icon_name", { required: true })}
-        />
+              return (
+                <IconWrapper
+                  key={iconName}
+                  onClick={() => selectIconHandler(iconName)}
+                  className={selectedIcon === iconName ? "isActive" : ""}
+                >
+                  <Icon />
+                </IconWrapper>
+              );
+            })}
+          </IconsContainer>
+          <input
+            type="hidden"
+            value={selectedIcon}
+            // readOnly
+            {...register("icon_name", { required: true })}
+          />
+        </Section>
 
-        <h2>Wybierz status</h2>
-        <select {...register("status")}>
-          <option value="development">W pracy</option>
-          <option value="dropped">Porzucone</option>
-          <option value="finished">Zakończone</option>
-          <option value="planned">Zaplanowane</option>
-        </select>
+        <Section>
+          <StyledLabel>Wybierz status</StyledLabel>
+          <select {...register("status")}>
+            <option value="development">W pracy</option>
+            {/* <option value="dropped">Porzucone</option> */}
+            {/* <option value="finished">Zakończone</option> */}
+            <option value="planned">Zaplanowane</option>
+          </select>
+        </Section>
 
-        <input type="submit" value="Dodaj projekt" />
+        {/* <Button type="submit" value="Dodaj projekt">
+          Dodaj projekt
+        </Button> */}
+        <input type="submit" />
       </form>
     </div>
   );
 };
 
-const IconWrapper = styled.div`
-  display: grid;
-  font-size: 24px;
-  grid-template-columns: repeat(5, 1fr);
+const Button = styled.button`
+  height: 50px;
+  border-radius: 10px;
+  padding: 0 2rem;
+  background: #df6d6d;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+`;
 
-  > svg {
-    margin: auto;
-    padding: 1rem;
-    cursor: pointer;
-    border-radius: 8px;
-    padding: 1rem;
-    border: 1px solid transparent;
-  }
+const StyledLabel = styled.label`
+  font-size: 18px;
+  display: block;
+`;
 
-  > svg:hover {
+const Section = styled.section`
+  margin-bottom: 3rem;
+`;
+
+const IconWrapper = styled.li`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  margin: auto;
+  cursor: pointer;
+  border: 1px solid transparent;
+
+  :hover {
     background: #202020;
   }
 
-  > svg.isActive {
+  &.isActive {
     border-color: #ddd;
-    /* background: red; */
   }
+`;
+
+const IconsContainer = styled.ul`
+  display: grid;
+  font-size: 24px;
+  grid-template-columns: repeat(5, 1fr);
+`;
+
+const StyledInput = styled.input`
+  background: transparent;
+  border: none;
+  width: 100%;
+  color: black;
+  background: #d2d2d2;
+  border-radius: 8px;
+  height: 50px;
+  padding: 0 1rem;
+  width: 100%;
 `;

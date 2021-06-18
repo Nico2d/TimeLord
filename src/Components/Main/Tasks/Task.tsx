@@ -72,10 +72,3 @@ const Container = styled.div<{ isCompleted: boolean }>`
     border-radius: 35px;
   }
 `;
-
-const StyledInput = styled.input`
-  background: transparent;
-  border: none;
-  width: 100%;
-  color: white;
-`;

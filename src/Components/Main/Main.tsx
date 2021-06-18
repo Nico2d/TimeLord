@@ -19,7 +19,7 @@ export const Main: React.FC<MainProps> = ({ projectsList }) => {
         <Route path="/projects/manage">Zarządzaj projektami</Route>
 
         {projectsList.map((project) => (
-          <Route key={project.id} path={`/projects/:${project.name}`}>
+          <Route key={project.id} path={`/projects/${project.name}`}>
             <TaskList projectID={project.id} />
           </Route>
         ))}
