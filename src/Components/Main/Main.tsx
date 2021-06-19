@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 import { ProjectType } from "../../Types/Project.type";
 import { AddNewProjectForm } from "../Shared/Projects/AddNewProjectForm";
-import { TaskList } from "../Shared/Tasks/TaskList";
+import { Project } from "../Shared/Projects/Project";
 
 type MainProps = {
   projectsList: Array<ProjectType>;
@@ -20,7 +20,7 @@ export const Main: React.FC<MainProps> = ({ projectsList }) => {
 
         {projectsList.map((project) => (
           <Route key={project.id} path={`/projects/${project.name}`}>
-            <TaskList projectID={project.id} />
+            <Project projectID={project.id} />
           </Route>
         ))}
 
