@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { UserType } from "../../Types/User.type";
 import { Sidebar } from "../Shared/StyledComponents/Sidebar";
-import { ProjectsList } from "./ProjectsList/ProjectsList";
+import { ProjectsList } from "../Shared/Projects/ProjectsList";
 import { IoMdStats, IoMdSettings, IoIosPower } from "react-icons/io";
-import { RowItem } from "../Shared/StyledComponents/RowItem";
+import { RowItem } from "../Shared/RowItem";
 
 type SidebarProps = {
   user: UserType;
