@@ -1,11 +1,9 @@
-import React, { useState } from "react";
 import styled from "styled-components";
 import { MdAdd } from "react-icons/md";
 import { CategoryItem } from "./CategoryItem";
 import { CategoryType } from "../../../Types/Category.type";
 
 export const Categories = () => {
-  const [filterList, setFilterList] = useState([]);
   const categoryList: Array<CategoryType> = [
     { id: "1", name: "Design", color: "#DF6D6D" },
     { id: "2", name: "Bugs", color: "#F9C182" },

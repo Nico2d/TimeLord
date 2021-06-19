@@ -2,6 +2,7 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { API_URL } from "../../../constants";
+import { postData } from "../../../Hooks/postData";
 import { StyledInput } from "../StyledComponents/StyledInput";
 import { IconsArray } from "./ProjectIconsArray";
 
@@ -12,23 +13,6 @@ type Inputs = {
   time_lord_users: number;
 };
 
-async function postData(url = "", data = {}) {
-  const response = await fetch(url, {
-    method: "POST",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
-    body: JSON.stringify(data),
-  });
-
-  return response.json();
-}
-
 export const AddNewProjectForm = () => {
   const [selectedIcon, setSelectedIcon] = useState<string>("");
   const { register, handleSubmit } = useForm();
@@ -37,10 +21,10 @@ export const AddNewProjectForm = () => {
     setSelectedIcon(iconName);
   };
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    data.time_lord_users = 1; //user_ID
+  const onSubmit: SubmitHandler<Inputs> = async (body) => {
+    body.time_lord_users = 1; //user_ID
 
-    postData(`${API_URL}/time-lord-projects`, data)
+    postData(`${API_URL}/time-lord-projects`, body)
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
@@ -139,4 +123,3 @@ const IconsContainer = styled.ul`
   font-size: 24px;
   grid-template-columns: repeat(5, 1fr);
 `;
-

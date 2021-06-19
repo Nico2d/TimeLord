@@ -1,29 +1,68 @@
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import styled from "styled-components";
+import { API_URL } from "../../../constants";
+import { postData } from "../../../Hooks/postData";
+import { TaskType } from "../../../Types/Task.type";
 import { StyledInput } from "../StyledComponents/StyledInput";
 
-export const AddNewTaskForm = () => {
-  const { register, handleSubmit } = useForm();
+type AddNewTaskFormProps = {
+  projectID: number;
+  handleAddNewProject: (taskArray: TaskType) => void;
+};
+
+export const AddNewTaskForm: React.FC<AddNewTaskFormProps> = ({
+  projectID,
+  handleAddNewProject,
+}) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit: SubmitHandler<TaskType> = async (body) => {
+    console.log("Adding task ");
+    body.time_lord_project = projectID;
+    body.isCompleted = false;
+
+    postData(`${API_URL}/time-lord-tasks`, body)
+      .then((response) => console.log(response))
+      .then((data) => {
+        console.log("Success:", data);
+
+        handleAddNewProject(body);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
 
   return (
-    <Container>
+    <Container onSubmit={handleSubmit(onSubmit)}>
       <StyledInput
         type="text"
         placeholder="Wprowadź nazwę zadania, naciśnij [Enter] aby użyć szybkiego dodania"
         {...register("name", { required: true })}
       />
-      <StyledSumbit type="submit" value="Dodaj" />
+      <StyledSubmit type="submit" value="Dodaj" />
+      {errors.name && <ErrorInput>This field is required</ErrorInput>}
     </Container>
   );
 };
 
-const Container = styled.div`
+const ErrorInput = styled.div`
+  margin-top: 10px;
+  color: red;
+  text-align: left;
+`;
+
+const Container = styled.form`
   margin-top: 3rem;
   margin-bottom: 5rem;
   position: relative;
 `;
 
-const StyledSumbit = styled.input`
+const StyledSubmit = styled.input`
   position: absolute;
   right: 8px;
   top: 8px;
