@@ -15,7 +15,6 @@ export const Dashboard = () => {
     fetch(`${API_URL}/time-lord-users/${userID}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setUser(data);
       });
   }, [userID]);

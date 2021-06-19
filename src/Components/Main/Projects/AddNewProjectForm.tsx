@@ -39,9 +39,14 @@ export const AddNewProjectForm = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     data.time_lord_users = 1; //user_ID
 
-    postData(`${API_URL}/time-lord-projects`, data).then((data) => {
-      console.log("response:", data);
-    });
+    postData(`${API_URL}/time-lord-projects`, data)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   return (
@@ -76,7 +81,6 @@ export const AddNewProjectForm = () => {
           <input
             type="hidden"
             value={selectedIcon}
-            // readOnly
             {...register("icon_name", { required: true })}
           />
         </Section>
@@ -99,16 +103,6 @@ export const AddNewProjectForm = () => {
     </div>
   );
 };
-
-const Button = styled.button`
-  height: 50px;
-  border-radius: 10px;
-  padding: 0 2rem;
-  background: #df6d6d;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-`;
 
 const StyledLabel = styled.label`
   font-size: 18px;

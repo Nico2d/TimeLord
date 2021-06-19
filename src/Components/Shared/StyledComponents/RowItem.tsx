@@ -1,4 +1,3 @@
-import { IconType } from "react-icons";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
@@ -9,7 +8,6 @@ type RowItemProps = {
 };
 
 export const RowItem: React.FC<RowItemProps> = ({ icon, text, link = "" }) => {
-  console.log("link: ", icon);
   return (
     <Container as={NavLink} to={link}>
       {icon && <IconWrapper>{icon}</IconWrapper>}

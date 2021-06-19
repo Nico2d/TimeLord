@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import React from "react";
 import styled from "styled-components";
 import { UserType } from "../../Types/User.type";
 import { Sidebar } from "../Shared/StyledComponents/Sidebar";
@@ -13,7 +12,7 @@ type SidebarProps = {
 
 export const NavigationSidebar: React.FC<SidebarProps> = ({ user }) => {
   return (
-    <Sidebar location="left">
+    <Sidebar location="left" width="250px">
       <Avatar
         src={user.avatar.url}
         width="100px"

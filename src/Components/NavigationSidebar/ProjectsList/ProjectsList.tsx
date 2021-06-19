@@ -1,6 +1,5 @@
 import React from "react";
 import { MdAdd, MdBusinessCenter, MdMoreHoriz } from "react-icons/md";
-import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { ProjectType } from "../../../Types/Project.type";
 import { RowItem } from "../../Shared/StyledComponents/RowItem";
@@ -34,20 +33,6 @@ export const ProjectsList: React.FC<ProjectProps> = ({ projectsList }) => {
     </Container>
   );
 };
-
-const IconWrapper = styled.div`
-  width: 24px;
-  margin-right: 10px;
-`;
-
-const RowItemText = styled.span`
-  word-wrap: break-word;
-  text-overflow: ellipsis;
-
-  /* Needed to make it work */
-  overflow: hidden;
-  white-space: nowrap;
-`;
 
 const Container = styled.div`
   display: flex;

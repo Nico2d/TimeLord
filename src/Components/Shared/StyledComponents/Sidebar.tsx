@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-export const Sidebar = styled.div<{ location?: string }>`
+export const Sidebar = styled.div<{ location?: string; width?: string }>`
   position: relative;
   display: flex;
   flex-flow: column;
   background: #202020;
   color: white;
-  width: 200px;
+  width: ${(props) => props.width ?? "200px"};
   height: 100vh;
   padding: 0 1.5rem;
 
