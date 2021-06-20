@@ -5,22 +5,44 @@ import {
   MdPlayCircleOutline,
 } from "react-icons/md";
 import styled from "styled-components";
+import { API_URL } from "../../../constants";
 import { TaskType } from "../../../Types/Task.type";
 
 type TaskProps = {
   task: TaskType;
+  handleComplete: (updatedTask: TaskType) => void;
 };
 
-export const Task: React.FC<TaskProps> = ({ task }) => {
-  const [isCompleted, setIsCompleted] = useState(task.isCompleted);
+export const Task: React.FC<TaskProps> = ({ task, handleComplete }) => {
   const clickHandler = () => {
-    setIsCompleted((isCompleted) => !isCompleted);
+    const body = { isCompleted: !task.isCompleted };
+
+    fetch(`${API_URL}/time-lord-tasks/${task.id}`, {
+      method: "PUT",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify(body),
+    })
+      .then((response) => response.json())
+      .then((data) => {})
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
+    task.isCompleted = !task.isCompleted;
+    handleComplete(task);
   };
 
   return (
-    <Container onClick={clickHandler} isCompleted={isCompleted}>
+    <Container onClick={clickHandler} isCompleted={task.isCompleted}>
       <CheckboxWrapper>
-        {isCompleted ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
+        {task.isCompleted ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
       </CheckboxWrapper>
       <p>{task.name}</p>
       <PlayWrapper>

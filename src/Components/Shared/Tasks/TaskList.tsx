@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { TaskType } from "../../../Types/Task.type";
 import { Task } from "./Task";
@@ -7,16 +8,43 @@ type TaskListProps = {
 };
 
 export const TaskList: React.FC<TaskListProps> = ({ taskList }) => {
-  if (taskList.length === 0) {
-    return <Container>Lista zadań jest pusta</Container>;
-  }
+  const [taskArray, setTaskArray] = useState<Array<TaskType>>(taskList);
+
+  useEffect(() => {
+    setTaskArray(taskList);
+  }, [taskList]);
+
+  const updateCompletedList = (updatedTask: TaskType) => {
+    console.log("Updating task / refreshing component");
+
+    setTaskArray((prev) =>
+      prev.filter((task) => {
+        if (task.id === updatedTask.id) return updatedTask;
+
+        return task;
+      })
+    );
+  };
 
   return (
     <Container>
-      {taskList.map((task, idx) => {
-        console.log(task.id ?? "new");
-        return <Task key={task.id ?? "new"} task={task} />;
-      })}
+      {taskArray
+        .filter((task) => !task.isCompleted)
+        .map((task, idx) => {
+          console.log(task);
+          return (
+            <Task key={idx} task={task} handleComplete={updateCompletedList} />
+          );
+        })}
+
+      <p>Pokaż zakończone zadania</p>
+      {taskArray
+        .filter((task) => task.isCompleted)
+        .map((task, idx) => {
+          return (
+            <Task key={idx} task={task} handleComplete={updateCompletedList} />
+          );
+        })}
     </Container>
   );
 };
