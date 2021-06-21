@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { TaskType } from "../../../Types/Task.type";
+import { TaskType } from "../../Types/Task.type";
 import { Task } from "./Task";
 
 type TaskListProps = {

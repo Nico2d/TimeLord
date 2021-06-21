@@ -5,8 +5,8 @@ import {
   MdPlayCircleOutline,
 } from "react-icons/md";
 import styled from "styled-components";
-import { API_URL } from "../../../constants";
-import { TaskType } from "../../../Types/Task.type";
+import { API_URL } from "../../constants";
+import { TaskType } from "../../Types/Task.type";
 
 type TaskProps = {
   task: TaskType;

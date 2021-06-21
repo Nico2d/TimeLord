@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { API_URL } from "../../../constants";
-import { TaskType } from "../../../Types/Task.type";
+import { API_URL } from "../../constants";
+import { TaskType } from "../../Types/Task.type";
 import { Categories } from "../Categories/Categories";
 import { AddNewTaskForm } from "../Tasks/AddNewTaskForm";
 import { TaskList } from "../Tasks/TaskList";

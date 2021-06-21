@@ -2,8 +2,8 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 import { ProjectType } from "../../Types/Project.type";
-import { AddNewProjectForm } from "../Shared/Projects/AddNewProjectForm";
-import { Project } from "../Shared/Projects/Project";
+import { AddNewProjectForm } from "../Projects/AddNewProjectForm";
+import { Project } from "../Projects/Project";
 
 type MainProps = {
   projectsList: Array<ProjectType>;

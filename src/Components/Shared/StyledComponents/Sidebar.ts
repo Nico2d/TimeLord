@@ -10,6 +10,7 @@ export const Sidebar = styled.div<{ location?: string; width?: string }>`
   min-width: ${({ width }) => width ?? "200px"};
   height: 100vh;
   padding: 0 1.5rem;
+  overflow-y: scroll;
 
   ::before {
     position: absolute;

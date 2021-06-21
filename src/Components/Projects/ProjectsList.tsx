@@ -1,8 +1,8 @@
 import React from "react";
 import { MdAdd, MdBusinessCenter, MdMoreHoriz } from "react-icons/md";
 import styled from "styled-components";
-import { ProjectType } from "../../../Types/Project.type";
-import { RowItem } from "../RowItem";
+import { ProjectType } from "../../Types/Project.type";
+import { RowItem } from "../Shared/RowItem";
 
 type ProjectProps = {
   projectsList: Array<ProjectType>;

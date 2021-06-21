@@ -18,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
       padding: 0;
     }
 
-    body {
+    body, button {
       margin: 0;
       font-family: -apple-system, Roboto, 'Segoe UI', 'Oxygen',
         'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',

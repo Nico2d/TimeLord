@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { UserType } from "../../Types/User.type";
 import { Sidebar } from "../Shared/StyledComponents/Sidebar";
-import { ProjectsList } from "../Shared/Projects/ProjectsList";
+import { ProjectsList } from "../Projects/ProjectsList";
 import { IoMdStats, IoMdSettings, IoIosPower } from "react-icons/io";
 import { RowItem } from "../Shared/RowItem";
 

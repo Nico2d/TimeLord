@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { MdAdd } from "react-icons/md";
 import { CategoryItem } from "./CategoryItem";
-import { CategoryType } from "../../../Types/Category.type";
+import { CategoryType } from "../../Types/Category.type";
 
 export const Categories = () => {
   const categoryList: Array<CategoryType> = [

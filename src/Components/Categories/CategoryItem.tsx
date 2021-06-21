@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { CategoryType } from "../../../Types/Category.type";
+import { CategoryType } from "../../Types/Category.type";
 
 type CategoryItemProps = {
   category: CategoryType;

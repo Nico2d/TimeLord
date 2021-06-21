@@ -1,9 +1,10 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import styled from "styled-components";
-import { API_URL } from "../../../constants";
-import { postData } from "../../../Hooks/postData";
-import { TaskType } from "../../../Types/Task.type";
-import { StyledInput } from "../StyledComponents/StyledInput";
+import { API_URL } from "../../constants";
+import { postData } from "../../Hooks/postData";
+import { TaskType } from "../../Types/Task.type";
+import { ErrorMessage } from "../Shared/ErrorMessage";
+import { StyledInput } from "../Shared/StyledComponents/StyledInput";
 
 type AddNewTaskFormProps = {
   projectID: number;
@@ -46,16 +47,10 @@ export const AddNewTaskForm: React.FC<AddNewTaskFormProps> = ({
         {...register("name", { required: true })}
       />
       <StyledSubmit type="submit" value="Dodaj" />
-      {errors.name && <ErrorInput>This field is required</ErrorInput>}
+      {errors.name && <ErrorMessage message="This field is required" />}
     </Container>
   );
 };
-
-const ErrorInput = styled.div`
-  margin-top: 10px;
-  color: red;
-  text-align: left;
-`;
 
 const Container = styled.form`
   margin-top: 3rem;
