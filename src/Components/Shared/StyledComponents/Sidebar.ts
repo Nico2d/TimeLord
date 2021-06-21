@@ -6,7 +6,8 @@ export const Sidebar = styled.div<{ location?: string; width?: string }>`
   flex-flow: column;
   background: #202020;
   color: white;
-  width: ${(props) => props.width ?? "200px"};
+  width: ${({ width }) => width ?? "200px"};
+  min-width: ${({ width }) => width ?? "200px"};
   height: 100vh;
   padding: 0 1.5rem;
 
@@ -15,7 +16,7 @@ export const Sidebar = styled.div<{ location?: string; width?: string }>`
     top: 0;
     bottom: 0;
     width: 2px;
-    ${(props) => (props.location === "right" ? "left" : "right")}: 0;
+    ${({ location }) => (location === "right" ? "left" : "right")}: 0;
     content: "";
 
     /* background: linear-gradient(

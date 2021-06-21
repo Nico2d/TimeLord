@@ -17,23 +17,24 @@ export const AddNewTaskForm: React.FC<AddNewTaskFormProps> = ({
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit: SubmitHandler<TaskType> = async (body) => {
-    console.log("Adding task ");
     body.time_lord_project = projectID;
     body.isCompleted = false;
 
     postData(`${API_URL}/time-lord-tasks`, body)
       .then((response) => console.log(response))
       .then((data) => {
-        console.log("Success:", data);
+        console.log("Adding task [Success]", data);
 
         handleAddNewProject(body);
+        reset();
       })
       .catch((error) => {
-        console.error("Error:", error);
+        console.error("Adding task [Error]:", error);
       });
   };
 

@@ -36,4 +36,5 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   padding: 0 20px;
+  width: 100%;
 `;
