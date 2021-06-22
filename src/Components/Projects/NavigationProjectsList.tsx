@@ -1,7 +1,7 @@
 import React from "react";
 import { MdAdd, MdMoreHoriz } from "react-icons/md";
 import styled from "styled-components";
-import { slugify } from "../../Hooks/slugfy";
+import { slugify } from "../../Utils/slugify";
 import { ProjectType } from "../../Types/Project.type";
 import { RowItem } from "../Shared/RowItem";
 import { IconsArray } from "./ProjectIconsArray";
@@ -44,4 +44,5 @@ export const ProjectsList: React.FC<ProjectProps> = ({ projectsList }) => {
 const Container = styled.div`
   display: flex;
   flex-flow: column;
+  margin-bottom: 3rem;
 `;
