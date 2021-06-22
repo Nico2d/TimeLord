@@ -5,12 +5,17 @@ import { Sidebar } from "../Shared/StyledComponents/Sidebar";
 import { ProjectsList } from "../Projects/ProjectsList";
 import { IoMdStats, IoMdSettings, IoIosPower } from "react-icons/io";
 import { RowItem } from "../Shared/RowItem";
+import { ProjectType } from "../../Types/Project.type";
 
 type SidebarProps = {
   user: UserType;
+  projectList: ProjectType[];
 };
 
-export const NavigationSidebar: React.FC<SidebarProps> = ({ user }) => {
+export const NavigationSidebar: React.FC<SidebarProps> = ({
+  user,
+  projectList,
+}) => {
   return (
     <Sidebar location="left" width="250px">
       <Avatar
@@ -22,7 +27,7 @@ export const NavigationSidebar: React.FC<SidebarProps> = ({ user }) => {
       <Title>Witaj {user.username}!</Title>
 
       <RowItem text="Projekty" link="/projects"></RowItem>
-      <ProjectsList projectsList={user.time_lord_projects} />
+      <ProjectsList projectsList={projectList} />
 
       <NavWrapper>
         <RowItem

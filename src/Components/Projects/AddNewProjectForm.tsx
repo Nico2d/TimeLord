@@ -9,7 +9,13 @@ import { StyledButton } from "../Shared/StyledComponents/Button";
 import { StyledInput } from "../Shared/StyledComponents/StyledInput";
 import { IconsArray } from "./ProjectIconsArray";
 
-export const AddNewProjectForm = () => {
+type AddNewProjectFormProps = {
+  addToList: (newProject: ProjectType) => void;
+};
+
+export const AddNewProjectForm: React.FC<AddNewProjectFormProps> = ({
+  addToList,
+}) => {
   const [selectedIcon, setSelectedIcon] = useState<string>("");
   const [redirectToNewProject, setRedirectToNewProject] = useState("");
 
@@ -32,8 +38,7 @@ export const AddNewProjectForm = () => {
       .then((response) => {
         console.log(response.data);
 
-        //Dodanie na froncie
-
+        addToList(response.data);
         setRedirectToNewProject(data.name);
         reset();
       })

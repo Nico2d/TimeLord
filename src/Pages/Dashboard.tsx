@@ -6,10 +6,12 @@ import { BrowserRouter } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { UserType } from "../Types/User.type";
 import { API_URL } from "../constants";
+import { useProjectList } from "../Hooks/useProjectList";
 
 export const Dashboard = () => {
   const userID = 1;
   const [user, setUser] = useState<UserType>({} as UserType);
+  const [list, addToList] = useProjectList(userID);
 
   useEffect(() => {
     fetch(`${API_URL}/time-lord-users/${userID}`)
@@ -26,8 +28,8 @@ export const Dashboard = () => {
   return (
     <Container>
       <BrowserRouter>
-        <NavigationSidebar user={user} />
-        <Main projectsList={user.time_lord_projects} />
+        <NavigationSidebar user={user} projectList={list} />
+        <Main projectsList={list} addToList={addToList} />
       </BrowserRouter>
       <Complementary />
     </Container>
