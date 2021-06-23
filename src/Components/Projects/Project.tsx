@@ -54,6 +54,6 @@ export const Project: React.FC<ProjectProps> = ({ projectID }) => {
 };
 
 const Container = styled.div`
-  height: 100vh;
   width: 100%;
+  margin-bottom: auto;
 `;

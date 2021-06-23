@@ -20,10 +20,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
 };
 
 const ContentWrapper = styled.div`
-  overflow-y: scroll;
+  overflow-y: auto;
   padding: 0 1rem;
   background: #202020;
   height: 100%;
+  display: flex;
+  flex-flow: column;
+  scrollbar-width: thin;
 
   ::-webkit-scrollbar {
     height: 4px;

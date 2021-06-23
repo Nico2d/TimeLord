@@ -31,6 +31,7 @@ export const Main: React.FC<MainProps> = ({ projectsList, addToList }) => {
 
         <Route path="/settings">Tutaj są ustawienia</Route>
         <Route path="/statistics">Tutaj są Statystyki</Route>
+        {/* <Route path="/timer">Tutaj są Statystyki</Route> */}
       </Switch>
     </Container>
   );

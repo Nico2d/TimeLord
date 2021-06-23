@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
 import { Dashboard } from "./Pages/Dashboard";
 import { LandingPage } from "./Pages/LandingPage";
+import { Timer } from "./Pages/Timer";
 
 const GlobalStyle = createGlobalStyle`
     *{
@@ -50,6 +51,7 @@ function App() {
           <Route exact path="/">
             <LandingPage />
           </Route>
+
           <Route path="/dashboard">
             <Dashboard />
           </Route>
@@ -58,6 +60,10 @@ function App() {
           </Route>
           <Route path="/settings">
             <Dashboard />
+          </Route>
+
+          <Route path="/timer">
+            <Timer />
           </Route>
         </Switch>
       </Router>
@@ -68,6 +74,5 @@ function App() {
 export default App;
 
 const Container = styled.div`
-  width: 100vw;
   text-align: center;
 `;

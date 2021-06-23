@@ -29,7 +29,7 @@ export const Categories = () => {
 };
 
 const Scroll = styled.div`
-  overflow-x: scroll;
+  overflow-x: auto;
   width: 100%;
   display: flex;
   height: 50px;

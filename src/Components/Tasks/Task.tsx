@@ -4,9 +4,11 @@ import {
   MdCheckBoxOutlineBlank,
   MdPlayCircleOutline,
 } from "react-icons/md";
+import { Link, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 import { API_URL } from "../../constants";
 import { TaskType } from "../../Types/Task.type";
+import { useHistory } from "react-router-dom";
 
 type TaskProps = {
   task: TaskType;
@@ -14,6 +16,11 @@ type TaskProps = {
 };
 
 export const Task: React.FC<TaskProps> = ({ task, handleComplete }) => {
+  let { path, url } = useRouteMatch();
+
+  console.log("path:", path);
+  console.log("url: ", url);
+
   const clickHandler = () => {
     const body = { isCompleted: !task.isCompleted };
 
@@ -39,24 +46,37 @@ export const Task: React.FC<TaskProps> = ({ task, handleComplete }) => {
     handleComplete(task);
   };
 
+  let history = useHistory();
+
+  function handleClick() {
+    history.push(`${url}/timer`);
+  }
+
   return (
-    <Container onClick={clickHandler} isCompleted={task.isCompleted}>
-      <CheckboxWrapper>
+    <Container isCompleted={task.isCompleted}>
+      <CheckboxWrapper onClick={clickHandler}>
         {task.isCompleted ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
       </CheckboxWrapper>
-      <p>{task.name}</p>
-      <PlayWrapper>
+      <TextWrapper>{task.name}</TextWrapper>
+      <PlayWrapper onClick={handleClick}>
         <MdPlayCircleOutline />
       </PlayWrapper>
     </Container>
   );
 };
 
+const TextWrapper = styled.p`
+  text-align: left;
+  margin: auto 0;
+  font-size: 14px;
+`;
+
 const CheckboxWrapper = styled.div`
   padding: 0 1rem;
   font-size: 24px;
   display: flex;
   z-index: 1;
+  cursor: pointer;
 
   > * {
     margin: auto;
@@ -66,6 +86,7 @@ const CheckboxWrapper = styled.div`
 const PlayWrapper = styled(CheckboxWrapper)`
   color: #202020;
   margin-left: auto;
+  cursor: pointer;
 `;
 
 const Container = styled.div<{ isCompleted: boolean }>`
@@ -79,7 +100,6 @@ const Container = styled.div<{ isCompleted: boolean }>`
   text-decoration: ${(props) => (props.isCompleted ? "line-through" : "auto")};
   align-items: center;
   margin-bottom: 0.5rem;
-  cursor: pointer;
   overflow: hidden;
   user-select: none;
 

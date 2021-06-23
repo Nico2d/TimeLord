@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import { ProjectType } from "../../../Types/Project.type";
 import { ProjectItem } from "./ProjectItem";
 
@@ -8,13 +9,19 @@ export const ProjectManagementForm: React.FC<ProjectManagementFormProps> = ({
   projectList,
 }) => {
   return (
-    <div>
-      Zarządzaj projektami
-      <ul>
+    <>
+      Zarządzaj projektami (usuwanie, modyfikacja (zmiana nazwy, icony))
+      <StyleListContainer>
         {projectList.map((projectItem) => (
           <ProjectItem key={projectItem.id} projectItem={projectItem} />
         ))}
-      </ul>
-    </div>
+      </StyleListContainer>
+    </>
   );
 };
+
+const StyleListContainer = styled.ul`
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+`;
