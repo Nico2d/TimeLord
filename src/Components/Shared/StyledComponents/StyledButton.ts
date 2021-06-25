@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledButton = styled.button`
+export const StyledButton = styled.button<{ isFocus?: boolean }>`
   letter-spacing: 0.05em;
   font-weight: 500;
   padding: 1em 2em;
@@ -35,13 +35,13 @@ export const StyledButton = styled.button`
     filter: blur(5px);
     width: calc(100% + 4px);
     height: calc(100% + 4px);
-    animation: glowingbn5 20s linear infinite;
-    opacity: 0;
+    animation: glowing 20s linear infinite;
+    opacity: ${({ isFocus }) => (isFocus ? 1 : 0)};
     transition: opacity 0.3s ease-in-out;
     border-radius: 10px;
   }
 
-  @keyframes glowingbn5 {
+  @keyframes glowing {
     0% {
       background-position: 0 0;
     }

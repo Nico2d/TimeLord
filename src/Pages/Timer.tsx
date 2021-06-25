@@ -96,7 +96,7 @@ export const Timer: React.FC = () => {
     <Container>
       <BackwardWrapper as={Link} to={`/projects/${slugify(projectName)}`}>
         <MdKeyboardArrowLeft size="24px" />
-        {`Wróć do ${projectName}`}
+        {projectName}
       </BackwardWrapper>
 
       {!isTaskCompleted ? (
@@ -116,7 +116,10 @@ export const Timer: React.FC = () => {
         isRunning={runningMode}
         getElapsedTime={finishedHandler}
       />
-      <ButtonWrapper onClick={playButton}>
+      <ButtonWrapper
+        onClick={playButton}
+        isFocus={runningMode !== TimerModes.running}
+      >
         {runningMode === TimerModes.running ? "Pause" : "Start"}
       </ButtonWrapper>
       <ButtonWrapper onClick={endButtonHandler}>Zakończ</ButtonWrapper>
@@ -128,7 +131,8 @@ const TaskWrapper = styled.div`
   width: 100%;
   max-width: 800px;
   padding: 1rem;
-  margin-bottom: 5rem;
+  margin-top: 4rem;
+  margin-bottom: 2rem;
 `;
 
 const BackwardWrapper = styled.div`
