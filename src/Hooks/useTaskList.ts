@@ -31,11 +31,27 @@ export const useTaskList = (
   }, [projectID]);
 
   const addNewTask = (newTask: TaskType) => {
-    console.log("Adding new task...", newTask.name);
+    const putTask = async (body = {}) => {
+      const data = await fetch(`${API_URL}/time-lord-tasks`, {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+        body: JSON.stringify(body),
+      });
+      const items = await data.json();
+
+      return items;
+    };
+
+    putTask(newTask);
     setTaskList((taskList) => [...taskList, newTask]);
   };
-
-  // const postTask = () => {};
 
   return [isLoading, taskList, addNewTask];
 };
