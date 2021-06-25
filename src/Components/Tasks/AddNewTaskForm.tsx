@@ -20,16 +20,16 @@ export const AddNewTaskForm: React.FC<AddNewTaskFormProps> = ({
     formState: { errors },
   } = useForm();
 
-  const onSubmit: SubmitHandler<TaskType> = async (body) => {
-    body.time_lord_project = projectID;
-    body.isCompleted = false;
+  const onSubmit: SubmitHandler<TaskType> = async (task) => {
+    task.time_lord_project = projectID;
+    task.isCompleted = false;
 
-    handleAddNewProject(body);
+    handleAddNewProject(task);
     reset();
   };
 
   return (
-    <Container onSubmit={handleSubmit(onSubmit)}>
+    <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <StyledInput
         type="text"
         placeholder="Wprowadź nazwę zadania, naciśnij [Enter] aby użyć szybkiego dodania"
@@ -37,11 +37,11 @@ export const AddNewTaskForm: React.FC<AddNewTaskFormProps> = ({
       />
       <StyledSubmit type="submit" value="Dodaj" />
       {errors.name && <ErrorMessage message="This field is required" />}
-    </Container>
+    </StyledForm>
   );
 };
 
-const Container = styled.form`
+const StyledForm = styled.form`
   margin-top: 3rem;
   margin-bottom: 5rem;
   position: relative;

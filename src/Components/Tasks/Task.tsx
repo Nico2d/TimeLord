@@ -67,7 +67,7 @@ export const Task: React.FC<TaskProps> = ({
       <TextWrapper isCompleted={task.isCompleted}>{task.name}</TextWrapper>
 
       {task.isCompleted || isTimerPage ? (
-        <TimeCounterWrapper>{`${minutes}:${seconds}h`}</TimeCounterWrapper>
+        <TimeCounterWrapper>{`${minutes}:${seconds}`}</TimeCounterWrapper>
       ) : (
         <PlayWrapper>
           <a href={`/timer/${task.id}`}>
