@@ -4,14 +4,11 @@ export const useTime = (
   time: string
 ): [(time: string) => number, (totalSeconds: number) => string] => {
   const countToSeconds = (time: string) => {
-    if (time === null) {
+    if (time == null) {
       return 0;
     }
 
-    console.log(time);
     const [hours, minutes, seconds] = time.split(":");
-
-    console.log(hours, minutes, seconds);
 
     return +seconds + 60 * +minutes + 360 * +hours;
   };

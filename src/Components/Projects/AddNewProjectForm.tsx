@@ -4,6 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { API_URL } from "../../constants";
 import { ProjectType } from "../../Types/Project.type";
+import { slugify } from "../../Utils/slugify";
 import { ErrorMessage } from "../Shared/ErrorMessage";
 import { StyledButton } from "../Shared/StyledComponents/StyledButton";
 import { StyledInput } from "../Shared/StyledComponents/StyledInput";
@@ -110,8 +111,8 @@ export const AddNewProjectForm: React.FC<AddNewProjectFormProps> = ({
 
       {redirectToNewProject && (
         <RedirectContainer>
-          <p>Teraz czas aby dodać nowe zadania do projektu</p>
-          <a href={`/projects/${redirectToNewProject}`}>
+          <p>Czas aby dodać nowe zadania do projektu</p>
+          <a href={`/projects/${slugify(redirectToNewProject)}`}>
             Przejdź do listy zadań
           </a>
         </RedirectContainer>
