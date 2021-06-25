@@ -94,11 +94,9 @@ export const Timer: React.FC = () => {
 
   return (
     <Container>
-      <BackwardWrapper>
-        <Link to={`/projects/${slugify(projectName)}`}>
-          <MdKeyboardArrowLeft size="24px" />
-          Go back to {projectName}
-        </Link>
+      <BackwardWrapper as={Link} to={`/projects/${slugify(projectName)}`}>
+        <MdKeyboardArrowLeft size="24px" />
+        {`Wróć do ${projectName}`}
       </BackwardWrapper>
 
       {!isTaskCompleted ? (
@@ -130,6 +128,7 @@ const TaskWrapper = styled.div`
   width: 100%;
   max-width: 800px;
   padding: 1rem;
+  margin-bottom: 5rem;
 `;
 
 const BackwardWrapper = styled.div`
@@ -138,6 +137,7 @@ const BackwardWrapper = styled.div`
   left: 1rem;
   cursor: pointer;
   display: flex;
+  text-decoration: none;
 `;
 
 const Container = styled.div`
@@ -148,6 +148,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   color: white;
+  padding-bottom: 5rem;
 `;
 
 const ButtonWrapper = styled(StyledButton)`

@@ -60,7 +60,7 @@ export const Task: React.FC<TaskProps> = ({
   let seconds = getDualDigital(totalTaskTime % 60);
 
   return (
-    <Container>
+    <Container progressBar={totalTaskTime}>
       <CheckboxWrapper onClick={clickHandler}>
         {task.isCompleted ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
       </CheckboxWrapper>
@@ -113,7 +113,7 @@ const PlayWrapper = styled(CheckboxWrapper)`
   cursor: pointer;
 `;
 
-const Container = styled.div`
+const Container = styled.div<{ progressBar?: number }>`
   position: relative;
   display: inline-flex;
   height: 50px;
@@ -131,8 +131,13 @@ const Container = styled.div`
     position: absolute;
     right: -7px;
     background: #df6d6d;
-    width: calc(80px + 0%);
+    width: calc(
+      80px +
+        ${({ progressBar }) => (progressBar === undefined ? 0 : progressBar)}px
+    );
+
     height: 70px;
     transform: skewX(-15deg);
+    transition: width 0.5s ease-in-out;
   }
 `;
