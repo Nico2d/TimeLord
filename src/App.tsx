@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useLocation,
+} from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
 import { Dashboard } from "./Pages/Dashboard";
 import { LandingPage } from "./Pages/LandingPage";
@@ -17,6 +22,11 @@ const GlobalStyle = createGlobalStyle`
 
     ul{
       padding: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
     body, button {
@@ -62,14 +72,30 @@ function App() {
             <Dashboard />
           </Route>
 
-          <Route path="/timer">
+          <Route path="/timer/:taskId">
             <Timer />
+          </Route>
+
+          <Route path="*">
+            <NoMatch />
           </Route>
         </Switch>
       </Router>
     </Container>
   );
 }
+
+const NoMatch = () => {
+  let location = useLocation();
+
+  return (
+    <div>
+      <h3>
+        No match for <code>{location.pathname}</code>
+      </h3>
+    </div>
+  );
+};
 
 export default App;
 

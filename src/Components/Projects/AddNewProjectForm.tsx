@@ -5,12 +5,20 @@ import styled from "styled-components";
 import { API_URL } from "../../constants";
 import { ProjectType } from "../../Types/Project.type";
 import { ErrorMessage } from "../Shared/ErrorMessage";
-import { StyledButton } from "../Shared/StyledComponents/Button";
+import { StyledButton } from "../Shared/StyledComponents/StyledButton";
 import { StyledInput } from "../Shared/StyledComponents/StyledInput";
 import { IconsArray } from "./ProjectIconsArray";
 
 type AddNewProjectFormProps = {
   addToList: (newProject: ProjectType) => void;
+};
+
+type Input = {
+  id: number;
+  name: string;
+  icon_name: string;
+  time_lord_users: number;
+  status: string;
 };
 
 export const AddNewProjectForm: React.FC<AddNewProjectFormProps> = ({
@@ -24,7 +32,7 @@ export const AddNewProjectForm: React.FC<AddNewProjectFormProps> = ({
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<ProjectType>();
+  } = useForm<Input>();
 
   const selectIconHandler = (iconName: string) => {
     setSelectedIcon(iconName);

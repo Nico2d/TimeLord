@@ -1,20 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { MdKeyboardArrowLeft } from "react-icons/md";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Countdown } from "../Components/Timer/Countdown";
 import { TimerModes } from "../Types/TimerModes.type";
-
-enum RunningType {
-  working = 3,
-  break = 5,
-  longBreak = 15,
-}
+import { API_URL } from "../constants";
+import { Task } from "../Components/Tasks/Task";
+import { TaskType } from "../Types/Task.type";
+import { RunningType } from "../Components/Timer/RunningType";
+import { StyledButton } from "../Components/Shared/StyledComponents/StyledButton";
+import { useTime } from "../Hooks/useTime";
+import { slugify } from "../Utils/slugify";
 
 export const Timer: React.FC = () => {
+  const params: {
+    taskId: string;
+  } = useParams();
   const [runningMode, setRunningMode] = useState<TimerModes>(TimerModes.stop);
   const [totalTaskTime, setTotalTaskTime] = useState<number>(0);
   const [runningType, setRunningType] = useState<RunningType>(
     RunningType.working
   );
+  const [task, setTask] = useState<TaskType>({} as TaskType);
+  const [isTaskCompleted, setIsTaskCompleted] = useState(false);
+
+  const [countToSeconds, secondsToString] = useTime("");
+  let projectName = "project";
+
+  useEffect(() => {
+    console.log("useEffect in timer");
+
+    const fetchTask = async () => {
+      const data = await fetch(`${API_URL}/time-lord-tasks/${params.taskId}`);
+      const items = await data.json();
+
+      setTask(items);
+      setTotalTaskTime(countToSeconds(items.time));
+    };
+
+    fetchTask();
+  }, [params.taskId]);
 
   const playButton = () => {
     setRunningMode((runningMode) =>
@@ -27,8 +52,16 @@ export const Timer: React.FC = () => {
   };
 
   const finishedHandler = (elapsedTime: number) => {
-    if (runningType === RunningType.working)
-      setTotalTaskTime(totalTaskTime + elapsedTime);
+    console.log("finished handler");
+    if (runningType === RunningType.working) {
+      let addedTime = totalTaskTime + elapsedTime;
+
+      let body = task;
+      body.time = secondsToString(addedTime);
+      updateTimeFetch(body);
+
+      setTotalTaskTime(addedTime);
+    }
 
     setRunningType(
       runningType === RunningType.working
@@ -38,24 +71,74 @@ export const Timer: React.FC = () => {
     setRunningMode(TimerModes.stop);
   };
 
+  const updateTimeFetch = async (body: TaskType) => {
+    const data = await fetch(`${API_URL}/time-lord-tasks/${params.taskId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+    const response = await data.json();
+    console.log(response);
+  };
+
+  const onCompleteHandle = (completedTask: TaskType) => {
+    console.log("Task completed");
+    setIsTaskCompleted(true);
+  };
+
+  if (typeof task.time_lord_project === "object") {
+    projectName = task.time_lord_project.name;
+  }
+
   return (
     <Container>
-      <h1>TASK HERE</h1>
-      <div>Czas poświęcony na zadanie: {totalTaskTime}</div>
-      <div> Time to {RunningType[runningType]} </div>
+      <BackwardWrapper>
+        <Link to={`/projects/${slugify(projectName)}`}>
+          <MdKeyboardArrowLeft size="24px" />
+          Go back to {projectName}
+        </Link>
+      </BackwardWrapper>
+
+      {!isTaskCompleted ? (
+        <TaskWrapper>
+          <Task
+            task={task}
+            handleComplete={onCompleteHandle}
+            totalTaskTime={totalTaskTime}
+          />
+        </TaskWrapper>
+      ) : (
+        <p>Wróć do projektu aby wybrać nowe zadanie</p>
+      )}
 
       <Countdown
         countdown={runningType}
         isRunning={runningMode}
         getElapsedTime={finishedHandler}
       />
-      <StyledButton onClick={playButton}>
+      <ButtonWrapper onClick={playButton}>
         {runningMode === TimerModes.running ? "Pause" : "Start"}
-      </StyledButton>
-      <StyledButton onClick={endButtonHandler}>Zakończ</StyledButton>
+      </ButtonWrapper>
+      <ButtonWrapper onClick={endButtonHandler}>Zakończ</ButtonWrapper>
     </Container>
   );
 };
+
+const TaskWrapper = styled.div`
+  width: 100%;
+  max-width: 800px;
+  padding: 1rem;
+`;
+
+const BackwardWrapper = styled.div`
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  cursor: pointer;
+  display: flex;
+`;
 
 const Container = styled.div`
   display: flex;
@@ -67,10 +150,7 @@ const Container = styled.div`
   color: white;
 `;
 
-const StyledButton = styled.button`
+const ButtonWrapper = styled(StyledButton)`
   margin-top: 1rem;
-  padding: 0.8rem 1.5rem;
-  border-radius: 5px;
   width: 300px;
-  font-size: 18px;
 `;

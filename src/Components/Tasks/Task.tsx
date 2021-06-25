@@ -4,22 +4,27 @@ import {
   MdCheckBoxOutlineBlank,
   MdPlayCircleOutline,
 } from "react-icons/md";
-import { Link, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 import { API_URL } from "../../constants";
 import { TaskType } from "../../Types/Task.type";
-import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { getDualDigital } from "../../Utils/getDualDigital";
+import { useTime } from "../../Hooks/useTime";
 
 type TaskProps = {
   task: TaskType;
   handleComplete: (updatedTask: TaskType) => void;
+  totalTaskTime?: number;
 };
 
-export const Task: React.FC<TaskProps> = ({ task, handleComplete }) => {
-  let { path, url } = useRouteMatch();
-
-  console.log("path:", path);
-  console.log("url: ", url);
+export const Task: React.FC<TaskProps> = ({
+  task,
+  handleComplete,
+  totalTaskTime = 0,
+}) => {
+  const location = useLocation();
+  const isTimerPage = location.pathname.split("/")[1] === "timer";
+  const [countToSeconds] = useTime("");
 
   const clickHandler = () => {
     const body = { isCompleted: !task.isCompleted };
@@ -43,32 +48,51 @@ export const Task: React.FC<TaskProps> = ({ task, handleComplete }) => {
       });
 
     task.isCompleted = !task.isCompleted;
+
     handleComplete(task);
   };
 
-  let history = useHistory();
-
-  function handleClick() {
-    history.push(`${url}/timer`);
+  if (!isTimerPage) {
+    totalTaskTime = countToSeconds(task.time);
   }
 
+  let minutes = getDualDigital(Math.floor(totalTaskTime / 60));
+  let seconds = getDualDigital(totalTaskTime % 60);
+
   return (
-    <Container isCompleted={task.isCompleted}>
+    <Container>
       <CheckboxWrapper onClick={clickHandler}>
         {task.isCompleted ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
       </CheckboxWrapper>
-      <TextWrapper>{task.name}</TextWrapper>
-      <PlayWrapper onClick={handleClick}>
-        <MdPlayCircleOutline />
-      </PlayWrapper>
+      <TextWrapper isCompleted={task.isCompleted}>{task.name}</TextWrapper>
+
+      {task.isCompleted || isTimerPage ? (
+        <TimeCounterWrapper>{`${minutes}:${seconds}h`}</TimeCounterWrapper>
+      ) : (
+        <PlayWrapper>
+          <a href={`/timer/${task.id}`}>
+            <MdPlayCircleOutline />
+          </a>
+        </PlayWrapper>
+      )}
     </Container>
   );
 };
 
-const TextWrapper = styled.p`
+const TimeCounterWrapper = styled.div`
+  color: #202020;
+  margin-left: auto;
+  z-index: 1;
+  padding-right: 10px;
+  font-weight: bold;
+  text-decoration: none !important;
+`;
+
+const TextWrapper = styled.p<{ isCompleted: boolean }>`
   text-align: left;
   margin: auto 0;
   font-size: 14px;
+  text-decoration: ${(props) => (props.isCompleted ? "line-through" : "auto")};
 `;
 
 const CheckboxWrapper = styled.div`
@@ -89,7 +113,7 @@ const PlayWrapper = styled(CheckboxWrapper)`
   cursor: pointer;
 `;
 
-const Container = styled.div<{ isCompleted: boolean }>`
+const Container = styled.div`
   position: relative;
   display: inline-flex;
   height: 50px;
@@ -97,7 +121,6 @@ const Container = styled.div<{ isCompleted: boolean }>`
   border-radius: 8px;
   background: #202020;
   color: white;
-  text-decoration: ${(props) => (props.isCompleted ? "line-through" : "auto")};
   align-items: center;
   margin-bottom: 0.5rem;
   overflow: hidden;
@@ -108,8 +131,8 @@ const Container = styled.div<{ isCompleted: boolean }>`
     position: absolute;
     right: -7px;
     background: #df6d6d;
-    width: 70px;
+    width: calc(80px + 0%);
     height: 70px;
-    border-radius: 35px;
+    transform: skewX(-15deg);
   }
 `;

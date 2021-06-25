@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { TimerModes } from "../../Types/TimerModes.type";
 import { getDualDigital } from "../../Utils/getDualDigital";
+import { RunningType } from "./RunningType";
 
 type TimerProps = {
   countdown: number;
@@ -66,7 +67,10 @@ export const Countdown: React.FC<TimerProps> = ({
           strokeDashoffset={offset}
         />
       </svg>
-      <Display>{`${minutes} : ${seconds}`}</Display>
+      <Display>
+        {`${minutes} : ${seconds}`}
+        <p> Time to {RunningType[countdown]} </p>
+      </Display>
     </CountdownWrapper>
   );
 };
@@ -92,4 +96,9 @@ const Display = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
+
+  > p {
+    font-size: 1rem;
+    margin-top: 0;
+  }
 `;

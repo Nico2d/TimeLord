@@ -22,16 +22,13 @@ export const Main: React.FC<MainProps> = ({ projectsList, addToList }) => {
         <Route path="/projects/manage">
           <ProjectManagementForm projectList={projectsList} />
         </Route>
-
         {projectsList.map((project) => (
           <Route key={project.id} path={`/projects/${slugify(project.name)}`}>
             <Project projectID={project.id} />
           </Route>
         ))}
-
         <Route path="/settings">Tutaj są ustawienia</Route>
         <Route path="/statistics">Tutaj są Statystyki</Route>
-        {/* <Route path="/timer">Tutaj są Statystyki</Route> */}
       </Switch>
     </Container>
   );
