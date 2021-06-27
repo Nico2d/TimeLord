@@ -3,7 +3,11 @@ import { MdAdd } from "react-icons/md";
 import { CategoryItem } from "./CategoryItem";
 import { CategoryType } from "../../Types/Category.type";
 
-export const Categories = () => {
+type CategoriesProps = {
+  categories: {};
+};
+
+export const Categories: React.FC<CategoriesProps> = ({ categories }) => {
   const categoryList: Array<CategoryType> = [
     { id: "1", name: "Design", color: "#DF6D6D" },
     { id: "2", name: "Bugs", color: "#F9C182" },
@@ -13,28 +17,33 @@ export const Categories = () => {
     { id: "6", name: "Styles", color: "#BF80FF" },
   ];
 
+  const isEmpty = categoryList.length === 0 || categories == null;
+
+  console.log(categories);
   return (
     <Container>
-      <Scroll>
-        {categoryList.map((category) => (
-          <CategoryItem category={category} key={category.id} />
-        ))}
-      </Scroll>
+      {!isEmpty && (
+        <Scroll>
+          {categoryList.map((category) => (
+            <CategoryItem category={category} key={category.id} />
+          ))}
+        </Scroll>
+      )}
 
-      <AddCategory>
-        <MdAdd />
+      <AddCategory isFill={isEmpty}>
+        <MdAdd size={24} />
+        {isEmpty && <p>Dodaj nową kategorię</p>}
       </AddCategory>
     </Container>
   );
 };
 
 const Scroll = styled.div`
-  overflow-x: auto;
   width: 100%;
   display: flex;
   height: 50px;
-  width: 100%;
   overflow-y: hidden;
+  overflow-x: auto;
 
   ::-webkit-scrollbar {
     height: 4px;
@@ -61,28 +70,31 @@ const Container = styled.div`
   border-radius: 8px;
   flex-flow: row;
   margin-bottom: 1rem;
-  padding-right: 50px;
   width: fill-available;
   overflow: hidden;
 `;
 
-const AddCategory = styled.div`
+const AddCategory = styled.div<{ isFill: boolean }>`
   position: absolute;
   right: -6px;
   height: 100%;
-  width: 60px;
+  width: ${({ isFill }) => (isFill ? "calc(100% + 15px)" : "80px")};
   display: flex;
   background: #424242;
   transform: skew(-15deg);
   border-left: 5px #121212 solid;
   margin-bottom: 4px;
   cursor: pointer;
+  text-align: center;
+  justify-content: center;
 
   > * {
     fill: #d2d2d2;
-    margin: auto;
-    margin-left: 17px;
+    margin: auto 0;
     transform: skew(15deg);
-    font-size: 20px;
+  }
+
+  > P {
+    margin-left: 5px;
   }
 `;

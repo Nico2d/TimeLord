@@ -39,7 +39,7 @@ const Category = styled.div<{ color?: string; isActive: boolean }>`
   }
 
   :last-child {
-    margin-right: -6px;
+    margin-right: 75px;
   }
 
   > * {

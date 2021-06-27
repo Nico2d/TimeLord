@@ -9,7 +9,9 @@ type ProjectProps = {
 };
 
 export const Project: React.FC<ProjectProps> = ({ projectID }) => {
-  const [isLoading, taskList, addNewTask] = useTaskList(String(projectID));
+  const [isLoading, taskList, addNewTask, categories] = useTaskList(
+    String(projectID)
+  );
 
   if (isLoading) {
     return <Container>Loading...</Container>;
@@ -18,7 +20,7 @@ export const Project: React.FC<ProjectProps> = ({ projectID }) => {
   return (
     <Container>
       <AddNewTaskForm projectID={projectID} handleAddNewProject={addNewTask} />
-      <Categories />
+      <Categories categories={categories} />
       <TaskList taskList={taskList} />
     </Container>
   );
