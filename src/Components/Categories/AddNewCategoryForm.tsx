@@ -34,13 +34,8 @@ export const AddNewCategoryForm = ({
     formState: { errors },
   } = useForm<CategoryType>();
 
-  console.log(JSON.stringify(categories));
-
   const onSubmit: SubmitHandler<CategoryType> = async (submitData) => {
-    console.log(categories.push(submitData));
-    // const body = JSON.stringify({ categories: [submitData] });
-    // console.log("submitted category: ", body);
-    // let { dataTest } = submitData;
+    categories.push(submitData);
 
     fetch(`${API_URL}/time-lord-projects/${projectID}`, {
       method: "PUT",

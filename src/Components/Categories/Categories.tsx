@@ -12,7 +12,7 @@ export const Categories = ({
   categories,
   onNewCategoryAdd,
 }: CategoriesProps) => {
-  const isEmpty = categories.length === 0 || categories == null;
+  const isEmpty = categories == null || categories.length === 0;
 
   return (
     <Container>

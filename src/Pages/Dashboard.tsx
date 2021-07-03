@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
 import { UserType } from "../Types/User.type";
 import { API_URL } from "../constants";
 import { useProjectList } from "../Hooks/useProjectList";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 export const Dashboard = () => {
   const userID = 1;
@@ -25,12 +28,14 @@ export const Dashboard = () => {
   }
 
   return (
-    <Container>
-      <BrowserRouter>
-        <NavigationSidebar user={user} projectList={list} />
-        <Main projectsList={list} addToList={addToList} />
-      </BrowserRouter>
-    </Container>
+    <QueryClientProvider client={queryClient}>
+      <Container>
+        <BrowserRouter>
+          <NavigationSidebar user={user} projectList={list} />
+          <Main projectsList={list} addToList={addToList} />
+        </BrowserRouter>
+      </Container>
+    </QueryClientProvider>
   );
 };
 

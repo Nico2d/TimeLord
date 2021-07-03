@@ -22,7 +22,7 @@ export const Main: React.FC<MainProps> = ({ projectsList, addToList }) => {
       </Route>
       {projectsList.map((project) => (
         <Route key={project.id} path={`/projects/${slugify(project.name)}`}>
-          <Project projectID={project.id} />
+          <Project projectID={String(project.id)} />
         </Route>
       ))}
       <Route path="/settings">Tutaj są ustawienia</Route>

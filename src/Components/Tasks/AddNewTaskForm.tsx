@@ -5,13 +5,13 @@ import { ErrorMessage } from "../Shared/ErrorMessage";
 import { StyledInput } from "../Shared/StyledComponents/StyledInput";
 
 type AddNewTaskFormProps = {
-  projectID: number;
-  handleAddNewProject: (taskArray: TaskType) => void;
+  projectID: string | number;
+  // handleAddNewProject: (taskArray: TaskType) => void;
 };
 
 export const AddNewTaskForm: React.FC<AddNewTaskFormProps> = ({
   projectID,
-  handleAddNewProject,
+  // handleAddNewProject,
 }) => {
   const {
     register,
@@ -24,7 +24,7 @@ export const AddNewTaskForm: React.FC<AddNewTaskFormProps> = ({
     task.time_lord_project = projectID;
     task.isCompleted = false;
 
-    handleAddNewProject(task);
+    // handleAddNewProject(task);
     reset();
   };
 

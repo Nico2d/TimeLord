@@ -1,3 +1,4 @@
+import { CategoryType } from "./Category.type";
 import { TaskType } from "./Task.type";
 
 export type ProjectType = {
@@ -7,4 +8,5 @@ export type ProjectType = {
   time_lord_tasks: Array<TaskType>;
   time_lord_users: number;
   status: string;
+  categories: CategoryType[];
 };

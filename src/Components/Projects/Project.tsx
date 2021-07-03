@@ -1,36 +1,60 @@
-import { motion, useAnimation } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState } from "react";
+import { useQuery } from "react-query";
 import styled from "styled-components";
+import { API_URL } from "../../constants";
 import { useTaskList } from "../../Hooks/useTaskList";
+import { ProjectType } from "../../Types/Project.type";
 import { AddNewCategoryForm } from "../Categories/AddNewCategoryForm";
 import { Categories } from "../Categories/Categories";
-import { Complementary } from "../Complementary/Complementary";
 import { Sidebar } from "../Shared/StyledComponents/Sidebar";
 import { AddNewTaskForm } from "../Tasks/AddNewTaskForm";
 import { TaskList } from "../Tasks/TaskList";
 
+const fetchProject = async (projectID: string) => {
+  const res = await fetch(`${API_URL}/time-lord-projects/${projectID}`);
+  const data = res.json();
+
+  return data;
+};
+
 type ProjectProps = {
-  projectID: number;
+  projectID: string;
 };
 
 export const Project = ({ projectID }: ProjectProps) => {
   const [isComplementaryActive, setIsComplementaryActive] = useState(true);
-  const [isLoading, taskList, addNewTask, categories] = useTaskList(
-    String(projectID)
-  );
+  // const [isLoading, taskList, addNewTask, categories] = useTaskList(
+  //   String(projectID)
+  // );
 
   const addCategoryHandler = () => {
     console.log("Adding category...");
     setIsComplementaryActive((value) => !value);
   };
 
+  const {
+    isLoading,
+    error,
+    data: project,
+  } = useQuery<ProjectType, Error>("categories", () => fetchProject(projectID));
+  console.log("data", project);
+
   const variants = {
     hidden: { opacity: 1, x: 0, width: "auto" },
     closed: { opacity: 0, x: "100%", width: 0 },
   };
 
-  if (isLoading) {
+  if (isLoading || project === undefined) {
     return <ContentWrapper>Loading...</ContentWrapper>;
+  }
+
+  if (error) {
+    return (
+      <ContentWrapper>
+        {`An error has occurred: ${error.message}`}
+      </ContentWrapper>
+    );
   }
 
   return (
@@ -38,13 +62,13 @@ export const Project = ({ projectID }: ProjectProps) => {
       <ContentWrapper>
         <AddNewTaskForm
           projectID={projectID}
-          handleAddNewProject={addNewTask}
+          // handleAddNewProject={addNewTask}
         />
         <Categories
-          categories={categories}
+          categories={project.categories}
           onNewCategoryAdd={() => addCategoryHandler()}
         />
-        <TaskList taskList={taskList} />
+        <TaskList taskList={project.time_lord_tasks} />
       </ContentWrapper>
 
       <motion.div
@@ -63,7 +87,10 @@ export const Project = ({ projectID }: ProjectProps) => {
         transition={{ type: "tween", ease: [0, 0, 0, 0] }}
       >
         <Sidebar location="right" width="300px">
-          <AddNewCategoryForm categories={categories} projectID={String(projectID)} />
+          <AddNewCategoryForm
+            categories={project.categories}
+            projectID={String(projectID)}
+          />
         </Sidebar>
       </motion.div>
     </Container>
