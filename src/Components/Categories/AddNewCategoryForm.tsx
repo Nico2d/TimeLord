@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
+import { putCategories } from "../../API/putCategories";
 import { API_URL } from "../../constants";
 import { CategoryType } from "../../Types/Category.type";
+import { ProjectType } from "../../Types/Project.type";
 import { ErrorMessage } from "../Shared/ErrorMessage";
 import { StyledButton } from "../Shared/StyledComponents/StyledButton";
 import { StyledInput } from "../Shared/StyledComponents/StyledInput";
@@ -16,6 +19,7 @@ export const AddNewCategoryForm = ({
   projectID,
   categories,
 }: AddNewCategoryFormProps) => {
+  const queryClient = useQueryClient();
   const [selectedColor, setSelectedColor] = useState<string>("");
   const colorList = [
     "#DF6D6D",
@@ -34,26 +38,34 @@ export const AddNewCategoryForm = ({
     formState: { errors },
   } = useForm<CategoryType>();
 
-  const onSubmit: SubmitHandler<CategoryType> = async (submitData) => {
-    categories.push(submitData);
+  // const mutation = useMutation(() => putCategories(projectID, ), {
+  //   onSuccess: () => {
+  //     // Invalidate and refetch
+  //     queryClient.invalidateQueries("todos");
+  //   },
+  // });
 
-    fetch(`${API_URL}/time-lord-projects/${projectID}`, {
-      method: "PUT",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "same-origin",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      redirect: "follow",
-      referrerPolicy: "no-referrer",
-      body: JSON.stringify({ categories: categories }),
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+  const { mutate, isLoading } = useMutation(putCategories, {
+    onSuccess: (data) => {
+      console.log(data);
+      const message = "success";
+      alert(message);
+    },
+    onError: () => {
+      alert("there was an error");
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries("project");
+    },
+  });
+
+  const onSubmit: SubmitHandler<CategoryType> = async (submitData) => {
+    const Project = {
+      id: projectID,
+      categories: [...categories, submitData],
+    };
+
+    mutate(Project);
 
     setSelectedColor("");
     reset();

@@ -19,7 +19,7 @@ export const Categories = ({
       {!isEmpty && (
         <Scroll>
           {categories.map((category) => (
-            <CategoryItem category={category} key={category.id} />
+            <CategoryItem key={category.id} category={category} />
           ))}
         </Scroll>
       )}

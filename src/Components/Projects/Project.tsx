@@ -2,21 +2,13 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { API_URL } from "../../constants";
-import { useTaskList } from "../../Hooks/useTaskList";
+import { fetchProject } from "../../API/fetchProject";
 import { ProjectType } from "../../Types/Project.type";
 import { AddNewCategoryForm } from "../Categories/AddNewCategoryForm";
 import { Categories } from "../Categories/Categories";
 import { Sidebar } from "../Shared/StyledComponents/Sidebar";
 import { AddNewTaskForm } from "../Tasks/AddNewTaskForm";
 import { TaskList } from "../Tasks/TaskList";
-
-const fetchProject = async (projectID: string) => {
-  const res = await fetch(`${API_URL}/time-lord-projects/${projectID}`);
-  const data = res.json();
-
-  return data;
-};
 
 type ProjectProps = {
   projectID: string;
@@ -37,7 +29,7 @@ export const Project = ({ projectID }: ProjectProps) => {
     isLoading,
     error,
     data: project,
-  } = useQuery<ProjectType, Error>("categories", () => fetchProject(projectID));
+  } = useQuery<ProjectType, Error>("project", () => fetchProject(projectID));
   console.log("data", project);
 
   const variants = {
