@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Complementary } from "../Components/Complementary/Complementary";
 import { Main } from "../Components/Main/Main";
 import { NavigationSidebar } from "../Components/NavigationSidebar/NavigationSidebar";
 import { BrowserRouter } from "react-router-dom";
@@ -31,7 +30,6 @@ export const Dashboard = () => {
         <NavigationSidebar user={user} projectList={list} />
         <Main projectsList={list} addToList={addToList} />
       </BrowserRouter>
-      <Complementary />
     </Container>
   );
 };

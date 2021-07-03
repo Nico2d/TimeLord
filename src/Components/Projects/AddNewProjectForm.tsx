@@ -55,7 +55,7 @@ export const AddNewProjectForm: React.FC<AddNewProjectFormProps> = ({
   };
 
   return (
-    <div>
+    <Container>
       <Section>
         <h1>Chcesz stworzyć coś wspaniałego?</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -117,9 +117,15 @@ export const AddNewProjectForm: React.FC<AddNewProjectFormProps> = ({
           </a>
         </RedirectContainer>
       )}
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  flex-flow: column;
+  margin: auto;
+`;
 
 const RedirectContainer = styled.div`
   p {

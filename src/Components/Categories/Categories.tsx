@@ -4,33 +4,27 @@ import { CategoryItem } from "./CategoryItem";
 import { CategoryType } from "../../Types/Category.type";
 
 type CategoriesProps = {
-  categories: {};
+  categories: CategoryType[];
+  onNewCategoryAdd?: () => void;
 };
 
-export const Categories: React.FC<CategoriesProps> = ({ categories }) => {
-  const categoryList: Array<CategoryType> = [
-    { id: "1", name: "Design", color: "#DF6D6D" },
-    { id: "2", name: "Bugs", color: "#F9C182" },
-    { id: "3", name: "Frontend", color: "#FAFA9A" },
-    { id: "4", name: "Backend", color: "#85E099" },
-    { id: "5", name: "Testing", color: "#80C8FF" },
-    { id: "6", name: "Styles", color: "#BF80FF" },
-  ];
+export const Categories = ({
+  categories,
+  onNewCategoryAdd,
+}: CategoriesProps) => {
+  const isEmpty = categories.length === 0 || categories == null;
 
-  const isEmpty = categoryList.length === 0 || categories == null;
-
-  console.log(categories);
   return (
     <Container>
       {!isEmpty && (
         <Scroll>
-          {categoryList.map((category) => (
+          {categories.map((category) => (
             <CategoryItem category={category} key={category.id} />
           ))}
         </Scroll>
       )}
 
-      <AddCategory isFill={isEmpty}>
+      <AddCategory isFill={isEmpty} onClick={onNewCategoryAdd}>
         <MdAdd size={24} />
         {isEmpty && <p>Dodaj nową kategorię</p>}
       </AddCategory>

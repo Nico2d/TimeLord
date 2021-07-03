@@ -93,6 +93,7 @@ const TextWrapper = styled.p<{ isCompleted: boolean }>`
   margin: auto 0;
   font-size: 14px;
   text-decoration: ${(props) => (props.isCompleted ? "line-through" : "auto")};
+  z-index: 1;
 `;
 
 const CheckboxWrapper = styled.div`
