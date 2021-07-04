@@ -9,6 +9,8 @@ import styled, { createGlobalStyle } from "styled-components";
 import { Dashboard } from "./Pages/Dashboard";
 import { LandingPage } from "./Pages/LandingPage";
 import { Timer } from "./Pages/Timer";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 const GlobalStyle = createGlobalStyle`
     *{
@@ -50,37 +52,42 @@ const GlobalStyle = createGlobalStyle`
     }
   `;
 
+const queryClient = new QueryClient();
+
 function App() {
   return (
-    <Container>
-      <GlobalStyle />
+    <QueryClientProvider client={queryClient}>
+      <Container>
+        <GlobalStyle />
 
-      <Router>
-        <Switch>
-          <Route exact path="/">
-            <LandingPage />
-          </Route>
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <LandingPage />
+            </Route>
 
-          <Route path="/dashboard">
-            <Dashboard />
-          </Route>
-          <Route path="/projects">
-            <Dashboard />
-          </Route>
-          <Route path="/settings">
-            <Dashboard />
-          </Route>
+            <Route path="/dashboard">
+              <Dashboard />
+            </Route>
+            <Route path="/projects">
+              <Dashboard />
+            </Route>
+            <Route path="/settings">
+              <Dashboard />
+            </Route>
 
-          <Route path="/timer/:taskId">
-            <Timer />
-          </Route>
+            <Route path="/timer/:taskId">
+              <Timer />
+            </Route>
 
-          <Route path="*">
-            <NoMatch />
-          </Route>
-        </Switch>
-      </Router>
-    </Container>
+            <Route path="*">
+              <NoMatch />
+            </Route>
+          </Switch>
+        </Router>
+      </Container>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
 

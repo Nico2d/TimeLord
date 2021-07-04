@@ -83,10 +83,10 @@ export const Timer: React.FC = () => {
     console.log(response);
   };
 
-  const onCompleteHandle = (completedTask: TaskType) => {
-    console.log("Task completed");
-    setIsTaskCompleted(true);
-  };
+  // const onCompleteHandle = (completedTask: TaskType) => {
+  //   console.log("Task completed");
+  //   setIsTaskCompleted(true);
+  // };
 
   if (typeof task.time_lord_project === "object") {
     projectName = task.time_lord_project.name;
@@ -103,7 +103,7 @@ export const Timer: React.FC = () => {
         <TaskWrapper>
           <Task
             task={task}
-            handleComplete={onCompleteHandle}
+            // handleComplete={onCompleteHandle}
             totalTaskTime={totalTaskTime}
           />
         </TaskWrapper>

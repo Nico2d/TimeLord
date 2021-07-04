@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 import { fetchTaskList } from "../../API/fetchTaskList";

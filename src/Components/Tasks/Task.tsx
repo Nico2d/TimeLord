@@ -10,46 +10,36 @@ import { TaskType } from "../../Types/Task.type";
 import { useLocation } from "react-router-dom";
 import { getDualDigital } from "../../Utils/getDualDigital";
 import { useTime } from "../../Hooks/useTime";
+import { useMutation, useQueryClient } from "react-query";
+import { updateTask } from "../../API/updateTask";
 
 type TaskProps = {
   task: TaskType;
-  handleComplete?: (updatedTask: TaskType) => void;
   totalTaskTime?: number;
 };
 
-export const Task: React.FC<TaskProps> = ({
-  task,
-  handleComplete,
-  totalTaskTime = 0,
-}) => {
+export const Task: React.FC<TaskProps> = ({ task, totalTaskTime = 0 }) => {
   const location = useLocation();
   const isTimerPage = location.pathname.split("/")[1] === "timer";
   const [countToSeconds] = useTime("");
 
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation(updateTask, {
+    onSuccess: (data) => {
+      console.log("Update task [Success]:", data);
+    },
+    onError: () => {
+      alert("there was an error");
+    },
+    onSettled: () => {
+      queryClient.refetchQueries(["taskList"], { active: true });
+    },
+  });
+
   const clickHandler = () => {
-    const body = { isCompleted: !task.isCompleted };
+    const body = { id: task.id, isCompleted: !task.isCompleted };
 
-    fetch(`${API_URL}/time-lord-tasks/${task.id}`, {
-      method: "PUT",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "same-origin",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      redirect: "follow",
-      referrerPolicy: "no-referrer",
-      body: JSON.stringify(body),
-    })
-      .then((response) => response.json())
-      .then((data) => {})
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-
-    task.isCompleted = !task.isCompleted;
-
-    if (handleComplete !== undefined) handleComplete(task);
+    mutate(body);
   };
 
   if (!isTimerPage) {
