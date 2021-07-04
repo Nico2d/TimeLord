@@ -1,38 +1,32 @@
 import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import styled from "styled-components";
+import { fetchTaskList } from "../../API/fetchTaskList";
 import { TaskType } from "../../Types/Task.type";
 import { Task } from "./Task";
 
 type TaskListProps = {
-  taskList: Array<TaskType>;
+  projectID: string;
 };
 
-export const TaskList: React.FC<TaskListProps> = ({ taskList }) => {
-  const [taskArray, setTaskArray] = useState<Array<TaskType>>(taskList);
+export const TaskList: React.FC<TaskListProps> = ({ projectID }) => {
   const [isHiddenCompletedTasks, setiIHiddenCompletedTasks] = useState(true);
 
-  useEffect(() => {
-    setTaskArray(taskList);
-  }, [taskList]);
+  const { isLoading, data: taskList } = useQuery<TaskType[], Error>(
+    "taskList",
+    () => fetchTaskList(projectID)
+  );
 
-  const updateCompletedList = (updatedTask: TaskType) => {
-    setTaskArray((prev) =>
-      prev.filter((task) => {
-        if (task.id === updatedTask.id) return updatedTask;
-
-        return task;
-      })
-    );
-  };
+  if (isLoading || taskList === undefined) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Container>
-      {taskArray
+      {taskList
         .filter((task) => !task.isCompleted)
         .map((task, idx) => {
-          return (
-            <Task key={idx} task={task} handleComplete={updateCompletedList} />
-          );
+          return <Task key={idx} task={task} />;
         })}
 
       <HiddenLabel
@@ -47,16 +41,10 @@ export const TaskList: React.FC<TaskListProps> = ({ taskList }) => {
         } zakończone zadania`}
       </HiddenLabel>
       <CompletedTasks isHidden={isHiddenCompletedTasks}>
-        {taskArray
+        {taskList
           .filter((task) => task.isCompleted)
           .map((task, idx) => {
-            return (
-              <Task
-                key={idx}
-                task={task}
-                handleComplete={updateCompletedList}
-              />
-            );
+            return <Task key={idx} task={task} />;
           })}
       </CompletedTasks>
     </Container>

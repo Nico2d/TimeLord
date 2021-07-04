@@ -13,7 +13,7 @@ import { useTime } from "../../Hooks/useTime";
 
 type TaskProps = {
   task: TaskType;
-  handleComplete: (updatedTask: TaskType) => void;
+  handleComplete?: (updatedTask: TaskType) => void;
   totalTaskTime?: number;
 };
 
@@ -49,7 +49,7 @@ export const Task: React.FC<TaskProps> = ({
 
     task.isCompleted = !task.isCompleted;
 
-    handleComplete(task);
+    if (handleComplete !== undefined) handleComplete(task);
   };
 
   if (!isTimerPage) {

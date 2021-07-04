@@ -1,17 +1,17 @@
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
+import { postTask } from "../../API/postTask";
 import { TaskType } from "../../Types/Task.type";
 import { ErrorMessage } from "../Shared/ErrorMessage";
 import { StyledInput } from "../Shared/StyledComponents/StyledInput";
 
 type AddNewTaskFormProps = {
   projectID: string | number;
-  // handleAddNewProject: (taskArray: TaskType) => void;
 };
 
 export const AddNewTaskForm: React.FC<AddNewTaskFormProps> = ({
   projectID,
-  // handleAddNewProject,
 }) => {
   const {
     register,
@@ -20,11 +20,24 @@ export const AddNewTaskForm: React.FC<AddNewTaskFormProps> = ({
     formState: { errors },
   } = useForm();
 
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation(postTask, {
+    onSuccess: (data) => {
+      console.log("Adding new task [Success]:", data);
+    },
+    onError: () => {
+      alert("there was an error");
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries("taskList");
+    },
+  });
+
   const onSubmit: SubmitHandler<TaskType> = async (task) => {
     task.time_lord_project = projectID;
     task.isCompleted = false;
 
-    // handleAddNewProject(task);
+    mutate(task);
     reset();
   };
 

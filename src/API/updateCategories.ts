@@ -1,15 +1,13 @@
 import { API_URL } from "../constants";
 import { CategoryType } from "../Types/Category.type";
 
-type putCategoriesProps = {
+type updateCategoriesProps = {
   categories: CategoryType[];
   id: string | number;
 };
 
-export const putCategories = async (data: putCategoriesProps) => {
-  const { id } = data;
-
-  const res = await fetch(`${API_URL}/time-lord-projects/${id}`, {
+export const updateCategories = async (data: updateCategoriesProps) => {
+  const res = await fetch(`${API_URL}/time-lord-projects/${data.id}`, {
     method: "PUT",
     mode: "cors",
     cache: "no-cache",

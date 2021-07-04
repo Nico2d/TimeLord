@@ -2,10 +2,8 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
-import { putCategories } from "../../API/putCategories";
-import { API_URL } from "../../constants";
+import { updateCategories } from "../../API/updateCategories";
 import { CategoryType } from "../../Types/Category.type";
-import { ProjectType } from "../../Types/Project.type";
 import { ErrorMessage } from "../Shared/ErrorMessage";
 import { StyledButton } from "../Shared/StyledComponents/StyledButton";
 import { StyledInput } from "../Shared/StyledComponents/StyledInput";
@@ -19,7 +17,6 @@ export const AddNewCategoryForm = ({
   projectID,
   categories,
 }: AddNewCategoryFormProps) => {
-  const queryClient = useQueryClient();
   const [selectedColor, setSelectedColor] = useState<string>("");
   const colorList = [
     "#DF6D6D",
@@ -38,18 +35,10 @@ export const AddNewCategoryForm = ({
     formState: { errors },
   } = useForm<CategoryType>();
 
-  // const mutation = useMutation(() => putCategories(projectID, ), {
-  //   onSuccess: () => {
-  //     // Invalidate and refetch
-  //     queryClient.invalidateQueries("todos");
-  //   },
-  // });
-
-  const { mutate, isLoading } = useMutation(putCategories, {
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation(updateCategories, {
     onSuccess: (data) => {
-      console.log(data);
-      const message = "success";
-      alert(message);
+      console.log("Adding new category [Success]:", data);
     },
     onError: () => {
       alert("there was an error");
@@ -62,7 +51,7 @@ export const AddNewCategoryForm = ({
   const onSubmit: SubmitHandler<CategoryType> = async (submitData) => {
     const Project = {
       id: projectID,
-      categories: [...categories, submitData],
+      categories: [...(categories ?? []), submitData],
     };
 
     mutate(Project);

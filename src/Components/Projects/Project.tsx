@@ -16,9 +16,6 @@ type ProjectProps = {
 
 export const Project = ({ projectID }: ProjectProps) => {
   const [isComplementaryActive, setIsComplementaryActive] = useState(true);
-  // const [isLoading, taskList, addNewTask, categories] = useTaskList(
-  //   String(projectID)
-  // );
 
   const addCategoryHandler = () => {
     console.log("Adding category...");
@@ -30,7 +27,6 @@ export const Project = ({ projectID }: ProjectProps) => {
     error,
     data: project,
   } = useQuery<ProjectType, Error>("project", () => fetchProject(projectID));
-  console.log("data", project);
 
   const variants = {
     hidden: { opacity: 1, x: 0, width: "auto" },
@@ -52,15 +48,12 @@ export const Project = ({ projectID }: ProjectProps) => {
   return (
     <Container>
       <ContentWrapper>
-        <AddNewTaskForm
-          projectID={projectID}
-          // handleAddNewProject={addNewTask}
-        />
+        <AddNewTaskForm projectID={projectID} />
         <Categories
           categories={project.categories}
           onNewCategoryAdd={() => addCategoryHandler()}
         />
-        <TaskList taskList={project.time_lord_tasks} />
+        <TaskList projectID={projectID} />
       </ContentWrapper>
 
       <motion.div
