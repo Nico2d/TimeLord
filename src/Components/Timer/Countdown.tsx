@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { TimerModes } from "../../Types/TimerModes.type";
 import { getDualDigital } from "../../Utils/getDualDigital";
 import { RunningType } from "./RunningType";
+import { useDrawProgressCircle } from "./useDrawProgressCircle";
 
 type TimerProps = {
   countdown: number;
@@ -17,14 +18,11 @@ export const Countdown: React.FC<TimerProps> = ({
   getElapsedTime,
 }) => {
   const [time, setTime] = useState(countdown);
-  const RADIUS = 150;
-  const PERCENT = (time / countdown) * 100;
-  const radiusOffset = RADIUS + 10;
-  const circumference = RADIUS * 2 * Math.PI;
-  const offset = circumference - (PERCENT / 100) * circumference;
+  const [radius, radiusOffset, circumference, circumferenceOffset] =
+    useDrawProgressCircle((time / countdown) * 100);
 
-  const minutes = getDualDigital(Math.floor(time / 60));
-  const seconds = getDualDigital(time % 60);
+  let minutes = getDualDigital(Math.floor(time / 60));
+  let seconds = getDualDigital(time % 60);
 
   useEffect(() => {
     const CountdownTimeHandler = () => {
@@ -55,16 +53,18 @@ export const Countdown: React.FC<TimerProps> = ({
     getElapsedTime(countdown - time);
   }
 
+  console.log("Countdown render");
+
   return (
     <CountdownWrapper>
       <svg width={radiusOffset * 2} height={radiusOffset * 2}>
         <StyledCircle
           fill="transparent"
-          r={RADIUS}
+          r={radius}
           cx={radiusOffset}
           cy={radiusOffset}
           strokeDasharray={`${circumference} ${circumference}`}
-          strokeDashoffset={offset}
+          strokeDashoffset={circumferenceOffset}
         />
       </svg>
       <Display>

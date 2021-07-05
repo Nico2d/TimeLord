@@ -5,7 +5,6 @@ import {
   MdPlayCircleOutline,
 } from "react-icons/md";
 import styled from "styled-components";
-import { API_URL } from "../../constants";
 import { TaskType } from "../../Types/Task.type";
 import { useLocation } from "react-router-dom";
 import { getDualDigital } from "../../Utils/getDualDigital";
@@ -16,9 +15,14 @@ import { updateTask } from "../../API/updateTask";
 type TaskProps = {
   task: TaskType;
   totalTaskTime?: number;
+  handleComplete?: () => void;
 };
 
-export const Task: React.FC<TaskProps> = ({ task, totalTaskTime = 0 }) => {
+export const Task = ({
+  task,
+  totalTaskTime = 0,
+  handleComplete,
+}: TaskProps) => {
   const location = useLocation();
   const isTimerPage = location.pathname.split("/")[1] === "timer";
   const [countToSeconds] = useTime("");
@@ -27,19 +31,24 @@ export const Task: React.FC<TaskProps> = ({ task, totalTaskTime = 0 }) => {
   const { mutate } = useMutation(updateTask, {
     onSuccess: (data) => {
       console.log("Update task [Success]:", data);
+      queryClient.refetchQueries(["taskList"], { active: true });
     },
     onError: () => {
       alert("there was an error");
     },
     onSettled: () => {
-      queryClient.refetchQueries(["taskList"], { active: true });
+      const { id } = task;
+      console.log("task ID:", id);
+
+      // queryClient.invalidateQueries(["task", { id }]);
     },
   });
 
   const clickHandler = () => {
     const body = { id: task.id, isCompleted: !task.isCompleted };
-
     mutate(body);
+
+    if (handleComplete) handleComplete();
   };
 
   if (!isTimerPage) {
