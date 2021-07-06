@@ -7,9 +7,11 @@ export const LandingPage = () => {
     <>
       <Header>Witaj w TimeKeeper</Header>
 
-      <Header>Tutaj jest landing page</Header>
+      <Header>Tutaj jest landing page w budowie</Header>
 
-      <Link to="/dashboard">Przejdź do panelu</Link>
+      <StyledButton as={Link} to="/dashboard">
+        Przejdź do panelu
+      </StyledButton>
 
       <StyledDiv>
         <p>
