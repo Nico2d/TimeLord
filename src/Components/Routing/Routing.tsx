@@ -4,6 +4,7 @@ import { NoMatch } from "../../Pages/404";
 import { Dashboard } from "../../Pages/Dashboard";
 import { LandingPage } from "../../Pages/LandingPage";
 import { LoginPage } from "../../Pages/LoginPage";
+import { Register } from "../../Pages/Register";
 import { Timer } from "../../Pages/Timer";
 import { TimerWithoutAuth } from "../../Pages/TimerWithoutAuth";
 import ProtectedRoute, { ProtectedRouteProps } from "../Shared/ProtectedRoute";
@@ -34,9 +35,8 @@ export const Routing = () => {
       <Switch>
         <Route exact path="/" component={LandingPage} />
         <Route path="/login" component={LoginPage} />
-        <Route path="/register">Rejestracja</Route>
+        <Route path="/register" component={Register} />
 
-        {/* PROTECTED */}
         <ProtectedRoute
           {...defaultProtectedRouteProps}
           path="/dashboard"
@@ -70,24 +70,6 @@ export const Routing = () => {
           path="/timer/:taskId"
           component={Timer}
         />
-
-        {/* NOT PROTECTED */}
-        {/* <Route path="/dashboard/">
-          <Dashboard />
-        </Route> */}
-
-        {/* <Route path="/projects">
-          <Dashboard />
-        </Route> */}
-
-        {/* <Route path="/statistics">
-          <Dashboard />
-        </Route>
-        <Route path="/settings">
-          <Dashboard />
-        </Route> */}
-
-        {/* END NOT PROTECTED */}
 
         <Route path="/timer/">
           <TimerWithoutAuth />
