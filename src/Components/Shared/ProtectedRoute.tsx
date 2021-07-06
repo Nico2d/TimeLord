@@ -29,11 +29,11 @@ export default function ProtectedRoute({
     }
   }, [isAuthenticated, setRedirectPath, currentLocation]);
 
-  if (isAuthenticated && routeProps.path === currentLocation.pathname) {
-    console.log("im auth");
+  const isCurrentLocation = routeProps.path === currentLocation.pathname;
+
+  if (isAuthenticated) {
     return <Route {...routeProps} />;
   } else {
-    console.log("im not auth");
     return (
       <Redirect
         to={{ pathname: isAuthenticated ? redirectPath : authenticationPath }}

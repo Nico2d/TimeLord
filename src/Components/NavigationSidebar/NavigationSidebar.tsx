@@ -6,8 +6,6 @@ import { ProjectsList } from "../Projects/NavigationProjectsList";
 import { IoMdStats, IoMdSettings, IoIosPower } from "react-icons/io";
 import { RowItem } from "../Shared/RowItem";
 import { ProjectType } from "../../Types/Project.type";
-import { Route } from "react-router-dom";
-import { NoMatch } from "../../Pages/404";
 
 type SidebarProps = {
   user: UserType;
@@ -37,11 +35,13 @@ export const NavigationSidebar: React.FC<SidebarProps> = ({
           text="Statystyki"
           link="/statistics"
         ></RowItem>
+
         <RowItem
           icon={<IoMdSettings />}
           text="Ustawienia"
           link="/settings"
         ></RowItem>
+
         <RowItem icon={<IoIosPower />} text="Wyloguj" link="/"></RowItem>
       </NavWrapper>
     </Sidebar>

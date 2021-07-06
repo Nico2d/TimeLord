@@ -36,6 +36,7 @@ export const Routing = () => {
         <Route path="/login" component={LoginPage} />
         <Route path="/register">Rejestracja</Route>
 
+        {/* PROTECTED */}
         <ProtectedRoute
           {...defaultProtectedRouteProps}
           path="/dashboard"
@@ -44,6 +45,18 @@ export const Routing = () => {
         <ProtectedRoute
           {...defaultProtectedRouteProps}
           path="/projects"
+          component={Dashboard}
+        />
+
+        <ProtectedRoute
+          {...defaultProtectedRouteProps}
+          path="/projects/:slug"
+          component={Dashboard}
+        />
+
+        <ProtectedRoute
+          {...defaultProtectedRouteProps}
+          path="/statistics"
           component={Dashboard}
         />
         <ProtectedRoute
@@ -57,6 +70,24 @@ export const Routing = () => {
           path="/timer/:taskId"
           component={Timer}
         />
+
+        {/* NOT PROTECTED */}
+        {/* <Route path="/dashboard/">
+          <Dashboard />
+        </Route> */}
+
+        {/* <Route path="/projects">
+          <Dashboard />
+        </Route> */}
+
+        {/* <Route path="/statistics">
+          <Dashboard />
+        </Route>
+        <Route path="/settings">
+          <Dashboard />
+        </Route> */}
+
+        {/* END NOT PROTECTED */}
 
         <Route path="/timer/">
           <TimerWithoutAuth />
