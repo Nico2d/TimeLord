@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
 import { slugify } from "../../Utils/slugify";
 import { ProjectType } from "../../Types/Project.type";
 import { AddNewProjectForm } from "../Projects/AddNewProjectForm";
@@ -11,13 +11,17 @@ type MainProps = {
   addToList: (newProject: ProjectType) => void;
 };
 
-export const Main: React.FC<MainProps> = ({ projectsList, addToList }) => {
+export const Main = ({ projectsList, addToList }: MainProps) => {
+  let { path, url } = useRouteMatch();
+
+  console.log("path:", path);
+
   return (
     <Switch>
-      <Route path="/projects/add-new">
+      <Route path={`/projects/add-new`}>
         <AddNewProjectForm addToList={addToList} />
       </Route>
-      <Route path="/projects/manage">
+      <Route path={`/projects/manage`}>
         <ProjectManagementForm projectList={projectsList} />
       </Route>
       {projectsList.map((project) => (
@@ -25,8 +29,10 @@ export const Main: React.FC<MainProps> = ({ projectsList, addToList }) => {
           <Project projectID={String(project.id)} />
         </Route>
       ))}
-      <Route path="/settings">Tutaj są ustawienia</Route>
-      <Route path="/statistics">Tutaj są Statystyki</Route>
+
+      <Route path={`/statistics`}>Tutaj są Statystyki</Route>
+      <Route path={`/settings`}>Tutaj są ustawienia</Route>
+      <Route path={`/logout`}> Paapapapa</Route>
     </Switch>
   );
 };

@@ -26,10 +26,8 @@ export const Dashboard = () => {
 
   return (
     <Container>
-      <BrowserRouter>
-        <NavigationSidebar user={user} projectList={list} />
-        <Main projectsList={list} addToList={addToList} />
-      </BrowserRouter>
+      <NavigationSidebar user={user} projectList={list} />
+      <Main projectsList={list} addToList={addToList} />
     </Container>
   );
 };

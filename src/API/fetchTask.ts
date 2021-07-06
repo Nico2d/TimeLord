@@ -1,7 +1,7 @@
 import { API_URL } from "../constants";
 
 export const fetchTask = async ({ queryKey }: any) => {
-  const [_key, taskID] = queryKey;
+  const [, taskID] = queryKey;
   const response = await fetch(`${API_URL}/time-lord-tasks/${taskID}`);
 
   if (!response.ok) {

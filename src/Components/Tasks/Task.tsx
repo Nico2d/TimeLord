@@ -6,7 +6,7 @@ import {
 } from "react-icons/md";
 import styled from "styled-components";
 import { TaskType } from "../../Types/Task.type";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { getDualDigital } from "../../Utils/getDualDigital";
 import { useTime } from "../../Hooks/useTime";
 import { useMutation, useQueryClient } from "react-query";
@@ -69,9 +69,11 @@ export const Task = ({
         <TimeCounterWrapper>{`${minutes}:${seconds}`}</TimeCounterWrapper>
       ) : (
         <PlayWrapper>
-          <a href={`/timer/${task.id}`}>
+          {/* <a href={`/timer/${task.id}`}> */}
+          <Link to="/timer">
             <MdPlayCircleOutline />
-          </a>
+          </Link>
+          {/* </a> */}
         </PlayWrapper>
       )}
     </Container>

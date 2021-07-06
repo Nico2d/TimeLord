@@ -1,16 +1,8 @@
-import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  useLocation,
-} from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
-import { Dashboard } from "./Pages/Dashboard";
-import { LandingPage } from "./Pages/LandingPage";
-import { Timer } from "./Pages/Timer";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { Routing } from "./Components/Routing/Routing";
+import { SessionContextProvider } from "./Context/SessionContext";
 
 const GlobalStyle = createGlobalStyle`
     *{
@@ -57,51 +49,16 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Container>
-        <GlobalStyle />
-
-        <Router>
-          <Switch>
-            <Route exact path="/">
-              <LandingPage />
-            </Route>
-
-            <Route path="/dashboard">
-              <Dashboard />
-            </Route>
-            <Route path="/projects">
-              <Dashboard />
-            </Route>
-            <Route path="/settings">
-              <Dashboard />
-            </Route>
-
-            <Route path="/timer/:taskId">
-              <Timer />
-            </Route>
-
-            <Route path="*">
-              <NoMatch />
-            </Route>
-          </Switch>
-        </Router>
-      </Container>
+      <SessionContextProvider>
+        <Container>
+          <GlobalStyle />
+          <Routing />
+        </Container>
+      </SessionContextProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }
-
-const NoMatch = () => {
-  let location = useLocation();
-
-  return (
-    <div>
-      <h3>
-        No match for <code>{location.pathname}</code>
-      </h3>
-    </div>
-  );
-};
 
 export default App;
 
