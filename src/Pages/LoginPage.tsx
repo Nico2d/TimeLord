@@ -1,10 +1,9 @@
 import axios from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { StyledButton } from "../Components/Shared/StyledComponents/StyledButton";
 import { StyledInput } from "../Components/Shared/StyledComponents/StyledInput";
-import { useSessionContext } from "../Context/SessionContext";
 import { useSignInUser } from "../Hooks/useSignInUser.ts/useSignInUser";
 
 export type SignInProps = {
@@ -13,22 +12,11 @@ export type SignInProps = {
 };
 
 export const LoginPage = () => {
-  const [session, setSession] = useSessionContext();
-  const history = useHistory();
-  const [mutate] = useSignInUser();
-
-  const handleLogin = () => {
-    setSession({ ...session, isAuthenticated: true });
-    history.push(session.redirectPath);
-  };
-
   const { register, handleSubmit } = useForm<SignInProps>();
+  const [mutate] = useSignInUser();
 
   const onSubmit: SubmitHandler<SignInProps> = async (data) => {
     mutate.mutate(data);
-
-    console.log(mutate.isSuccess);
-    handleLogin();
   };
 
   return (
