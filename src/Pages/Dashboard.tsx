@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Main } from "../Components/Main/Main";
 import { NavigationSidebar } from "../Components/NavigationSidebar/NavigationSidebar";
-import { BrowserRouter } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { UserType } from "../Types/User.type";
 import { API_URL } from "../constants";

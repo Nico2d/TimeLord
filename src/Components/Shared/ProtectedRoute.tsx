@@ -29,7 +29,7 @@ export default function ProtectedRoute({
     }
   }, [isAuthenticated, setRedirectPath, currentLocation]);
 
-  const isCurrentLocation = routeProps.path === currentLocation.pathname;
+  // const isCurrentLocation = routeProps.path === currentLocation.pathname;
 
   if (isAuthenticated) {
     return <Route {...routeProps} />;

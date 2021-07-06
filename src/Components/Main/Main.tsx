@@ -1,5 +1,4 @@
-import React from "react";
-import { Route, Switch, useRouteMatch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { slugify } from "../../Utils/slugify";
 import { ProjectType } from "../../Types/Project.type";
 import { AddNewProjectForm } from "../Projects/AddNewProjectForm";
@@ -12,10 +11,6 @@ type MainProps = {
 };
 
 export const Main = ({ projectsList, addToList }: MainProps) => {
-  let { path, url } = useRouteMatch();
-
-  console.log("path:", path);
-
   return (
     <Switch>
       <Route path={`/projects/add-new`}>

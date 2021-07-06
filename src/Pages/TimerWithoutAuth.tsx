@@ -6,7 +6,7 @@ import { CountdownContainer } from "../Components/Timer/Countdown/CountdownConta
 import { TaskType } from "../Types/Task.type";
 
 export const TimerWithoutAuth = () => {
-  const [task, setTask] = useState<TaskType>({
+  const [task] = useState<TaskType>({
     name: "Twoje super zadanie",
   } as TaskType);
 

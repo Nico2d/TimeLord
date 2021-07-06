@@ -21,7 +21,7 @@ export const CountdownContainer = ({ task }: CountdownContainerProps) => {
   );
 
   //czy nie mógłbym po prostu zwracać z countdowna gotowego czasu??
-  const [countToSeconds, secondsToString] = useTime("");
+  const [, secondsToString] = useTime("");
 
   const queryClient = useQueryClient();
   const { mutate } = useMutation(updateTask, {
