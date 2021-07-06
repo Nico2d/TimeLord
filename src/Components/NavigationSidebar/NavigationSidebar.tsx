@@ -6,6 +6,7 @@ import { ProjectsList } from "../Projects/NavigationProjectsList";
 import { IoMdStats, IoMdSettings, IoIosPower } from "react-icons/io";
 import { RowItem } from "../Shared/RowItem";
 import { ProjectType } from "../../Types/Project.type";
+import { useSignOutUser } from "../../Hooks/useSignOutUser/useSignOutUser";
 
 type SidebarProps = {
   user: UserType;
@@ -16,6 +17,8 @@ export const NavigationSidebar: React.FC<SidebarProps> = ({
   user,
   projectList,
 }) => {
+  const [SignOutUser] = useSignOutUser();
+
   return (
     <Sidebar location="left" width="250px">
       <Avatar
@@ -42,7 +45,9 @@ export const NavigationSidebar: React.FC<SidebarProps> = ({
           link="/settings"
         ></RowItem>
 
-        <RowItem icon={<IoIosPower />} text="Wyloguj" link="/"></RowItem>
+        <div onClick={SignOutUser}>
+          <RowItem icon={<IoIosPower />} text="Wyloguj"></RowItem>
+        </div>
       </NavWrapper>
     </Sidebar>
   );

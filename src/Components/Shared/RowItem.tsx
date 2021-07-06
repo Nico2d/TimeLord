@@ -9,7 +9,7 @@ type RowItemProps = {
 
 export const RowItem: React.FC<RowItemProps> = ({ icon, text, link = "" }) => {
   return (
-    <Container as={NavLink} to={link}>
+    <Container as={NavLink} to={link} exact>
       {icon && <IconWrapper>{icon}</IconWrapper>}
 
       <RowItemText>{text}</RowItemText>
