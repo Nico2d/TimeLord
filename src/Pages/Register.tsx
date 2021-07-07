@@ -1,14 +1,13 @@
-import axios from "axios";
 import { useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useCreateUser } from "../API/Hooks/useCreateUser";
 import { ErrorMessage } from "../Components/Shared/ErrorMessage";
 import { StyledButton } from "../Components/Shared/StyledComponents/StyledButton";
 import { StyledInput } from "../Components/Shared/StyledComponents/StyledInput";
-import { API_URL } from "../constants";
 
-type RegisterType = {
+export type RegisterType = {
   username: string;
   email: string;
   password: string;
@@ -16,6 +15,7 @@ type RegisterType = {
 };
 
 export const Register = () => {
+  const [mutate] = useCreateUser();
   const {
     register,
     handleSubmit,
@@ -27,23 +27,10 @@ export const Register = () => {
   password.current = watch("password", "");
 
   const onSubmit: SubmitHandler<RegisterType> = async (submitData) => {
-    axios
-      .post(`${API_URL}/auth/local/register`, {
-        username: submitData.username,
-        email: submitData.email,
-        password: submitData.password,
-      })
-      .then((response) => {
-        console.log("Well done!");
-        console.log("User profile", response.data.user);
-        console.log("User token", response.data.jwt);
-      })
-      .catch((error) => {
-        console.log("An error occurred:", error.response);
-      });
+    mutate.mutate(submitData);
   };
 
-  const checkIsAllFieldsFilled = () => {
+  const isAllFieldsFilled = () => {
     let isAllFieldsFilled = true;
     const watchAllFields = Object.values(watch());
 
@@ -59,8 +46,6 @@ export const Register = () => {
 
     return isAllFieldsFilled;
   };
-
-  console.log(checkIsAllFieldsFilled());
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
@@ -104,12 +89,24 @@ export const Register = () => {
       />
       {errors.repeatPassword && <p>{errors.repeatPassword.message}</p>}
 
-      <StyledButton type="submit" isFocus={checkIsAllFieldsFilled()}>
+      <StyledButton type="submit" isFocus={isAllFieldsFilled()}>
         Załóż konto
       </StyledButton>
 
+      {mutate.isError && (
+        <p>
+          Niestety nie udało się utworzyć nowego konta. Spróbuj z innym e-mailem
+        </p>
+      )}
+      {mutate.isSuccess && (
+        <div>
+          Gratulacje udało Ci się założyć konto.
+          <Link to="/dashboard">Przejdź do serwisu</Link>
+        </div>
+      )}
+
       <p>
-        Masz już konto? <Link to="/dashboard">Zaloguj się</Link>
+        Masz już konto? <Link to="/login">Zaloguj się</Link>
       </p>
     </StyledForm>
   );
