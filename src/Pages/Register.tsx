@@ -94,14 +94,12 @@ export const Register = () => {
       </StyledButton>
 
       {mutate.isError && (
-        <p>
-          Niestety nie udało się utworzyć nowego konta. Spróbuj z innym e-mailem
-        </p>
+        <ErrorMessage message="Niestety nie udało się utworzyć nowego konta. Spróbuj z innym e-mailem" />
       )}
       {mutate.isSuccess && (
         <div>
           Gratulacje udało Ci się założyć konto.
-          <Link to="/dashboard">Przejdź do serwisu</Link>
+          {/* <Link to="/dashboard">Przejdź do serwisu</Link> */}
         </div>
       )}
 
