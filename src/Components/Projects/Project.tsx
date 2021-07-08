@@ -15,7 +15,6 @@ type ProjectProps = {
 };
 
 export const Project = ({ projectID }: ProjectProps) => {
-  console.log("Project ID:", projectID);
   const [isComplementaryActive, setIsComplementaryActive] = useState(true);
 
   const addCategoryHandler = () => {

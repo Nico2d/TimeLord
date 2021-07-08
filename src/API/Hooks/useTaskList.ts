@@ -3,7 +3,6 @@ import { TaskType } from "../../Types/Task.type";
 import { fetchTaskList } from "../fetchTaskList";
 
 export const useTaskList = (projectID: string): [string, TaskType[]] => {
-  console.log(projectID);
   const { status, data } = useQuery(["taskList", projectID], () =>
     fetchTaskList(projectID)
   );

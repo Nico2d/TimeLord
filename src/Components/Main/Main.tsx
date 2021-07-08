@@ -31,7 +31,6 @@ export const Main = ({ userID }: MainProps) => {
       </Route>
       {user.time_lord_projects.map((project) => (
         <Route key={project.id} path={`/projects/${slugify(project.name)}`}>
-          {console.log(project)}
           <Project projectID={String(project.id)} />
         </Route>
       ))}

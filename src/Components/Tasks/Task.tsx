@@ -1,4 +1,3 @@
-import React from "react";
 import {
   MdCheckBox,
   MdCheckBoxOutlineBlank,
@@ -36,12 +35,6 @@ export const Task = ({
     onError: () => {
       alert("there was an error");
     },
-    onSettled: () => {
-      const { id } = task;
-      console.log("task ID:", id);
-
-      // queryClient.invalidateQueries(["task", { id }]);
-    },
   });
 
   const clickHandler = () => {
@@ -69,11 +62,9 @@ export const Task = ({
         <TimeCounterWrapper>{`${minutes}:${seconds}`}</TimeCounterWrapper>
       ) : (
         <PlayWrapper>
-          {/* <a href={`/timer/${task.id}`}> */}
-          <Link to="/timer">
+          <Link to={`/timer/${task.id}`}>
             <MdPlayCircleOutline />
           </Link>
-          {/* </a> */}
         </PlayWrapper>
       )}
     </Container>
