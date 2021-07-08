@@ -1,8 +1,10 @@
 import axiosInstance from "../axiosConfig";
-import { TaskType } from "../Types/Task.type";
+import { ProjectType } from "../Types/Project.type";
 
 export const fetchTaskList = async (projectID: string) => {
-  const res = axiosInstance.get<TaskType[]>(`/time-lord-projects/${projectID}`);
+  const res = axiosInstance.get<ProjectType>(
+    `/time-lord-projects/${projectID}`
+  );
 
   return res;
 };

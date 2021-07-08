@@ -1,17 +1,25 @@
 import { Route, Switch } from "react-router-dom";
 import { slugify } from "../../Utils/slugify";
-import { ProjectType } from "../../Types/Project.type";
 import { AddNewProjectForm } from "../Projects/AddNewProjectForm";
 import { Project } from "../Projects/Project";
 import { ProjectManagementForm } from "../Projects/ProjectManagment/ProjectManagementForm";
+import { useProjectList } from "../../Hooks/useProjectList";
+import { useUser } from "../../API/Hooks/useUser";
+import { LoadingSpinner } from "../Shared/LoadingSpinner";
+import { FetchError } from "../Shared/FetchError";
 
 type MainProps = {
-  projectsList: Array<ProjectType>;
-  addToList: (newProject: ProjectType) => void;
+  userID: string;
 };
 
-export const Main = ({ projectsList, addToList }: MainProps) => {
-  console.log("projectsList", projectsList);
+export const Main = ({ userID }: MainProps) => {
+  const [status, user] = useUser(userID);
+
+  //To do wyjebania będzie
+  const [list, addToList] = useProjectList(user.id);
+
+  if (status === "loading") return <LoadingSpinner />;
+  if (status === "error") return <FetchError />;
 
   return (
     <Switch>
@@ -19,10 +27,11 @@ export const Main = ({ projectsList, addToList }: MainProps) => {
         <AddNewProjectForm addToList={addToList} />
       </Route>
       <Route path={`/projects/manage`}>
-        <ProjectManagementForm projectList={projectsList} />
+        <ProjectManagementForm projectList={user.time_lord_projects} />
       </Route>
-      {projectsList.map((project) => (
-        <Route key={project.id} path={`/projects/:${slugify(project.name)}`}>
+      {user.time_lord_projects.map((project) => (
+        <Route key={project.id} path={`/projects/${slugify(project.name)}`}>
+          {console.log(project)}
           <Project projectID={String(project.id)} />
         </Route>
       ))}

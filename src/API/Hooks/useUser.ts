@@ -1,18 +1,13 @@
 import { useQuery } from "react-query";
+import { ProjectType } from "../../Types/Project.type";
 import { UserType } from "../../Types/User.type";
-import { fetchMe } from "../Endpoints/fetchMe";
 import { fetchUser } from "../Endpoints/fetchUser";
 
-export const useUser = (id?: string): [string, UserType] => {
-  const { status, data } = useQuery(
-    "user",
-    id ? () => fetchUser(id) : fetchMe,
-    {
-      refetchOnWindowFocus: false,
-    }
-  );
+export const useUser = (id: string): [string, UserType, ProjectType[]] => {
+  const { status, data } = useQuery("user", () => fetchUser(id));
 
   const user = data?.data ?? ({} as UserType);
+  const projectList: ProjectType[] = data?.data.time_lord_projects ?? [];
 
-  return [status, user];
+  return [status, user, projectList];
 };

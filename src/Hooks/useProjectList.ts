@@ -1,8 +1,6 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import { fetchUser } from "../API/Endpoints/fetchUser";
-import { API_URL } from "../constants";
 import { ProjectType } from "../Types/Project.type";
 
 export const useProjectList = (

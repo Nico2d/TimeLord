@@ -15,7 +15,7 @@ type ProjectProps = {
 };
 
 export const Project = ({ projectID }: ProjectProps) => {
-  console.log("AKJGSHJHAGSJHA Welcome in project");
+  console.log("Project ID:", projectID);
   const [isComplementaryActive, setIsComplementaryActive] = useState(true);
 
   const addCategoryHandler = () => {
@@ -27,7 +27,9 @@ export const Project = ({ projectID }: ProjectProps) => {
     isLoading,
     error,
     data: project,
-  } = useQuery<ProjectType, Error>("project", () => fetchProject(projectID));
+  } = useQuery<ProjectType, Error>(["project", projectID], () =>
+    fetchProject(projectID)
+  );
 
   const variants = {
     hidden: { opacity: 1, x: 0, width: "auto" },

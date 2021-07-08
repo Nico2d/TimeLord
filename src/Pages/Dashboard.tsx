@@ -1,27 +1,22 @@
 import styled from "styled-components";
 import { Main } from "../Components/Main/Main";
 import { NavigationSidebar } from "../Components/NavigationSidebar/NavigationSidebar";
-import { useProjectList } from "../Hooks/useProjectList";
-import { useUser } from "../API/Hooks/useUser";
+import { FetchError } from "../Components/Shared/FetchError";
+import { LoadingSpinner } from "../Components/Shared/LoadingSpinner";
+import { useQuery } from "react-query";
+import { fetchMe } from "../API/Endpoints/fetchMe";
 
 export const Dashboard = () => {
-  const [status, user] = useUser();
+  const { status, data } = useQuery("me", fetchMe);
+  const user = data?.data;
 
-  const [list, addToList] = useProjectList(user.id);
-
-  if (status === "loading") return <Container>Loading...</Container>;
-  if (status === "error") return <Container>Error...</Container>;
-
-  console.log(user);
-
-  //REFACTOR HERE - wyjebać te projectsList i zmienić to na synchroniczne useQuery
-
-  console.log(list);
+  if (status === "loading" || !user) return <LoadingSpinner />;
+  if (status === "error") return <FetchError />;
 
   return (
     <Container>
       <NavigationSidebar userID={user.id} />
-      <Main projectsList={list} addToList={addToList} />
+      <Main userID={user.id} />
     </Container>
   );
 };

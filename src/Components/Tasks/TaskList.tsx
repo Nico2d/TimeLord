@@ -1,9 +1,6 @@
 import { useState } from "react";
-import { useQuery } from "react-query";
 import styled from "styled-components";
-import { fetchTaskList } from "../../API/fetchTaskList";
 import { useTaskList } from "../../API/Hooks/useTaskList";
-import { TaskType } from "../../Types/Task.type";
 import { FetchError } from "../Shared/FetchError";
 import { LoadingSpinner } from "../Shared/LoadingSpinner";
 import { Task } from "./Task";
@@ -14,20 +11,10 @@ type TaskListProps = {
 
 export const TaskList = ({ projectID }: TaskListProps) => {
   const [isHiddenCompletedTasks, setiIHiddenCompletedTasks] = useState(true);
-
-  // const { isLoading, data: taskList } = useQuery<TaskType[], Error>(
-  //   "taskList",
-  //   () => fetchTaskList(projectID)
-  // );
-
   const [status, taskList] = useTaskList(projectID);
 
   if (status === "loading") return <LoadingSpinner />;
   if (status === "error") return <FetchError />;
-
-  // if (isLoading || taskList === undefined) {
-  //   return <div>Loading...</div>;
-  // }
 
   return (
     <Container>

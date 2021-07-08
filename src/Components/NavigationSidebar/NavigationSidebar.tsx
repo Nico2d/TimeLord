@@ -1,11 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { UserType } from "../../Types/User.type";
 import { Sidebar } from "../Shared/StyledComponents/Sidebar";
 import { ProjectsList } from "../Projects/NavigationProjectsList";
 import { IoMdStats, IoMdSettings, IoIosPower } from "react-icons/io";
 import { RowItem } from "../Shared/RowItem";
-import { ProjectType } from "../../Types/Project.type";
 import { useSignOutUser } from "../../Hooks/useSignOutUser/useSignOutUser";
 import { useUser } from "../../API/Hooks/useUser";
 import { LoadingSpinner } from "../Shared/LoadingSpinner";
@@ -18,8 +16,6 @@ type SidebarProps = {
 export const NavigationSidebar: React.FC<SidebarProps> = ({ userID }) => {
   const [SignOutUser] = useSignOutUser();
   const [status, user] = useUser(userID);
-
-  console.log("Sidebar my project list :", user);
 
   if (status === "loading") return <LoadingSpinner />;
   else if (status === "error") return <FetchError />;
@@ -68,9 +64,9 @@ const Title = styled.p`
   text-align: center;
 `;
 
-const Avatar = styled.img`
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin: 1rem auto 0;
-`;
+// const Avatar = styled.img`
+//   width: 100px;
+//   height: 100px;
+//   border-radius: 50%;
+//   margin: 1rem auto 0;
+// `;
