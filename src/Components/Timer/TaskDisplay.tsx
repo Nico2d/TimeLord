@@ -39,6 +39,6 @@ const TaskWrapper = styled.div`
   width: 100%;
   max-width: 800px;
   padding: 1rem;
-  margin-top: 4rem;
+  margin-top: 2rem;
   margin-bottom: 2rem;
 `;

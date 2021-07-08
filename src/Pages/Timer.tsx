@@ -16,6 +16,8 @@ export const Timer = () => {
     fetchTask
   );
 
+  console.log(!params);
+
   const task: TaskType = data;
 
   if (error) {

@@ -1,35 +1,22 @@
 import styled from "styled-components";
 import { Main } from "../Components/Main/Main";
 import { NavigationSidebar } from "../Components/NavigationSidebar/NavigationSidebar";
-import { BrowserRouter } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { UserType } from "../Types/User.type";
-import { API_URL } from "../constants";
-import { useProjectList } from "../Hooks/useProjectList";
+import { FetchError } from "../Components/Shared/FetchError";
+import { LoadingSpinner } from "../Components/Shared/LoadingSpinner";
+import { useQuery } from "react-query";
+import { fetchMe } from "../API/Endpoints/fetchMe";
 
 export const Dashboard = () => {
-  const userID = 1;
-  const [user, setUser] = useState<UserType>({} as UserType);
-  const [list, addToList] = useProjectList(userID);
+  const { status, data } = useQuery("me", fetchMe);
+  const user = data?.data;
 
-  useEffect(() => {
-    fetch(`${API_URL}/time-lord-users/${userID}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setUser(data);
-      });
-  }, [userID]);
-
-  if (user.username === undefined) {
-    return <Container>Loading...</Container>;
-  }
+  if (status === "loading" || !user) return <LoadingSpinner />;
+  if (status === "error") return <FetchError />;
 
   return (
     <Container>
-      <BrowserRouter>
-        <NavigationSidebar user={user} projectList={list} />
-        <Main projectsList={list} addToList={addToList} />
-      </BrowserRouter>
+      <NavigationSidebar userID={user.id} />
+      <Main userID={user.id} />
     </Container>
   );
 };

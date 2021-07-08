@@ -1,8 +1,7 @@
-import axios from "axios";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import styled from "styled-components";
-import { API_URL } from "../../constants";
+import { useProjectList } from "../../API/Hooks/useProjectList";
 import { ProjectType } from "../../Types/Project.type";
 import { slugify } from "../../Utils/slugify";
 import { ErrorMessage } from "../Shared/ErrorMessage";
@@ -11,7 +10,7 @@ import { StyledInput } from "../Shared/StyledComponents/StyledInput";
 import { IconsArray } from "./ProjectIconsArray";
 
 type AddNewProjectFormProps = {
-  addToList: (newProject: ProjectType) => void;
+  userID: string;
 };
 
 type Input = {
@@ -22,11 +21,10 @@ type Input = {
   status: string;
 };
 
-export const AddNewProjectForm: React.FC<AddNewProjectFormProps> = ({
-  addToList,
-}) => {
+export const AddNewProjectForm = ({ userID }: AddNewProjectFormProps) => {
   const [selectedIcon, setSelectedIcon] = useState<string>("");
   const [redirectToNewProject, setRedirectToNewProject] = useState("");
+  const [mutate] = useProjectList();
 
   const {
     register,
@@ -40,19 +38,17 @@ export const AddNewProjectForm: React.FC<AddNewProjectFormProps> = ({
   };
 
   const onSubmit: SubmitHandler<ProjectType> = async (data) => {
-    data.time_lord_users = 1; //user_ID
+    data.users_permissions_users = userID;
+    data.slug = slugify(data.name);
 
-    axios
-      .post(`${API_URL}/time-lord-projects`, data)
-      .then((response) => {
-        console.log(response.data);
-
-        addToList(response.data);
-        setRedirectToNewProject(data.name);
-        reset();
-      })
-      .catch((error) => console.log(error));
+    mutate.mutate(data);
   };
+
+  if (mutate.isSuccess) {
+    reset();
+
+    setRedirectToNewProject(mutate.data?.data.name ?? "");
+  }
 
   return (
     <Container>

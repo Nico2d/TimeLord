@@ -1,4 +1,3 @@
-import React from "react";
 import {
   MdCheckBox,
   MdCheckBoxOutlineBlank,
@@ -6,7 +5,7 @@ import {
 } from "react-icons/md";
 import styled from "styled-components";
 import { TaskType } from "../../Types/Task.type";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { getDualDigital } from "../../Utils/getDualDigital";
 import { useTime } from "../../Hooks/useTime";
 import { useMutation, useQueryClient } from "react-query";
@@ -36,12 +35,6 @@ export const Task = ({
     onError: () => {
       alert("there was an error");
     },
-    onSettled: () => {
-      const { id } = task;
-      console.log("task ID:", id);
-
-      // queryClient.invalidateQueries(["task", { id }]);
-    },
   });
 
   const clickHandler = () => {
@@ -69,9 +62,9 @@ export const Task = ({
         <TimeCounterWrapper>{`${minutes}:${seconds}`}</TimeCounterWrapper>
       ) : (
         <PlayWrapper>
-          <a href={`/timer/${task.id}`}>
+          <Link to={`/timer/${task.id}`}>
             <MdPlayCircleOutline />
-          </a>
+          </Link>
         </PlayWrapper>
       )}
     </Container>
