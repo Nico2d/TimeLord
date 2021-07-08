@@ -6,7 +6,8 @@ export type ProjectType = {
   name: string;
   icon_name: string;
   time_lord_tasks: Array<TaskType>;
-  time_lord_users: number;
+  users_permissions_users: string;
   status: string;
   categories: CategoryType[];
+  slug: string;
 };
