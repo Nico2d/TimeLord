@@ -4,6 +4,7 @@ import { NoMatch } from "../../Pages/404";
 import { Dashboard } from "../../Pages/Dashboard";
 import { LandingPage } from "../../Pages/LandingPage";
 import { LoginPage } from "../../Pages/LoginPage";
+import { Logout } from "../../Pages/Logout";
 import { Register } from "../../Pages/Register";
 import { Timer } from "../../Pages/Timer";
 import { TimerWithoutAuth } from "../../Pages/TimerWithoutAuth";
@@ -36,6 +37,7 @@ export const Routing = () => {
         <Route exact path="/" component={LandingPage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/register" component={Register} />
+        <Route path="/logout" component={Logout} />
 
         <ProtectedRoute
           {...defaultProtectedRouteProps}

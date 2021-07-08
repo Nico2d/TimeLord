@@ -7,30 +7,35 @@ import { IoMdStats, IoMdSettings, IoIosPower } from "react-icons/io";
 import { RowItem } from "../Shared/RowItem";
 import { ProjectType } from "../../Types/Project.type";
 import { useSignOutUser } from "../../Hooks/useSignOutUser/useSignOutUser";
+import { useUser } from "../../API/Hooks/useUser";
+import { LoadingSpinner } from "../Shared/LoadingSpinner";
+import { FetchError } from "../Shared/FetchError";
 
 type SidebarProps = {
-  user: UserType;
-  projectList: ProjectType[];
+  userID: string;
 };
 
-export const NavigationSidebar: React.FC<SidebarProps> = ({
-  user,
-  projectList,
-}) => {
+export const NavigationSidebar: React.FC<SidebarProps> = ({ userID }) => {
   const [SignOutUser] = useSignOutUser();
+  const [status, user] = useUser(userID);
+
+  console.log("Sidebar my project list :", user);
+
+  if (status === "loading") return <LoadingSpinner />;
+  else if (status === "error") return <FetchError />;
 
   return (
     <Sidebar location="left" width="250px">
-      <Avatar
+      {/* <Avatar
         src={user.avatar.url}
         width="100px"
         height="100px"
         alt="User avatar"
-      />
+      /> */}
       <Title>Witaj {user.username}!</Title>
 
       <RowItem text="Projekty" link="/projects"></RowItem>
-      <ProjectsList projectsList={projectList} />
+      <ProjectsList projectsList={user.time_lord_projects} />
 
       <NavWrapper>
         <RowItem

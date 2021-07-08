@@ -11,6 +11,8 @@ type MainProps = {
 };
 
 export const Main = ({ projectsList, addToList }: MainProps) => {
+  console.log("projectsList", projectsList);
+
   return (
     <Switch>
       <Route path={`/projects/add-new`}>
@@ -20,14 +22,14 @@ export const Main = ({ projectsList, addToList }: MainProps) => {
         <ProjectManagementForm projectList={projectsList} />
       </Route>
       {projectsList.map((project) => (
-        <Route key={project.id} path={`/projects/${slugify(project.name)}`}>
+        <Route key={project.id} path={`/projects/:${slugify(project.name)}`}>
           <Project projectID={String(project.id)} />
         </Route>
       ))}
 
       <Route path={`/statistics`}>Tutaj są Statystyki</Route>
       <Route path={`/settings`}>Tutaj są ustawienia</Route>
-      <Route path={`/logout`}> Paapapapa</Route>
+      <Route path={`/logout`}> Pa pa pa...</Route>
     </Switch>
   );
 };

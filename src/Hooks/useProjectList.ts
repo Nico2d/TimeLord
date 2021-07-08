@@ -1,23 +1,22 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
+import { fetchUser } from "../API/Endpoints/fetchUser";
 import { API_URL } from "../constants";
 import { ProjectType } from "../Types/Project.type";
 
 export const useProjectList = (
-  userID: number
-): [Array<ProjectType>, (newProject: ProjectType) => void] => {
-  const [list, setList] = useState<ProjectType[]>([]);
+  userID: string
+): [Array<ProjectType>, (newProject: ProjectType) => void, string] => {
+  const { data, status } = useQuery("user", () => fetchUser(userID));
 
-  useEffect(() => {
-    axios.get(`${API_URL}/time-lord-users/${userID}`).then((res) => {
-      const projectList = res.data.time_lord_projects;
-      setList(projectList);
-    });
-  }, [userID]);
+  const [list, setList] = useState<ProjectType[]>(
+    data?.data.time_lord_projects ?? []
+  );
 
   const addToList = (newProject: ProjectType): void => {
     setList((prevProjectList) => [...prevProjectList, newProject]);
   };
 
-  return [list, addToList];
+  return [list, addToList, status];
 };

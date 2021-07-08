@@ -1,31 +1,26 @@
 import styled from "styled-components";
 import { Main } from "../Components/Main/Main";
 import { NavigationSidebar } from "../Components/NavigationSidebar/NavigationSidebar";
-import { useEffect, useState } from "react";
-import { UserType } from "../Types/User.type";
-import { API_URL } from "../constants";
 import { useProjectList } from "../Hooks/useProjectList";
+import { useUser } from "../API/Hooks/useUser";
 
 export const Dashboard = () => {
-  const userID = 1;
-  const [user, setUser] = useState<UserType>({} as UserType);
-  const [list, addToList] = useProjectList(userID);
+  const [status, user] = useUser();
 
-  useEffect(() => {
-    fetch(`${API_URL}/time-lord-users/${userID}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setUser(data);
-      });
-  }, [userID]);
+  const [list, addToList] = useProjectList(user.id);
 
-  if (user.username === undefined) {
-    return <Container>Loading...</Container>;
-  }
+  if (status === "loading") return <Container>Loading...</Container>;
+  if (status === "error") return <Container>Error...</Container>;
+
+  console.log(user);
+
+  //REFACTOR HERE - wyjebać te projectsList i zmienić to na synchroniczne useQuery
+
+  console.log(list);
 
   return (
     <Container>
-      <NavigationSidebar user={user} projectList={list} />
+      <NavigationSidebar userID={user.id} />
       <Main projectsList={list} addToList={addToList} />
     </Container>
   );

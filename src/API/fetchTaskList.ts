@@ -1,8 +1,8 @@
-import { API_URL } from "../constants";
+import axiosInstance from "../axiosConfig";
+import { TaskType } from "../Types/Task.type";
 
 export const fetchTaskList = async (projectID: string) => {
-  const res = await fetch(`${API_URL}/time-lord-projects/${projectID}`);
-  const data = await res.json();
+  const res = axiosInstance.get<TaskType[]>(`/time-lord-projects/${projectID}`);
 
-  return data.time_lord_tasks;
+  return res;
 };
