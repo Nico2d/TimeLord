@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useTime } from "../../Hooks/useTime";
 import { TimerModes } from "../../Types/TimerModes.type";
-import { getDualDigital } from "../../Utils/getDualDigital";
 import { RunningType } from "./RunningType";
 import { useDrawProgressCircle } from "./useDrawProgressCircle";
 
@@ -18,11 +18,9 @@ export const Countdown: React.FC<TimerProps> = ({
   getElapsedTime,
 }) => {
   const [time, setTime] = useState(countdown);
+  const [, secondsToString] = useTime("");
   const [radius, radiusOffset, circumference, circumferenceOffset] =
     useDrawProgressCircle((time / countdown) * 100);
-
-  let minutes = getDualDigital(Math.floor(time / 60));
-  let seconds = getDualDigital(time % 60);
 
   useEffect(() => {
     const CountdownTimeHandler = () => {
@@ -53,8 +51,6 @@ export const Countdown: React.FC<TimerProps> = ({
     getElapsedTime(countdown - time);
   }
 
-  console.log("Countdown render");
-
   return (
     <CountdownWrapper>
       <svg width={radiusOffset * 2} height={radiusOffset * 2}>
@@ -68,7 +64,7 @@ export const Countdown: React.FC<TimerProps> = ({
         />
       </svg>
       <Display>
-        {`${minutes} : ${seconds}`}
+        {secondsToString(time)}
         <p> Time to {RunningType[countdown]} </p>
       </Display>
     </CountdownWrapper>

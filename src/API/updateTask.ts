@@ -1,4 +1,4 @@
-import { API_URL } from "../constants";
+import axiosInst from "../axiosConfig";
 
 type updateTaskProps = {
   id: string | number;
@@ -6,18 +6,7 @@ type updateTaskProps = {
 };
 
 export const updateTask = async (task: updateTaskProps) => {
-  const res = await fetch(`${API_URL}/time-lord-tasks/${task.id}`, {
-    method: "PUT",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
-    body: JSON.stringify(task),
-  });
+  const res = await axiosInst.put(`/time-lord-tasks/${task.id}`, task);
 
-  return res.json();
+  return res;
 };

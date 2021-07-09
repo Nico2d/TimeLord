@@ -1,8 +1,11 @@
-import { getDualDigital } from "../Utils/getDualDigital";
-
 export const useTime = (
   time: string
 ): [(time: string) => number, (totalSeconds: number) => string] => {
+  const getDualDigital = (number: number) => {
+    if (number < 10) return `0${number}`;
+    else return number;
+  };
+
   const countToSeconds = (time: string) => {
     if (time == null) {
       return 0;

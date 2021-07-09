@@ -1,5 +1,5 @@
 export enum RunningType {
-  working = 1500,
+  working = 3, //1500, - 25min
   break = 5,
   longBreak = 15,
 }

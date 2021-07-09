@@ -56,7 +56,11 @@ const HiddenLabel = styled.p`
 `;
 
 const CompletedTasks = styled.div<{ isHidden: boolean }>`
-  max-height: ${({ isHidden }) => (isHidden ? "0px" : "500px")};
+  max-height: ${({ isHidden }) => (isHidden ? "0px" : "99999px")};
   overflow: hidden;
   transition: max-height 0.3s ease-out;
+
+  :last-child {
+    margin-bottom: 1rem;
+  }
 `;

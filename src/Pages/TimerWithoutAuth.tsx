@@ -3,21 +3,32 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Task } from "../Components/Tasks/Task";
 import { CountdownContainer } from "../Components/Timer/Countdown/CountdownContainer";
+import { useTime } from "../Hooks/useTime";
 import { TaskType } from "../Types/Task.type";
 
 export const TimerWithoutAuth = () => {
-  const [task] = useState<TaskType>({
+  const [stringToSeconds, secondsToString] = useTime("");
+  const [task, setTask] = useState<TaskType>({
     name: "Twoje super zadanie",
   } as TaskType);
+
+  const onFinishHandleUpdateTime = (addedTime: number) => {
+    setTask({
+      name: "Twoje super zadanie",
+      time: secondsToString(addedTime),
+    } as TaskType);
+  };
 
   return (
     <Container>
       <StyledWrapper>
-        <Task task={task} />
+        <Task task={task} totalTaskTime={stringToSeconds(task.time)} />
       </StyledWrapper>
 
       <CountdownContainerWrapper>
-        <CountdownContainer task={task} />
+        <CountdownContainer
+          onFinishHandleUpdateTime={onFinishHandleUpdateTime}
+        />
       </CountdownContainerWrapper>
 
       <RegisterContainer>

@@ -6,7 +6,6 @@ import {
 import styled from "styled-components";
 import { TaskType } from "../../Types/Task.type";
 import { Link, useLocation } from "react-router-dom";
-import { getDualDigital } from "../../Utils/getDualDigital";
 import { useTime } from "../../Hooks/useTime";
 import { useMutation, useQueryClient } from "react-query";
 import { updateTask } from "../../API/updateTask";
@@ -24,7 +23,7 @@ export const Task = ({
 }: TaskProps) => {
   const location = useLocation();
   const isTimerPage = location.pathname.split("/")[1] === "timer";
-  const [countToSeconds] = useTime("");
+  const [countToSeconds, secondsToString] = useTime("");
 
   const queryClient = useQueryClient();
   const { mutate } = useMutation(updateTask, {
@@ -48,9 +47,6 @@ export const Task = ({
     totalTaskTime = countToSeconds(task.time);
   }
 
-  let minutes = getDualDigital(Math.floor(totalTaskTime / 60));
-  let seconds = getDualDigital(totalTaskTime % 60);
-
   return (
     <Container progressBar={totalTaskTime}>
       <CheckboxWrapper onClick={clickHandler}>
@@ -59,7 +55,9 @@ export const Task = ({
       <TextWrapper isCompleted={task.isCompleted}>{task.name}</TextWrapper>
 
       {task.isCompleted || isTimerPage ? (
-        <TimeCounterWrapper>{`${minutes}:${seconds}`}</TimeCounterWrapper>
+        <TimeCounterWrapper>
+          {secondsToString(totalTaskTime)}
+        </TimeCounterWrapper>
       ) : (
         <PlayWrapper>
           <Link to={`/timer/${task.id}`}>

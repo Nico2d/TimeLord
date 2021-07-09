@@ -1,44 +1,26 @@
 import { useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
-import { updateTask } from "../../../API/updateTask";
-import { useTime } from "../../../Hooks/useTime";
-import { TaskType } from "../../../Types/Task.type";
 import { TimerModes } from "../../../Types/TimerModes.type";
 import { StyledButton } from "../../Shared/StyledComponents/StyledButton";
 import { Countdown } from "../Countdown";
 import { RunningType } from "../RunningType";
 
 type CountdownContainerProps = {
-  task: TaskType;
+  onFinishHandleUpdateTime: (time: number) => void;
+  startTime?: number;
 };
 
-export const CountdownContainer = ({ task }: CountdownContainerProps) => {
+export const CountdownContainer = ({
+  onFinishHandleUpdateTime,
+  startTime = 0,
+}: CountdownContainerProps) => {
   const [runningMode, setRunningMode] = useState<TimerModes>(TimerModes.stop);
-  const [totalTaskTime, setTotalTaskTime] = useState<number>(0);
+  const [totalTaskTime, setTotalTaskTime] = useState<number>(startTime);
   const [runningType, setRunningType] = useState<RunningType>(
     RunningType.working
   );
 
-  //czy nie mógłbym po prostu zwracać z countdowna gotowego czasu??
-  const [, secondsToString] = useTime("");
-
-  const queryClient = useQueryClient();
-  const { mutate } = useMutation(updateTask, {
-    onSuccess: (data) => {
-      console.log("Update task [Success]:", data);
-    },
-    onError: () => {
-      alert("there was an error");
-    },
-    onSettled: () => {
-      const taskID = task.id;
-      queryClient.invalidateQueries(["task", taskID]);
-      queryClient.refetchQueries(["task", taskID]);
-    },
-  });
-
-  const playButton = () => {
+  const playButtonHandler = () => {
     setRunningMode((runningMode) =>
       runningMode === TimerModes.running ? TimerModes.stop : TimerModes.running
     );
@@ -48,16 +30,12 @@ export const CountdownContainer = ({ task }: CountdownContainerProps) => {
     setRunningMode(TimerModes.finished);
   };
 
-  const onFinishHandleUpdateTime = (elapsedTime: number) => {
+  const finishButtonHandleUpdateTime = (elapsedTime: number) => {
     console.log("finished handler");
     if (runningType === RunningType.working) {
       let addedTime = totalTaskTime + elapsedTime;
 
-      let body = task;
-      body.time = secondsToString(addedTime);
-
-      mutate(body);
-
+      onFinishHandleUpdateTime(addedTime);
       setTotalTaskTime(addedTime);
     }
 
@@ -74,11 +52,11 @@ export const CountdownContainer = ({ task }: CountdownContainerProps) => {
       <Countdown
         countdown={runningType}
         isRunning={runningMode}
-        getElapsedTime={onFinishHandleUpdateTime}
+        getElapsedTime={finishButtonHandleUpdateTime}
       />
 
       <ButtonWrapper
-        onClick={playButton}
+        onClick={playButtonHandler}
         isFocus={runningMode !== TimerModes.running}
       >
         {runningMode === TimerModes.running ? "Pause" : "Start"}
