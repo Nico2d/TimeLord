@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useProjectList } from "../../API/Hooks/useProjectList";
@@ -44,11 +44,10 @@ export const AddNewProjectForm = ({ userID }: AddNewProjectFormProps) => {
     mutate.mutate(data);
   };
 
-  if (mutate.isSuccess) {
+  useEffect(() => {
     reset();
-
     setRedirectToNewProject(mutate.data?.data.name ?? "");
-  }
+  }, [mutate.data?.data.name, mutate.isSuccess, reset]);
 
   return (
     <Container>
