@@ -11,17 +11,31 @@ type TaskListProps = {
 
 export const TaskList = ({ projectID }: TaskListProps) => {
   const [isHiddenCompletedTasks, setiIHiddenCompletedTasks] = useState(true);
-  const [status, taskList] = useTaskList(projectID);
+  const [status, taskList, categoriesList] = useTaskList(projectID);
 
   if (status === "loading") return <LoadingSpinner />;
   if (status === "error") return <FetchError />;
+
+  const getCategoryColor = (category: string | null) => {
+    const categoryTask = categoriesList.find((categoryItem) => {
+      return categoryItem.name === category;
+    });
+
+    return categoryTask?.color;
+  };
 
   return (
     <Container>
       {taskList
         .filter((task) => !task.isCompleted)
         .map((task, idx) => {
-          return <Task key={idx} task={task} />;
+          return (
+            <Task
+              key={idx}
+              task={task}
+              categoryColor={getCategoryColor(task.category)}
+            />
+          );
         })}
 
       <HiddenLabel
@@ -39,7 +53,13 @@ export const TaskList = ({ projectID }: TaskListProps) => {
         {taskList
           .filter((task) => task.isCompleted)
           .map((task, idx) => {
-            return <Task key={idx} task={task} />;
+            return (
+              <Task
+                key={idx}
+                task={task}
+                categoryColor={getCategoryColor(task.category)}
+              />
+            );
           })}
       </CompletedTasks>
     </Container>

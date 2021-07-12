@@ -14,12 +14,14 @@ type TaskProps = {
   task: TaskType;
   totalTaskTime?: number;
   handleComplete?: () => void;
+  categoryColor?: string | undefined;
 };
 
 export const Task = ({
   task,
   totalTaskTime = 0,
   handleComplete,
+  categoryColor,
 }: TaskProps) => {
   const location = useLocation();
   const isTimerPage = location.pathname.split("/")[1] === "timer";
@@ -48,7 +50,7 @@ export const Task = ({
   }
 
   return (
-    <Container progressBar={totalTaskTime}>
+    <Container progressBar={totalTaskTime} categoryColor={categoryColor}>
       <CheckboxWrapper onClick={clickHandler}>
         {task.isCompleted ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
       </CheckboxWrapper>
@@ -70,11 +72,11 @@ export const Task = ({
 };
 
 const TimeCounterWrapper = styled.div`
-  color: #202020;
+  color: white;
   margin-left: auto;
   z-index: 1;
   padding-right: 10px;
-  font-weight: bold;
+  font-size: 14px;
   text-decoration: none !important;
 `;
 
@@ -104,7 +106,7 @@ const PlayWrapper = styled(CheckboxWrapper)`
   cursor: pointer;
 `;
 
-const Container = styled.div<{ progressBar?: number }>`
+const Container = styled.div<{ progressBar?: number; categoryColor?: string }>`
   position: relative;
   display: inline-flex;
   height: 50px;
@@ -121,7 +123,7 @@ const Container = styled.div<{ progressBar?: number }>`
     content: "";
     position: absolute;
     right: -7px;
-    background: #df6d6d;
+    background: ${({ categoryColor }) => categoryColor ?? "#424242"}; //#df6d6d;
     width: calc(
       80px +
         ${({ progressBar }) => (progressBar === undefined ? 0 : progressBar)}px
