@@ -1,6 +1,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
+import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
 import { postTask } from "../../API/postTask";
 import { TaskType } from "../../Types/Task.type";
 import { ErrorMessage } from "../Shared/ErrorMessage";
@@ -33,7 +34,21 @@ export const AddNewTaskForm: React.FC<AddNewTaskFormProps> = ({
     },
   });
 
+  const separateCategory = (taskNameInput: string): [string | null, string] => {
+    const [category, ...rest] = taskNameInput.split(": ");
+
+    if (rest.length >= 1) {
+      return [category, rest.join(" ")];
+    } else {
+      return [null, taskNameInput];
+    }
+  };
+
   const onSubmit: SubmitHandler<TaskType> = async (task) => {
+    const [category, taskContent] = separateCategory(task.name);
+
+    task.category = category;
+    task.name = taskContent;
     task.time_lord_project = projectID;
     task.isCompleted = false;
 
