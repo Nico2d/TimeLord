@@ -44,6 +44,7 @@ export const AddNewCategoryForm = ({
 
   const onSubmit: SubmitHandler<CategoryType> = async (submitData) => {
     submitData.id = uuidv4();
+    submitData.name = submitData.name.toUpperCase();
 
     console.log(submitData);
 

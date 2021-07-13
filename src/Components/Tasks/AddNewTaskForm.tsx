@@ -44,7 +44,7 @@ export const AddNewTaskForm = ({ projectID }: AddNewTaskFormProps) => {
   const onSubmit: SubmitHandler<TaskType> = async (task) => {
     const [category, taskContent] = separateCategory(task.name);
 
-    task.category = category;
+    task.category = category?.toUpperCase() ?? null;
     task.name = taskContent;
     task.time_lord_project = projectID;
     task.isCompleted = false;
