@@ -27,7 +27,7 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
 };
 
 const Category = styled.div<{ color?: string; isActive: boolean }>`
-  background: ${(props) => (props.isActive ? props.color : "#424242")};
+  background: ${(props) => (props.isActive ? props.color : "#202020")};
   margin-right: 5px;
   vertical-align: middle;
   line-height: 50px;

@@ -22,7 +22,7 @@ export const TaskList = ({ projectID, flirtedCategoryList }: TaskListProps) => {
 
   const getCategoryColor = (category: string | null) => {
     const categoryTask = categoriesList.find((categoryItem) => {
-      return categoryItem.name === category;
+      return categoryItem.name.toUpperCase() === category?.toUpperCase();
     });
 
     return categoryTask?.color;
