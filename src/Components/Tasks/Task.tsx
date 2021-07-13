@@ -123,7 +123,7 @@ const Container = styled.div<{ progressBar?: number; categoryColor?: string }>`
     content: "";
     position: absolute;
     right: -7px;
-    background: ${({ categoryColor }) => categoryColor ?? "#424242"}; //#df6d6d;
+    background: ${({ categoryColor }) => categoryColor ?? "#424242"};
     width: calc(
       80px +
         ${({ progressBar }) => (progressBar === undefined ? 0 : progressBar)}px

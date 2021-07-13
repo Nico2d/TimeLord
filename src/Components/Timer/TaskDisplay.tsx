@@ -24,9 +24,8 @@ export const TaskDisplay = ({ task }: TaskDisplayProps) => {
           <Task
             task={task}
             handleComplete={onCompleteHandle}
-            totalTaskTime={countToSeconds(task.time)} //{totalTaskTime}
+            totalTaskTime={countToSeconds(task.time)}
           />
-          {/* <TaskContainer taskID={taskId} /> */}
         </TaskWrapper>
       ) : (
         <p>Wróć do projektu aby wybrać nowe zadanie</p>

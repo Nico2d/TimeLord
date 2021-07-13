@@ -5,10 +5,10 @@ import styled from "styled-components";
 import { fetchProject } from "../../API/fetchProject";
 import { ProjectType } from "../../Types/Project.type";
 import { AddNewCategoryForm } from "../Categories/AddNewCategoryForm";
-import { Categories } from "../Categories/Categories";
+import { FetchError } from "../Shared/FetchError";
+import { LoadingSpinner } from "../Shared/LoadingSpinner";
 import { Sidebar } from "../Shared/StyledComponents/Sidebar";
-import { AddNewTaskForm } from "../Tasks/AddNewTaskForm";
-import { TaskList } from "../Tasks/TaskList";
+import { ProjectMain } from "./ProjectMain/ProjectMain";
 
 type ProjectProps = {
   projectID: string;
@@ -18,7 +18,6 @@ export const Project = ({ projectID }: ProjectProps) => {
   const [isComplementaryActive, setIsComplementaryActive] = useState(true);
 
   const addCategoryHandler = () => {
-    console.log("Adding category...");
     setIsComplementaryActive((value) => !value);
   };
 
@@ -36,27 +35,19 @@ export const Project = ({ projectID }: ProjectProps) => {
   };
 
   if (isLoading || project === undefined) {
-    return <ContentWrapper>Loading...</ContentWrapper>;
+    return <LoadingSpinner />;
   }
 
   if (error) {
-    return (
-      <ContentWrapper>
-        {`An error has occurred: ${error.message}`}
-      </ContentWrapper>
-    );
+    return <FetchError />;
   }
 
   return (
     <Container>
-      <ContentWrapper>
-        <AddNewTaskForm projectID={projectID} />
-        <Categories
-          categories={project.categories}
-          onNewCategoryAdd={() => addCategoryHandler()}
-        />
-        <TaskList projectID={projectID} />
-      </ContentWrapper>
+      <ProjectMain
+        project={project}
+        onNewCategoryAdd={() => addCategoryHandler()}
+      />
 
       <motion.div
         animate={isComplementaryActive ? "open" : "closed"}
@@ -88,10 +79,4 @@ const Container = styled.div`
   display: flex;
   width: 100%;
   overflow-x: hidden;
-`;
-
-const ContentWrapper = styled.div`
-  width: 100%;
-  margin-bottom: auto;
-  padding: 0 20px;
 `;

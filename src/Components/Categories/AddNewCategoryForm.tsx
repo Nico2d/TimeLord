@@ -7,6 +7,7 @@ import { CategoryType } from "../../Types/Category.type";
 import { ErrorMessage } from "../Shared/ErrorMessage";
 import { StyledButton } from "../Shared/StyledComponents/StyledButton";
 import { StyledInput } from "../Shared/StyledComponents/StyledInput";
+import { v4 as uuidv4 } from "uuid";
 
 type AddNewCategoryFormProps = {
   categories: CategoryType[];
@@ -49,6 +50,10 @@ export const AddNewCategoryForm = ({
   });
 
   const onSubmit: SubmitHandler<CategoryType> = async (submitData) => {
+    submitData.id = uuidv4();
+
+    console.log(submitData);
+
     const Project = {
       id: projectID,
       categories: [...(categories ?? []), submitData],

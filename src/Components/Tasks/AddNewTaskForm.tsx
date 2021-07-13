@@ -1,7 +1,6 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
-import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
 import { postTask } from "../../API/postTask";
 import { TaskType } from "../../Types/Task.type";
 import { ErrorMessage } from "../Shared/ErrorMessage";
@@ -11,9 +10,7 @@ type AddNewTaskFormProps = {
   projectID: string | number;
 };
 
-export const AddNewTaskForm: React.FC<AddNewTaskFormProps> = ({
-  projectID,
-}) => {
+export const AddNewTaskForm = ({ projectID }: AddNewTaskFormProps) => {
   const {
     register,
     handleSubmit,
@@ -65,6 +62,7 @@ export const AddNewTaskForm: React.FC<AddNewTaskFormProps> = ({
       />
       <StyledSubmit type="submit" value="Dodaj" />
       {errors.name && <ErrorMessage message="This field is required" />}
+      <p>{`ProTip: możesz zapisać dodać nazwę kategorii przed zadaniem np. {kategoria}: moja nazwa zadania`}</p>
     </StyledForm>
   );
 };

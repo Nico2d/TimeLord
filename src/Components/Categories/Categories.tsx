@@ -6,21 +6,48 @@ import { CategoryType } from "../../Types/Category.type";
 type CategoriesProps = {
   categories: CategoryType[];
   onNewCategoryAdd?: () => void;
+  filterList: CategoryType[];
+  setFilterList: React.Dispatch<React.SetStateAction<CategoryType[]>>;
 };
 
 export const Categories = ({
   categories,
   onNewCategoryAdd,
+  filterList,
+  setFilterList,
 }: CategoriesProps) => {
   const isEmpty = categories == null || categories.length === 0;
+
+  const categoryFiltersHandler = (clickedCategory: CategoryType) => {
+    const isOnFilterList = filterList.some(
+      (filterItem) => filterItem.id === clickedCategory.id
+    );
+
+    if (isOnFilterList) {
+      setFilterList((prev) =>
+        prev.filter((item) => item.id !== clickedCategory.id)
+      );
+    } else {
+      setFilterList((prev) => [...prev, clickedCategory]);
+    }
+  };
 
   return (
     <Container>
       {!isEmpty && (
         <Scroll>
-          {categories.map((category, idx) => (
-            <CategoryItem key={idx} category={category} />
-          ))}
+          {categories.map((category, idx) => {
+            return (
+              <CategoryItem
+                key={idx}
+                category={category}
+                onClickHandler={() => categoryFiltersHandler(category)}
+                isActive={filterList.some(
+                  (filterItem) => filterItem.id === category.id
+                )}
+              />
+            );
+          })}
         </Scroll>
       )}
 

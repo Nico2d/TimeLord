@@ -1,19 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { CategoryType } from "../../Types/Category.type";
 
 type CategoryItemProps = {
   category: CategoryType;
+  onClickHandler: () => void;
+  isActive?: boolean;
 };
 
-export const CategoryItem: React.FC<CategoryItemProps> = ({ category }) => {
-  const [isActive, setIsActive] = useState(true);
-
+export const CategoryItem: React.FC<CategoryItemProps> = ({
+  category,
+  onClickHandler,
+  isActive = true,
+}) => {
   return (
     <Category
       key={category.id}
       color={category.color}
-      onClick={() => setIsActive((isActive) => !isActive)}
+      onClick={onClickHandler}
       role="button"
       isActive={isActive}
     >
@@ -31,8 +35,10 @@ const Category = styled.div<{ color?: string; isActive: boolean }>`
   transform: skew(-15deg);
   flex: 1;
   cursor: pointer;
-  font-weight: 500;
   pointer-events: stroke;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 16px;
 
   :first-child {
     margin-left: -6px;
