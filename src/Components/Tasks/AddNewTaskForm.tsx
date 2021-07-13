@@ -10,9 +10,7 @@ type AddNewTaskFormProps = {
   projectID: string | number;
 };
 
-export const AddNewTaskForm: React.FC<AddNewTaskFormProps> = ({
-  projectID,
-}) => {
+export const AddNewTaskForm = ({ projectID }: AddNewTaskFormProps) => {
   const {
     register,
     handleSubmit,
@@ -33,7 +31,21 @@ export const AddNewTaskForm: React.FC<AddNewTaskFormProps> = ({
     },
   });
 
+  const separateCategory = (taskNameInput: string): [string | null, string] => {
+    const [category, ...rest] = taskNameInput.split(": ");
+
+    if (rest.length >= 1) {
+      return [category, rest.join(" ")];
+    } else {
+      return [null, taskNameInput];
+    }
+  };
+
   const onSubmit: SubmitHandler<TaskType> = async (task) => {
+    const [category, taskContent] = separateCategory(task.name);
+
+    task.category = category?.toUpperCase() ?? null;
+    task.name = taskContent;
     task.time_lord_project = projectID;
     task.isCompleted = false;
 
@@ -50,6 +62,7 @@ export const AddNewTaskForm: React.FC<AddNewTaskFormProps> = ({
       />
       <StyledSubmit type="submit" value="Dodaj" />
       {errors.name && <ErrorMessage message="This field is required" />}
+      <p>{`ProTip: możesz w szybki sposób dodać kategorię do zadania np. {kategoria}: moja nazwa zadania`}</p>
     </StyledForm>
   );
 };
