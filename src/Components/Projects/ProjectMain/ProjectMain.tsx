@@ -35,6 +35,8 @@ export const ProjectMain = ({
 
 const ContentWrapper = styled.div`
   width: 100%;
-  margin-bottom: auto;
   padding: 0 20px;
+  max-width: 1000px;
+  margin: auto;
+  margin-top: 0;
 `;
