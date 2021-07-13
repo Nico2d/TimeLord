@@ -62,7 +62,7 @@ export const AddNewTaskForm = ({ projectID }: AddNewTaskFormProps) => {
       />
       <StyledSubmit type="submit" value="Dodaj" />
       {errors.name && <ErrorMessage message="This field is required" />}
-      <p>{`ProTip: możesz zapisać dodać nazwę kategorii przed zadaniem np. {kategoria}: moja nazwa zadania`}</p>
+      <p>{`ProTip: możesz w szybki sposób dodać kategorię do zadania np. {kategoria}: moja nazwa zadania`}</p>
     </StyledForm>
   );
 };

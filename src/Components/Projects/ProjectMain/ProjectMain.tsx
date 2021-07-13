@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { CategoryType } from "../../../Types/Category.type";
 import { ProjectType } from "../../../Types/Project.type";
 import { Categories } from "../../Categories/Categories";
+import { EmptyCategory } from "../../Categories/EmptyCategory";
 import { AddNewTaskForm } from "../../Tasks/AddNewTaskForm";
 import { TaskList } from "../../Tasks/TaskList";
 
@@ -15,11 +16,6 @@ export const ProjectMain = ({
   project,
   onNewCategoryAdd,
 }: ProjectMainProps) => {
-  const EmptyCategory: CategoryType = {
-    id: "empty",
-    name: "puste",
-    color: "#d2d2d2",
-  };
   const categoryList = [EmptyCategory, ...(project.categories ?? [])];
   const [filterList, setFilterList] = useState<CategoryType[]>(categoryList);
 
@@ -32,7 +28,7 @@ export const ProjectMain = ({
         filterList={filterList}
         setFilterList={setFilterList}
       />
-      <TaskList projectID={project.id} categoryList={filterList} />
+      <TaskList projectID={project.id} flirtedCategoryList={filterList} />
     </ContentWrapper>
   );
 };

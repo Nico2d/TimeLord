@@ -8,6 +8,7 @@ import { ErrorMessage } from "../Shared/ErrorMessage";
 import { StyledButton } from "../Shared/StyledComponents/StyledButton";
 import { StyledInput } from "../Shared/StyledComponents/StyledInput";
 import { v4 as uuidv4 } from "uuid";
+import { colorList } from "./ColorList";
 
 type AddNewCategoryFormProps = {
   categories: CategoryType[];
@@ -19,14 +20,6 @@ export const AddNewCategoryForm = ({
   categories,
 }: AddNewCategoryFormProps) => {
   const [selectedColor, setSelectedColor] = useState<string>("");
-  const colorList = [
-    "#DF6D6D",
-    "#F9C182",
-    "#FAFA9A",
-    "#85E099",
-    "#80C8FF",
-    "#BF80FF",
-  ];
 
   const {
     register,
