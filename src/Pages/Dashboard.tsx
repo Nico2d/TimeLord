@@ -17,6 +17,8 @@ export const Dashboard = () => {
     <Container>
       <NavigationSidebar userID={user.id} />
       <Main userID={user.id} />
+
+      <div id="sidebarComplementaryPortal"></div>
     </Container>
   );
 };

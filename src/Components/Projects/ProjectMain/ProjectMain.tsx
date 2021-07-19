@@ -27,6 +27,7 @@ export const ProjectMain = ({
         onNewCategoryAdd={onNewCategoryAdd}
         filterList={filterList}
         setFilterList={setFilterList}
+        projectID={project.id}
       />
       <TaskList projectID={project.id} flirtedCategoryList={filterList} />
     </ContentWrapper>

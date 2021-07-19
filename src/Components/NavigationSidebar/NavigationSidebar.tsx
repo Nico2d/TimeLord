@@ -21,7 +21,7 @@ export const NavigationSidebar: React.FC<SidebarProps> = ({ userID }) => {
   else if (status === "error") return <FetchError />;
 
   return (
-    <Sidebar location="left" width="250px">
+    <Sidebar position="left" width="250px">
       {/* <Avatar
         src={user.avatar.url}
         width="100px"

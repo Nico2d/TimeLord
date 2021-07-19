@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
@@ -7,7 +6,7 @@ import { ProjectType } from "../../Types/Project.type";
 import { AddNewCategoryForm } from "../Categories/AddNewCategoryForm";
 import { FetchError } from "../Shared/FetchError";
 import { LoadingSpinner } from "../Shared/LoadingSpinner";
-import { Sidebar } from "../Shared/StyledComponents/Sidebar";
+import { SidebarComplementary } from "../SidebarComplementary/SidebarComplementary";
 import { ProjectMain } from "./ProjectMain/ProjectMain";
 
 type ProjectProps = {
@@ -29,10 +28,10 @@ export const Project = ({ projectID }: ProjectProps) => {
     fetchProject(projectID)
   );
 
-  const variants = {
-    hidden: { opacity: 1, x: 0, width: "auto" },
-    closed: { opacity: 0, x: "100%", width: 0 },
-  };
+  // const variants = {
+  //   hidden: { opacity: 1, x: 0, width: "auto" },
+  //   closed: { opacity: 0, x: "100%", width: 0 },
+  // };
 
   if (isLoading || project === undefined) {
     return <LoadingSpinner />;
@@ -49,12 +48,28 @@ export const Project = ({ projectID }: ProjectProps) => {
         onNewCategoryAdd={() => addCategoryHandler()}
       />
 
-      <motion.div
+      
+
+      {/* <StyledSidebar
+        position="right"
+        width="300px"
+        animate={!isComplementaryActive ? "visible" : "hidden"}
+        transition={{ type: "tween", ease: [0, 0, 0, 0] }}
+      >
+        <ContentWrapper>
+          <AddNewCategoryForm
+            categories={project.categories}
+            projectID={String(projectID)}
+          />
+        </ContentWrapper>
+      </StyledSidebar> */}
+
+      {/* <motion.div
         animate={isComplementaryActive ? "open" : "closed"}
         variants={variants}
         transition={{ type: "tween", ease: [0, 0, 0, 0] }}
       >
-        <Sidebar location="right" width="250px">
+        <Sidebar position="right" width="250px">
           Complementary
         </Sidebar>
       </motion.div>
@@ -64,13 +79,13 @@ export const Project = ({ projectID }: ProjectProps) => {
         variants={variants}
         transition={{ type: "tween", ease: [0, 0, 0, 0] }}
       >
-        <Sidebar location="right" width="300px">
+        <Sidebar position="right" width="300px">
           <AddNewCategoryForm
             categories={project.categories}
             projectID={String(projectID)}
           />
         </Sidebar>
-      </motion.div>
+      </motion.div> */}
     </Container>
   );
 };

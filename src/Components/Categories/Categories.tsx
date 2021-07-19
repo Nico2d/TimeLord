@@ -2,12 +2,17 @@ import styled from "styled-components";
 import { MdAdd } from "react-icons/md";
 import { CategoryItem } from "./CategoryItem";
 import { CategoryType } from "../../Types/Category.type";
+import { useState } from "react";
+import { SidebarComplementary } from "../SidebarComplementary/SidebarComplementary";
+import { AddNewCategoryForm } from "./AddNewCategoryForm";
+import { SidebarSwapper } from "../SidebarComplementary/SidebarSwapper";
 
 type CategoriesProps = {
   categories: CategoryType[];
   onNewCategoryAdd?: () => void;
   filterList: CategoryType[];
   setFilterList: React.Dispatch<React.SetStateAction<CategoryType[]>>;
+  projectID: string;
 };
 
 export const Categories = ({
@@ -15,8 +20,10 @@ export const Categories = ({
   onNewCategoryAdd,
   filterList,
   setFilterList,
+  projectID,
 }: CategoriesProps) => {
   const isEmpty = categories == null || categories.length === 0;
+  const [showForm, setShowForm] = useState(false);
 
   const categoryFiltersHandler = (clickedCategory: CategoryType) => {
     const isOnFilterList = filterList.some(
@@ -51,10 +58,20 @@ export const Categories = ({
         </Scroll>
       )}
 
-      <AddCategory isFill={isEmpty} onClick={onNewCategoryAdd}>
+      <AddCategory
+        isFill={isEmpty}
+        onClick={() => setShowForm((showForm) => !showForm)}
+      >
         <MdAdd size={24} />
         {isEmpty && <p>Dodaj nową kategorię</p>}
       </AddCategory>
+
+      <SidebarSwapper isSwappedModal={showForm} key="addNewCategoryForm">
+        <AddNewCategoryForm
+          categories={categories}
+          projectID={String(projectID)}
+        />
+      </SidebarSwapper>
     </Container>
   );
 };
