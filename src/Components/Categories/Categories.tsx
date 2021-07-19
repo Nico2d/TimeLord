@@ -3,7 +3,6 @@ import { MdAdd } from "react-icons/md";
 import { CategoryItem } from "./CategoryItem";
 import { CategoryType } from "../../Types/Category.type";
 import { useState } from "react";
-import { SidebarComplementary } from "../SidebarComplementary/SidebarComplementary";
 import { AddNewCategoryForm } from "./AddNewCategoryForm";
 import { SidebarSwapper } from "../SidebarComplementary/SidebarSwapper";
 
@@ -17,7 +16,6 @@ type CategoriesProps = {
 
 export const Categories = ({
   categories,
-  onNewCategoryAdd,
   filterList,
   setFilterList,
   projectID,
@@ -66,7 +64,7 @@ export const Categories = ({
         {isEmpty && <p>Dodaj nową kategorię</p>}
       </AddCategory>
 
-      <SidebarSwapper isSwappedModal={showForm} key="addNewCategoryForm">
+      <SidebarSwapper isSwappedModal={showForm}>
         <AddNewCategoryForm
           categories={categories}
           projectID={String(projectID)}

@@ -9,13 +9,9 @@ import { TaskList } from "../../Tasks/TaskList";
 
 type ProjectMainProps = {
   project: ProjectType;
-  onNewCategoryAdd: () => void;
 };
 
-export const ProjectMain = ({
-  project,
-  onNewCategoryAdd,
-}: ProjectMainProps) => {
+export const ProjectMain = ({ project }: ProjectMainProps) => {
   const categoryList = [EmptyCategory, ...(project.categories ?? [])];
   const [filterList, setFilterList] = useState<CategoryType[]>(categoryList);
 
@@ -24,7 +20,6 @@ export const ProjectMain = ({
       <AddNewTaskForm projectID={project.id} />
       <Categories
         categories={categoryList}
-        onNewCategoryAdd={onNewCategoryAdd}
         filterList={filterList}
         setFilterList={setFilterList}
         projectID={project.id}
