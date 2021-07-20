@@ -3,7 +3,7 @@ import { MdAdd, MdMoreHoriz } from "react-icons/md";
 import styled from "styled-components";
 import { slugify } from "../../Utils/slugify";
 import { ProjectType } from "../../Types/Project.type";
-import { RowItem } from "../Sidebar/RowItem/RowItem";
+import { RowItem } from "../NavigationSidebar/RowItem/RowItem";
 import { IconsArray } from "./ProjectIconsArray";
 
 type ProjectProps = {

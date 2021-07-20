@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Main } from "../Components/Main/Main";
-import { NavigationSidebar } from "../Components/NavigationSidebar/NavigationSidebar";
+import { NavigationSidebar } from "../Components/NavigationSidebar/NavigationSidebar/NavigationSidebar";
 import { FetchError } from "../Components/Shared/FetchError";
 import { LoadingSpinner } from "../Components/Shared/LoadingSpinner";
 import { useQuery } from "react-query";

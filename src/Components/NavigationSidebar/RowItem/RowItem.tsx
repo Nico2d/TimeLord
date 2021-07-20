@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { Tooltip } from "../Tooltip/Tooltip";
+import { Tooltip } from "../../Sidebar/Tooltip/Tooltip";
 import * as Styled from "./RowItem.styles";
 import { RowItemProps } from "./RowItem.types";
 
