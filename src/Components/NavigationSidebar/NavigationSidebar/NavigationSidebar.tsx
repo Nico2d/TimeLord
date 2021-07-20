@@ -54,6 +54,7 @@ export const NavigationSidebar = ({ userID }: SidebarProps) => {
             <RowItem
               icon={isHidden ? <IoIosArrowForward /> : <IoIosArrowBack />}
               text={isHidden ? "Zwiń menu" : "Rozwiń menu"}
+              link="#"
               isHidden={isHidden}
             />
           </div>
@@ -73,7 +74,12 @@ export const NavigationSidebar = ({ userID }: SidebarProps) => {
           />
 
           <div onClick={SignOutUser}>
-            <RowItem icon={<IoIosPower />} text="Wyloguj" />
+            <RowItem
+              icon={<IoIosPower />}
+              text="Wyloguj"
+              link="/"
+              isHidden={isHidden}
+            />
           </div>
         </Styled.NavWrapper>
       </Sidebar>

@@ -2,7 +2,9 @@ import styled from "styled-components";
 
 export const IconWrapper = styled.div`
   width: 24px;
+  margin-bottom: 2px;
   margin-right: 10px;
+  display: flex;
 `;
 
 export const RowItemText = styled.span`
@@ -32,15 +34,3 @@ export const Container = styled.li`
     opacity: 1;
   }
 `;
-
-// ::before {
-//   position: absolute;
-//   min-width: 200px;
-//   width: 100%;
-//   height: 30px;
-//   background: black;
-//   border-radius: 1rem;
-//   left: 55px;
-//   top: 0;
-//   content: "";
-// }

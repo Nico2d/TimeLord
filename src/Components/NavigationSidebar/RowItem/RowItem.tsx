@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { Tooltip } from "../../Sidebar/Tooltip/Tooltip";
+import { Tooltip } from "../Tooltip/Tooltip";
 import * as Styled from "./RowItem.styles";
 import { RowItemProps } from "./RowItem.types";
 
@@ -11,11 +11,13 @@ export const RowItem = ({
 }: RowItemProps) => {
   if (isHidden) {
     return (
-      <Tooltip text={text}>
-        <Styled.Container as={NavLink} to={link} exact>
-          {icon && <Styled.IconWrapper>{icon}</Styled.IconWrapper>}
-        </Styled.Container>
-      </Tooltip>
+      <Styled.Container as={NavLink} to={link} exact>
+        {icon && (
+          <Tooltip text={text}>
+            <Styled.IconWrapper>{icon}</Styled.IconWrapper>
+          </Tooltip>
+        )}
+      </Styled.Container>
     );
   }
 

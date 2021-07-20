@@ -9,6 +9,7 @@ export const Avatar = styled.img<{ width?: string; height?: string }>`
 
 export const Title = styled.p`
   font-size: 20px;
+  margin: 0;
   margin-top: 0.5rem;
   text-align: center;
 `;

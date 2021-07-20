@@ -1,6 +1,5 @@
 import styled, { createGlobalStyle } from "styled-components";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
 import { Routing } from "./Components/Routing/Routing";
 import { SessionContextProvider } from "./Context/SessionContext";
 
@@ -55,7 +54,6 @@ function App() {
           <Routing />
         </Container>
       </SessionContextProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }

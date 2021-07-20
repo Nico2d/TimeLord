@@ -88,6 +88,7 @@ export const StyledSidebar = styled(motion.div).attrs(() => ({
 
 export const ContentWrapper = styled.div<{ width?: string }>`
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 0 1rem;
   background: #202020;
   height: 100vh;
