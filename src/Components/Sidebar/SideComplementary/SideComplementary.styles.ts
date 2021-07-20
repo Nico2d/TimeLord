@@ -1,24 +1,6 @@
-import { createPortal } from "react-dom";
 import styled from "styled-components";
 
-type SidebarComplementaryProps = {
-  width?: string;
-  children: React.ReactNode;
-};
-
-export const SidebarComplementary = ({
-  width = "250px",
-  children,
-}: SidebarComplementaryProps) => {
-  return createPortal(
-    <Wrapper>
-      <ContentWrapper width={width}>{children}</ContentWrapper>
-    </Wrapper>,
-    document.querySelector("#sidebarComplementaryPortal") as HTMLElement
-  );
-};
-
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   position: sticky;
   top: 0;
   bottom: 0;
@@ -67,7 +49,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const ContentWrapper = styled.div<{ width?: string }>`
+export const ContentWrapper = styled.div<{ width?: string }>`
   overflow-y: auto;
   padding: 0 1rem;
   background: #202020;

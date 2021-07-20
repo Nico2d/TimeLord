@@ -4,7 +4,7 @@ import { CategoryItem } from "./CategoryItem";
 import { CategoryType } from "../../Types/Category.type";
 import { useState } from "react";
 import { AddNewCategoryForm } from "./AddNewCategoryForm";
-import { SidebarSwapper } from "../SidebarComplementary/SidebarSwapper";
+import { SidebarSwapper } from "../Sidebar/SidebarSwapper/SidebarSwapper";
 
 type CategoriesProps = {
   categories: CategoryType[];

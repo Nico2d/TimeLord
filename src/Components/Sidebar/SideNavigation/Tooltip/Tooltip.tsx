@@ -1,7 +1,7 @@
 import { PositionTypes, TooltipProps } from "./Tooltip.types";
 import * as Styled from "./Tooltip.styles";
 import { useState, cloneElement } from "react";
-import { Portal } from "../../Shared/Portal/Portal";
+import { Portal } from "../../../Shared/Portal/Portal";
 
 export const Tooltip = ({ text, children }: TooltipProps) => {
   const [isVisible, setIsVisible] = useState(false);

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Main } from "../Components/Main/Main";
-import { NavigationSidebar } from "../Components/NavigationSidebar/NavigationSidebar/NavigationSidebar";
+import { SideNavigation } from "../Components/Sidebar/SideNavigation/SideNavigation/SideNavigation";
 import { FetchError } from "../Components/Shared/FetchError";
 import { LoadingSpinner } from "../Components/Shared/LoadingSpinner";
 import { useQuery } from "react-query";
@@ -15,7 +15,7 @@ export const Dashboard = () => {
 
   return (
     <Container>
-      <NavigationSidebar userID={user.id} />
+      <SideNavigation userID={user.id} />
       <Main userID={user.id} />
 
       <div id="sidebarComplementaryPortal"></div>
