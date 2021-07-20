@@ -9,12 +9,12 @@ type SidebarProps = {
   variant?: string;
 };
 
-export const Sidebar: React.FC<SidebarProps> = ({
+export const Sidebar = ({
   position,
   width,
   children,
   variant = "visible",
-}) => {
+}: SidebarProps) => {
   return (
     <StyledSidebar
       position={position}

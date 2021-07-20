@@ -11,5 +11,6 @@ export const Tooltip = styled.div<{
   padding: 10px 1rem;
   background: black;
   border-radius: 5px;
+  z-index: 100;
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
 `;

@@ -3,16 +3,27 @@ import { Tooltip } from "../Tooltip/Tooltip";
 import * as Styled from "./RowItem.styles";
 import { RowItemProps } from "./RowItem.types";
 
-export const RowItem = ({ icon, text, link = "" }: RowItemProps) => {
-  const isMobile = true;
+export const RowItem = ({
+  icon,
+  text,
+  link = "#",
+  isHidden = false,
+}: RowItemProps) => {
+  if (isHidden) {
+    return (
+      <Tooltip text={text}>
+        <Styled.Container as={NavLink} to={link} exact>
+          {icon && <Styled.IconWrapper>{icon}</Styled.IconWrapper>}
+        </Styled.Container>
+      </Tooltip>
+    );
+  }
 
   return (
     <Styled.Container as={NavLink} to={link} exact>
-      <Tooltip text={text}>
-        {<Styled.IconWrapper>{icon}</Styled.IconWrapper>}
-      </Tooltip>
+      {icon && <Styled.IconWrapper>{icon}</Styled.IconWrapper>}
 
-      {!isMobile && <Styled.RowItemText>{text}</Styled.RowItemText>}
+      <Styled.RowItemText>{text}</Styled.RowItemText>
     </Styled.Container>
   );
 };

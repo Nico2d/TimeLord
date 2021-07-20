@@ -8,15 +8,20 @@ import { IconsArray } from "./ProjectIconsArray";
 
 type ProjectProps = {
   projectsList: Array<ProjectType>;
+  isHidden: boolean;
 };
 
-export const ProjectsList: React.FC<ProjectProps> = ({ projectsList }) => {
+export const ProjectsList: React.FC<ProjectProps> = ({
+  projectsList,
+  isHidden,
+}) => {
   return (
     <Container>
       <RowItem
         icon={<MdAdd />}
         text="Dodaj projekt"
         link={`/projects/add-new`}
+        isHidden={isHidden}
       />
 
       {projectsList &&
@@ -29,6 +34,7 @@ export const ProjectsList: React.FC<ProjectProps> = ({ projectsList }) => {
               icon={<Icon />}
               text={projectItem.name}
               link={`/projects/${slugify(projectItem.name)}`}
+              isHidden={isHidden}
             />
           );
         })}
@@ -36,6 +42,7 @@ export const ProjectsList: React.FC<ProjectProps> = ({ projectsList }) => {
         text="Zarządzaj projektami"
         icon={<MdMoreHoriz />}
         link={`/projects/manage`}
+        isHidden={isHidden}
       />
     </Container>
   );
