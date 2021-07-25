@@ -1,18 +1,27 @@
-import { AnimatePresence } from "framer-motion";
-import { SideComplementary } from "../SideComplementary/SideComplementary";
+import { useMedia } from "react-use";
+import { Portal } from "../../Shared/Portal/Portal";
+import { Sidebar } from "../Sidebar/Sidebar";
 import { SidebarSwapperProps } from "./SidebarSwapper.types";
 
 export const SidebarSwapper = ({
   isSwappedModal,
   children,
 }: SidebarSwapperProps) => {
+  const isSmartphone = useMedia("(max-width: 460px)");
+
+  if (isSmartphone) {
+    return null;
+  }
+
   return (
-    <AnimatePresence>
+    <Portal targetElementId="sidebarComplementaryPortal">
       {!isSwappedModal ? (
-        <SideComplementary>Robisz super robotę mordo</SideComplementary>
+        <Sidebar position="right">Robisz super robotę mordo</Sidebar>
       ) : (
-        <SideComplementary width="300px">{children}</SideComplementary>
+        <Sidebar position="right" width="300px">
+          {children}
+        </Sidebar>
       )}
-    </AnimatePresence>
+    </Portal>
   );
 };

@@ -1,7 +1,42 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
-  position: sticky;
+export const ContentWrapper = styled.div<{ width?: string }>`
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 1rem;
+  background: #202020;
+  height: 100vh;
+  display: flex;
+  flex-flow: column;
+  scrollbar-width: thin;
+  width: ${({ width }) => width ?? "200px"};
+  min-width: ${({ width }) => width ?? "200px"};
+
+  ::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #424242;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+`;
+
+export const StyledSidebar = styled.div<{
+  position?: string;
+  width?: string;
+  isMobile?: boolean;
+}>`
+  position: ${({ isMobile }) => (isMobile ? "fixed" : "sticky")};
+  z-index: 500;
   top: 0;
   bottom: 0;
   display: flex;
@@ -46,34 +81,5 @@ export const Wrapper = styled.div`
     100% {
       background-position: 30% 0%;
     }
-  }
-`;
-
-export const ContentWrapper = styled.div<{ width?: string }>`
-  overflow-y: auto;
-  padding: 0 1rem;
-  background: #202020;
-  height: 100vh;
-  display: flex;
-  flex-flow: column;
-  scrollbar-width: thin;
-  width: ${({ width }) => width ?? "200px"};
-  min-width: ${({ width }) => width ?? "200px"};
-
-  ::-webkit-scrollbar {
-    height: 4px;
-    width: 4px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #424242;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555;
   }
 `;
