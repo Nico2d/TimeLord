@@ -1,24 +1,6 @@
-import { MdDelete } from "react-icons/md";
 import styled from "styled-components";
-import { ProjectType } from "../../../Types/Project.type";
 
-type ProjectItemProps = {
-  projectItem: ProjectType;
-};
-
-export const ProjectItem: React.FC<ProjectItemProps> = ({ projectItem }) => {
-  return (
-    <Container>
-      <p>{projectItem.name}</p>
-
-      <IconWrapper>
-        <MdDelete />
-      </IconWrapper>
-    </Container>
-  );
-};
-
-const Container = styled.li`
+export const Container = styled.li`
   display: inline-flex;
   height: 50px;
   border-radius: 8px;
@@ -30,7 +12,7 @@ const Container = styled.li`
   padding: 0 1rem;
 `;
 
-const IconWrapper = styled.div`
+export const IconWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;

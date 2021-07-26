@@ -4,7 +4,7 @@ export const ContentWrapper = styled.div<{ width?: string }>`
   overflow-y: auto;
   overflow-x: hidden;
   padding: 0 1rem;
-  background: #202020;
+  background: ${({ theme }) => theme.colors.panelColor};
   height: 100vh;
   display: flex;
   flex-flow: column;
@@ -41,7 +41,6 @@ export const StyledSidebar = styled.div<{
   bottom: 0;
   display: flex;
   flex-flow: column;
-  background: #202020;
   color: white;
   height: 100vh;
 
@@ -66,7 +65,6 @@ export const StyledSidebar = styled.div<{
     filter: blur(5px);
     width: 100%;
     height: 100%;
-
     background-size: 500% 500%;
     animation: rainbow 30s linear infinite;
   }

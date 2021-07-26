@@ -4,7 +4,7 @@ export const TopNavigation = styled.div`
   position: fixed;
   top: 0;
   width: 100vw;
-  background: #202020;
+  background: ${({ theme }) => theme.colors.panelColor};
   height: 50px;
   z-index: 500;
   display: flex;

@@ -1,25 +1,17 @@
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import styled from "styled-components";
-import { useProjectList } from "../../API/Hooks/useProjectList";
-import { ProjectType } from "../../Types/Project.type";
-import { slugify } from "../../Utils/slugify";
-import { ErrorMessage } from "../Shared/ErrorMessage";
-import { StyledButton } from "../Shared/StyledComponents/StyledButton";
-import { StyledInput } from "../Shared/StyledComponents/StyledInput";
-import { IconsArray } from "./ProjectIconsArray";
-
-type AddNewProjectFormProps = {
-  userID: string;
-};
-
-type Input = {
-  id: number;
-  name: string;
-  icon_name: string;
-  time_lord_users: number;
-  status: string;
-};
+import { useProjectList } from "../../../API/Hooks/useProjectList";
+import { ProjectType } from "../../../Types/Project.type";
+import { slugify } from "../../../Utils/slugify";
+import { ErrorMessage } from "../../Shared/ErrorMessage";
+import { StyledButton } from "../../Shared/StyledComponents/StyledButton";
+import { StyledInput } from "../../Shared/StyledComponents/StyledInput";
+import { IconsArray } from "../ProjectIconsArray";
+import * as Styled from "./AddNewProjectForm.style";
+import {
+  AddNewProjectFormInput,
+  AddNewProjectFormProps,
+} from "./AddNewProjectForm.types";
 
 export const AddNewProjectForm = ({ userID }: AddNewProjectFormProps) => {
   const [selectedIcon, setSelectedIcon] = useState<string>("");
@@ -31,7 +23,7 @@ export const AddNewProjectForm = ({ userID }: AddNewProjectFormProps) => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<Input>();
+  } = useForm<AddNewProjectFormInput>();
 
   const selectIconHandler = (iconName: string) => {
     setSelectedIcon(iconName);
@@ -50,11 +42,11 @@ export const AddNewProjectForm = ({ userID }: AddNewProjectFormProps) => {
   }, [mutate.data?.data.name, mutate.isSuccess, reset]);
 
   return (
-    <Container>
-      <Section>
+    <Styled.Container>
+      <Styled.Section>
         <h1>Chcesz stworzyć coś wspaniałego?</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Section>
+          <Styled.Section>
             <StyledInput
               type="text"
               placeholder="Nazwij projekt"
@@ -63,110 +55,55 @@ export const AddNewProjectForm = ({ userID }: AddNewProjectFormProps) => {
             {errors.name && (
               <ErrorMessage message="Twój projekt musi mieć jakąś super nazwę" />
             )}
-          </Section>
+          </Styled.Section>
 
-          <Section>
-            <StyledLabel>Wybierz ikonkę</StyledLabel>
-            <IconsContainer>
+          <Styled.Section>
+            <Styled.StyledLabel>Wybierz ikonkę</Styled.StyledLabel>
+            <Styled.IconsContainer>
               {Object.entries(IconsArray).map((iconItem) => {
                 const [iconName, Icon] = iconItem;
 
                 return (
-                  <IconWrapper
+                  <Styled.IconWrapper
                     key={iconName}
                     onClick={() => selectIconHandler(iconName)}
                     className={selectedIcon === iconName ? "isActive" : ""}
                   >
-                    <StyleRadioInput
+                    <Styled.StyleRadioInput
                       type="radio"
                       {...register("icon_name", { required: true })}
                       value={iconName}
                     />
                     <Icon />
-                  </IconWrapper>
+                  </Styled.IconWrapper>
                 );
               })}
-            </IconsContainer>
+            </Styled.IconsContainer>
             {errors.icon_name && (
               <ErrorMessage message="Wybierz jakąś ikonę aby łatwiej go odróżnić" />
             )}
-          </Section>
+          </Styled.Section>
 
-          <Section>
-            <StyledLabel>Wybierz status</StyledLabel>
+          <Styled.Section>
+            <Styled.StyledLabel>Dobierz status</Styled.StyledLabel>
             <select {...register("status")}>
               <option value="development">W pracy</option>
               <option value="planned">Zaplanowane</option>
             </select>
-          </Section>
+          </Styled.Section>
 
           <StyledButton type="submit">Dodaj nowy projekt</StyledButton>
         </form>
-      </Section>
+      </Styled.Section>
 
       {redirectToNewProject && (
-        <RedirectContainer>
+        <Styled.RedirectContainer>
           <p>Czas aby dodać nowe zadania do projektu</p>
           <a href={`/projects/${slugify(redirectToNewProject)}`}>
             Przejdź do listy zadań
           </a>
-        </RedirectContainer>
+        </Styled.RedirectContainer>
       )}
-    </Container>
+    </Styled.Container>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  flex-flow: column;
-  margin: auto;
-`;
-
-const RedirectContainer = styled.div`
-  p {
-    margin-bottom: 5px;
-  }
-
-  a {
-    color: #ff0000;
-  }
-`;
-
-const StyleRadioInput = styled.input.attrs({ type: "radio" })`
-  display: none;
-`;
-
-const StyledLabel = styled.label`
-  font-size: 18px;
-  display: block;
-`;
-
-const Section = styled.section`
-  margin-bottom: 3rem;
-`;
-
-const IconWrapper = styled.label`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 50px;
-  border-radius: 8px;
-  margin: auto;
-  cursor: pointer;
-  border: 1px solid transparent;
-
-  :hover {
-    background: #202020;
-  }
-
-  &.isActive {
-    border-color: #ddd;
-  }
-`;
-
-const IconsContainer = styled.ul`
-  display: grid;
-  font-size: 24px;
-  grid-template-columns: repeat(5, 1fr);
-`;

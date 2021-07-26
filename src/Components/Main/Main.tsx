@@ -1,12 +1,12 @@
 import { Route, Switch } from "react-router-dom";
 import { slugify } from "../../Utils/slugify";
-import { AddNewProjectForm } from "../Projects/AddNewProjectForm";
 import { Project } from "../Projects/Project";
 import { ProjectManagementForm } from "../Projects/ProjectManagment/ProjectManagementForm";
 import { useUser } from "../../API/Hooks/useUser";
 import { LoadingSpinner } from "../Shared/LoadingSpinner";
 import { FetchError } from "../Shared/FetchError";
 import styled from "styled-components";
+import { AddNewProjectForm } from "../Projects/AddNewProjectForm/AddNewProjectForm";
 
 type MainProps = {
   userID: string;
@@ -44,6 +44,7 @@ export const Main = ({ userID }: MainProps) => {
 const StyledWrapper = styled.div`
   padding: 0 1rem;
   overflow-x: hidden;
+  width: 100%;
 
   @media (max-width: 460px) {
     padding-top: 50px;

@@ -6,7 +6,7 @@ import { TaskType } from "../../Types/Task.type";
 import { EmptyCategory } from "../Categories/EmptyCategory";
 import { FetchError } from "../Shared/FetchError";
 import { LoadingSpinner } from "../Shared/LoadingSpinner";
-import { Task } from "./Task";
+import { Task } from "./Task/Task";
 
 type TaskListProps = {
   projectID: string;

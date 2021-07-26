@@ -78,7 +78,7 @@ const StyledSubmit = styled.input`
   right: 8px;
   top: 8px;
   height: 34px;
-  background: #202020;
+  background: ${({ theme }) => theme.colors.panelColor};
   border: none;
   border-radius: 8px;
   color: white;
