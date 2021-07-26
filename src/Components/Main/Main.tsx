@@ -43,6 +43,7 @@ export const Main = ({ userID }: MainProps) => {
 
 const StyledWrapper = styled.div`
   padding: 0 1rem;
+  overflow-x: hidden;
 
   @media (max-width: 460px) {
     padding-top: 50px;

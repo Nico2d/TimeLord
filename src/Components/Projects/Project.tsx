@@ -35,7 +35,6 @@ export const Project = ({ projectID }: ProjectProps) => {
 };
 
 const Container = styled.div`
-  display: flex;
   width: 100%;
   overflow-x: hidden;
 `;

@@ -30,7 +30,6 @@ export const ProjectMain = ({ project }: ProjectMainProps) => {
 };
 
 const ContentWrapper = styled.div`
-  width: 100%;
   max-width: 1000px;
   margin: auto;
   margin-top: 0;
