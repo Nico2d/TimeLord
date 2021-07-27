@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useTime } from "../../Hooks/useTime";
 import { TaskType } from "../../Types/Task.type";
-import { Task } from "../Tasks/Task";
+import { Task } from "../Tasks/Task/Task";
 
 type TaskDisplayProps = {
   task: TaskType;

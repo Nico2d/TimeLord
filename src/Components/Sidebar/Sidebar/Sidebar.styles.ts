@@ -1,32 +1,16 @@
-import React from "react";
 import styled from "styled-components";
 
-type SidebarProps = {
-  location?: string;
-  width?: string;
-  children: React.ReactNode;
-};
-
-export const Sidebar: React.FC<SidebarProps> = ({
-  location,
-  width,
-  children,
-}) => {
-  return (
-    <Container location={location} width={width}>
-      <ContentWrapper>{children}</ContentWrapper>
-    </Container>
-  );
-};
-
-const ContentWrapper = styled.div`
+export const ContentWrapper = styled.div<{ width?: string }>`
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 0 1rem;
-  background: #202020;
-  height: 100%;
+  background: ${({ theme }) => theme.colors.panelColor};
+  height: 100vh;
   display: flex;
   flex-flow: column;
   scrollbar-width: thin;
+  width: ${({ width }) => width ?? "200px"};
+  min-width: ${({ width }) => width ?? "200px"};
 
   ::-webkit-scrollbar {
     height: 4px;
@@ -46,18 +30,18 @@ const ContentWrapper = styled.div`
   }
 `;
 
-const Container = styled.div<{
-  location?: string;
+export const StyledSidebar = styled.div<{
+  position?: string;
   width?: string;
+  isMobile?: boolean;
 }>`
-  position: sticky;
+  position: ${({ isMobile }) => (isMobile ? "fixed" : "sticky")};
+  z-index: 500;
   top: 0;
+  bottom: 0;
   display: flex;
   flex-flow: column;
-  background: #202020;
   color: white;
-  width: ${({ width }) => width ?? "200px"};
-  min-width: ${({ width }) => width ?? "200px"};
   height: 100vh;
 
   :before {
@@ -81,7 +65,6 @@ const Container = styled.div<{
     filter: blur(5px);
     width: 100%;
     height: 100%;
-
     background-size: 500% 500%;
     animation: rainbow 30s linear infinite;
   }

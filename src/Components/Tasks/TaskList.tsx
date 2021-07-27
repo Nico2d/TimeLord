@@ -6,7 +6,7 @@ import { TaskType } from "../../Types/Task.type";
 import { EmptyCategory } from "../Categories/EmptyCategory";
 import { FetchError } from "../Shared/FetchError";
 import { LoadingSpinner } from "../Shared/LoadingSpinner";
-import { Task } from "./Task";
+import { Task } from "./Task/Task";
 
 type TaskListProps = {
   projectID: string;
@@ -22,7 +22,7 @@ export const TaskList = ({ projectID, flirtedCategoryList }: TaskListProps) => {
 
   const getCategoryColor = (category: string | null) => {
     const categoryTask = categoriesList.find((categoryItem) => {
-      return categoryItem.name === category;
+      return categoryItem.name.toUpperCase() === category?.toUpperCase();
     });
 
     return categoryTask?.color;
@@ -40,6 +40,10 @@ export const TaskList = ({ projectID, flirtedCategoryList }: TaskListProps) => {
 
   return (
     <Container>
+      {flirtedTaskList.length === 0 && (
+        <p>Lista jest pusta. Dodaj nowe zadanie</p>
+      )}
+
       {flirtedTaskList
         .filter((task) => !task.isCompleted)
         .map((task, idx) => {
@@ -52,17 +56,20 @@ export const TaskList = ({ projectID, flirtedCategoryList }: TaskListProps) => {
           );
         })}
 
-      <HiddenLabel
-        onClick={() =>
-          setiIHiddenCompletedTasks(
-            (isHiddenCompletedTasks) => !isHiddenCompletedTasks
-          )
-        }
-      >
-        {`${
-          isHiddenCompletedTasks ? "Wyświetl" : "Schowaj"
-        } zakończone zadania`}
-      </HiddenLabel>
+      {flirtedTaskList.length !== 0 && (
+        <HiddenLabel
+          onClick={() =>
+            setiIHiddenCompletedTasks(
+              (isHiddenCompletedTasks) => !isHiddenCompletedTasks
+            )
+          }
+        >
+          {`${
+            isHiddenCompletedTasks ? "Wyświetl" : "Schowaj"
+          } zakończone zadania`}
+        </HiddenLabel>
+      )}
+
       <CompletedTasks isHidden={isHiddenCompletedTasks}>
         {flirtedTaskList
           .filter((task) => task.isCompleted)

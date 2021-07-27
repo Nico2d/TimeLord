@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ProjectType } from "../../../Types/Project.type";
-import { ProjectItem } from "./ProjectItem";
+import { ProjectListItem } from "./ProjectListItem/ProjectListItem";
 
 type ProjectManagementFormProps = {
   projectList: ProjectType[];
@@ -13,7 +13,7 @@ export const ProjectManagementForm: React.FC<ProjectManagementFormProps> = ({
       Zarządzaj projektami (usuwanie, modyfikacja (zmiana nazwy, icony))
       <StyleListContainer>
         {projectList.map((projectItem) => (
-          <ProjectItem key={projectItem.id} projectItem={projectItem} />
+          <ProjectListItem key={projectItem.id} projectItem={projectItem} />
         ))}
       </StyleListContainer>
     </Container>

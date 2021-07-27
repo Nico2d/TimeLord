@@ -7,7 +7,7 @@ export const StyledButton = styled.button<{ isFocus?: boolean }>`
   border: none;
   outline: none;
   color: rgb(255, 255, 255);
-  background: #202020;
+  background: ${({ theme }) => theme.colors.panelColor};
   cursor: pointer;
   position: relative;
   z-index: 0;
