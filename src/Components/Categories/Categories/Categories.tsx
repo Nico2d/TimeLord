@@ -32,13 +32,17 @@ export const Categories = ({
     }
   };
 
+  const closeForm = () => {
+    restartSidebar();
+    setOpenForm(false);
+  };
+
   const addNewCategoryHandler = () => {
     if (openForm) {
-      restartSidebar();
-      setOpenForm(false);
+      closeForm();
     } else {
       setSidebar(
-        <Sidebar width="300px" position="right">
+        <Sidebar width="300px" position="right" onClickAway={closeForm}>
           <AddNewCategoryForm
             categories={categories}
             projectID={String(projectID)}
