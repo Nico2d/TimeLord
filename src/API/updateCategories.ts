@@ -1,5 +1,5 @@
+import { CategoryType } from "../Components/Categories/Categories/Categories.types";
 import { API_URL } from "../constants";
-import { CategoryType } from "../Types/Category.type";
 
 type updateCategoriesProps = {
   categories: CategoryType[];

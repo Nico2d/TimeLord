@@ -1,4 +1,4 @@
-import { CategoryType } from "../../Types/Category.type";
+import { CategoryType } from "./Categories/Categories.types";
 
 export const EmptyCategory: CategoryType = {
   id: "empty",

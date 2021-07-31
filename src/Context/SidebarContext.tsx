@@ -1,14 +1,33 @@
-import React from "react";
-import { useContext, useState } from "react";
+import { createContext, useContext } from "react";
+import { Sidebar } from "../Components/Sidebar/Sidebar/Sidebar";
 
-// export const SidebarContext = createContext<
-//   [Session, (session: Session) => void]
-// >([initialSession, () => {}]);
+type SidebarContextTypes = {
+  sidebar: JSX.Element | null;
+  sidebarType: string;
+  setSidebar: (sidebarContent: JSX.Element) => void;
+  restartSidebar: () => void;
+};
 
-export const SidebarContext = React.createContext("hidden");
+const SidebarContextInit = {
+  sidebar: (
+    <Sidebar position="right" width="300px">
+      My super sidebar
+    </Sidebar>
+  ),
+  sidebarType: "disable",
+  setSidebar: () => {},
+  restartSidebar: () => {},
+};
 
-// export const SidebarContext = () => useContext();
+export const SidebarContext =
+  createContext<SidebarContextTypes>(SidebarContextInit);
 
-export const SidebarContextProvider = () => {
-  const [sidebarVariant, setSidebarVariant] = useState("hidden");
+export const useSidebarComplementary = () => {
+  const context = useContext(SidebarContext);
+
+  if (context === undefined) {
+    throw new Error("useSidebarComplementary must be nested in PersonProvider");
+  }
+
+  return context;
 };

@@ -1,11 +1,11 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { CategoryType } from "../../../Types/Category.type";
 import { ProjectType } from "../../../Types/Project.type";
-import { Categories } from "../../Categories/Categories";
+import { Categories } from "../../Categories/Categories/Categories";
+import { CategoryType } from "../../Categories/Categories/Categories.types";
 import { EmptyCategory } from "../../Categories/EmptyCategory";
 import { AddNewTaskForm } from "../../Tasks/AddNewTaskForm";
-import { TaskList } from "../../Tasks/TaskList";
+import { TaskList } from "../../Tasks/TaskList/TaskList";
 
 type ProjectMainProps = {
   project: ProjectType;

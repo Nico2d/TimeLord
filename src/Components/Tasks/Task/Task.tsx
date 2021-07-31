@@ -9,6 +9,8 @@ import { useMutation, useQueryClient } from "react-query";
 import { updateTask } from "../../../API/updateTask";
 import * as Styled from "./Task.styles";
 import { TaskProps } from "./Task.types";
+import { useSidebarComplementary } from "../../../Context/SidebarContext";
+import { Sidebar } from "../../Sidebar/Sidebar/Sidebar";
 
 export const Task = ({
   task,
@@ -17,10 +19,8 @@ export const Task = ({
   categoryColor,
 }: TaskProps) => {
   const location = useLocation();
-  const isTimerPage = location.pathname.split("/")[1] === "timer";
-  const [countToSeconds, secondsToString] = useTime("");
-
   const queryClient = useQueryClient();
+  const [countToSeconds, secondsToString] = useTime("");
   const { mutate } = useMutation(updateTask, {
     onSuccess: (data) => {
       console.log("Update task [Success]:", data);
@@ -30,8 +30,11 @@ export const Task = ({
       alert("there was an error");
     },
   });
+  const { setSidebar } = useSidebarComplementary();
 
-  const clickHandler = () => {
+  const isTimerPage = location.pathname.split("/")[1] === "timer";
+
+  const completeCheckboxHandler = () => {
     const body = { id: task.id, isCompleted: !task.isCompleted };
     mutate(body);
 
@@ -42,26 +45,44 @@ export const Task = ({
     totalTaskTime = countToSeconds(task.time);
   }
 
-  return (
-    <Styled.Container progressBar={totalTaskTime} categoryColor={categoryColor}>
-      <Styled.CheckboxWrapper onClick={clickHandler}>
-        {task.isCompleted ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
-      </Styled.CheckboxWrapper>
-      <Styled.TextWrapper isCompleted={task.isCompleted}>
-        {task.name}
-      </Styled.TextWrapper>
+  const taskClickedHandler = () => {
+    setSidebar(
+      <Sidebar position="right" width="300px">
+        <div>HERE IS TASK EDIT</div>
+        <p>{task.name}</p>
+      </Sidebar>
+    );
+  };
 
-      {task.isCompleted || isTimerPage ? (
-        <Styled.TimeCounterWrapper>
-          {secondsToString(totalTaskTime)}
-        </Styled.TimeCounterWrapper>
-      ) : (
-        <Styled.PlayWrapper>
-          <Link to={`/timer/${task.id}`}>
-            <MdPlayCircleOutline />
-          </Link>
-        </Styled.PlayWrapper>
-      )}
-    </Styled.Container>
+  return (
+    <>
+      <Styled.Container
+        progressBar={totalTaskTime}
+        categoryColor={categoryColor}
+      >
+        <Styled.CheckboxWrapper onClick={completeCheckboxHandler}>
+          {task.isCompleted ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
+        </Styled.CheckboxWrapper>
+
+        <Styled.TextWrapper
+          isCompleted={task.isCompleted}
+          onClick={taskClickedHandler}
+        >
+          {task.name}
+        </Styled.TextWrapper>
+
+        {task.isCompleted || isTimerPage ? (
+          <Styled.TimeCounterWrapper>
+            {secondsToString(totalTaskTime)}
+          </Styled.TimeCounterWrapper>
+        ) : (
+          <Styled.PlayWrapper>
+            <Link to={`/timer/${task.id}`}>
+              <MdPlayCircleOutline />
+            </Link>
+          </Styled.PlayWrapper>
+        )}
+      </Styled.Container>
+    </>
   );
 };

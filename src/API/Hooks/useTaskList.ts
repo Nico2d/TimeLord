@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { CategoryType } from "../../Types/Category.type";
+import { CategoryType } from "../../Components/Categories/Categories/Categories.types";
 import { TaskType } from "../../Types/Task.type";
 import { fetchTaskList } from "../fetchTaskList";
 

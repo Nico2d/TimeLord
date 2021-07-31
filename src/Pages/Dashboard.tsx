@@ -1,10 +1,10 @@
-import styled from "styled-components";
 import { Main } from "../Components/Main/Main";
 import { SideNavigation } from "../Components/Sidebar/SideNavigation/SideNavigation/SideNavigation";
 import { FetchError } from "../Components/Shared/FetchError";
 import { LoadingSpinner } from "../Components/Shared/LoadingSpinner";
 import { useQuery } from "react-query";
 import { fetchMe } from "../API/Endpoints/fetchMe";
+import { SidebarComplementaryContextProvider } from "../Components/Sidebar/SidebarComplementaryContextProvider/SidebarComplementaryContextProvider";
 
 export const Dashboard = () => {
   const { status, data } = useQuery("me", fetchMe);
@@ -14,16 +14,9 @@ export const Dashboard = () => {
   if (status === "error") return <FetchError />;
 
   return (
-    <Container>
+    <SidebarComplementaryContextProvider>
       <SideNavigation userID={user.id} />
       <Main userID={user.id} />
-
-      <div id="sidebarComplementaryPortal"></div>
-    </Container>
+    </SidebarComplementaryContextProvider>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;

@@ -1,17 +1,12 @@
 import { useState } from "react";
-import styled from "styled-components";
-import { useTaskList } from "../../API/Hooks/useTaskList";
-import { CategoryType } from "../../Types/Category.type";
-import { TaskType } from "../../Types/Task.type";
-import { EmptyCategory } from "../Categories/EmptyCategory";
-import { FetchError } from "../Shared/FetchError";
-import { LoadingSpinner } from "../Shared/LoadingSpinner";
-import { Task } from "./Task/Task";
-
-type TaskListProps = {
-  projectID: string;
-  flirtedCategoryList: CategoryType[];
-};
+import { useTaskList } from "../../../API/Hooks/useTaskList";
+import { TaskType } from "../../../Types/Task.type";
+import { EmptyCategory } from "../../Categories/EmptyCategory";
+import { FetchError } from "../../Shared/FetchError";
+import { LoadingSpinner } from "../../Shared/LoadingSpinner";
+import { Task } from "../Task/Task";
+import { TaskListProps } from "./TaskList.types";
+import * as Styled from "./TaskList.styles";
 
 export const TaskList = ({ projectID, flirtedCategoryList }: TaskListProps) => {
   const [isHiddenCompletedTasks, setiIHiddenCompletedTasks] = useState(true);
@@ -39,7 +34,7 @@ export const TaskList = ({ projectID, flirtedCategoryList }: TaskListProps) => {
   });
 
   return (
-    <Container>
+    <Styled.Container>
       {flirtedTaskList.length === 0 && (
         <p>Lista jest pusta. Dodaj nowe zadanie</p>
       )}
@@ -57,7 +52,7 @@ export const TaskList = ({ projectID, flirtedCategoryList }: TaskListProps) => {
         })}
 
       {flirtedTaskList.length !== 0 && (
-        <HiddenLabel
+        <Styled.HiddenLabel
           onClick={() =>
             setiIHiddenCompletedTasks(
               (isHiddenCompletedTasks) => !isHiddenCompletedTasks
@@ -67,10 +62,10 @@ export const TaskList = ({ projectID, flirtedCategoryList }: TaskListProps) => {
           {`${
             isHiddenCompletedTasks ? "Wyświetl" : "Schowaj"
           } zakończone zadania`}
-        </HiddenLabel>
+        </Styled.HiddenLabel>
       )}
 
-      <CompletedTasks isHidden={isHiddenCompletedTasks}>
+      <Styled.CompletedTasks isHidden={isHiddenCompletedTasks}>
         {flirtedTaskList
           .filter((task) => task.isCompleted)
           .map((task, idx) => {
@@ -82,26 +77,7 @@ export const TaskList = ({ projectID, flirtedCategoryList }: TaskListProps) => {
               />
             );
           })}
-      </CompletedTasks>
-    </Container>
+      </Styled.CompletedTasks>
+    </Styled.Container>
   );
 };
-
-const Container = styled.div`
-  width: 100%;
-`;
-
-const HiddenLabel = styled.p`
-  text-decoration: underline;
-  cursor: pointer;
-`;
-
-const CompletedTasks = styled.div<{ isHidden: boolean }>`
-  max-height: ${({ isHidden }) => (isHidden ? "0px" : "99999px")};
-  overflow: hidden;
-  transition: max-height 0.3s ease-out;
-
-  :last-child {
-    margin-bottom: 1rem;
-  }
-`;
