@@ -1,83 +1,59 @@
-import { useState } from "react";
+import { useMemo } from "react";
 import { useTaskList } from "../../../API/Hooks/useTaskList";
-import { TaskType } from "../../../Types/Task.type";
-import { EmptyCategory } from "../../Categories/EmptyCategory";
 import { FetchError } from "../../Shared/FetchError";
 import { LoadingSpinner } from "../../Shared/LoadingSpinner";
 import { Task } from "../Task/Task";
 import { TaskListProps } from "./TaskList.types";
 import * as Styled from "./TaskList.styles";
+import { UncompletedTaskList } from "./UncompletedTaskList/UncompletedTaskList";
+import {
+  filterTaskListByCategoriesList,
+  filterCompletedTaskList,
+  filterUncompletedTaskList,
+  getCategoryColor,
+} from "./TaskList.functions";
 
 export const TaskList = ({ projectID, flirtedCategoryList }: TaskListProps) => {
-  const [isHiddenCompletedTasks, setiIHiddenCompletedTasks] = useState(true);
-  const [status, taskList, categoriesList] = useTaskList(projectID);
+  const { status, taskList, categoriesList } = useTaskList(projectID);
+
+  const flirtedTaskListByCheckedCategories = useMemo(
+    () => filterTaskListByCategoriesList(taskList, flirtedCategoryList),
+    [taskList, flirtedCategoryList]
+  );
+
+  const filteredCompletedTaskList = useMemo(
+    () => filterCompletedTaskList(flirtedTaskListByCheckedCategories),
+    [flirtedTaskListByCheckedCategories]
+  );
+
+  const filteredUncompletedTaskList = useMemo(
+    () => filterUncompletedTaskList(flirtedTaskListByCheckedCategories),
+    [flirtedTaskListByCheckedCategories]
+  );
 
   if (status === "loading") return <LoadingSpinner />;
   if (status === "error") return <FetchError />;
 
-  const getCategoryColor = (category: string | null) => {
-    const categoryTask = categoriesList.find((categoryItem) => {
-      return categoryItem.name.toUpperCase() === category?.toUpperCase();
-    });
-
-    return categoryTask?.color;
-  };
-
-  const flirtedTaskList: TaskType[] = taskList.filter(({ category }) => {
-    const taskCategory = (category = category ?? EmptyCategory.name);
-
-    const isOnFilteredList = flirtedCategoryList.some(
-      ({ name }) => taskCategory.toLowerCase() === name.toLowerCase()
-    );
-
-    return isOnFilteredList;
-  });
-
   return (
     <Styled.Container>
-      {flirtedTaskList.length === 0 && (
-        <p>Lista jest pusta. Dodaj nowe zadanie</p>
+      {flirtedTaskListByCheckedCategories.length === 0 && (
+        <p>Lista jest pusta. Dodaj nowe zadanie lub wyłącz filtry</p>
       )}
 
-      {flirtedTaskList
-        .filter((task) => !task.isCompleted)
-        .map((task, idx) => {
-          return (
-            <Task
-              key={idx}
-              task={task}
-              categoryColor={getCategoryColor(task.category)}
-            />
-          );
-        })}
+      {filteredCompletedTaskList.map((task) => {
+        return (
+          <Task
+            key={task.id}
+            task={task}
+            categoryColor={getCategoryColor(categoriesList, task.category)}
+          />
+        );
+      })}
 
-      {flirtedTaskList.length !== 0 && (
-        <Styled.HiddenLabel
-          onClick={() =>
-            setiIHiddenCompletedTasks(
-              (isHiddenCompletedTasks) => !isHiddenCompletedTasks
-            )
-          }
-        >
-          {`${
-            isHiddenCompletedTasks ? "Wyświetl" : "Schowaj"
-          } zakończone zadania`}
-        </Styled.HiddenLabel>
-      )}
-
-      <Styled.CompletedTasks isHidden={isHiddenCompletedTasks}>
-        {flirtedTaskList
-          .filter((task) => task.isCompleted)
-          .map((task, idx) => {
-            return (
-              <Task
-                key={idx}
-                task={task}
-                categoryColor={getCategoryColor(task.category)}
-              />
-            );
-          })}
-      </Styled.CompletedTasks>
+      <UncompletedTaskList
+        taskList={filteredUncompletedTaskList}
+        projectID={projectID}
+      />
     </Styled.Container>
   );
 };
