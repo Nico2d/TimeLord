@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
 import { ProjectType } from "../../../Types/Project.type";
 import { Categories } from "../../Categories/Categories/Categories";
 import { CategoryType } from "../../Categories/Categories/Categories.types";

@@ -2,6 +2,6 @@ import { CategoryType } from "./Categories/Categories.types";
 
 export const EmptyCategory: CategoryType = {
   id: "empty",
-  name: "puste",
+  name: "brak",
   color: "#424242",
 };

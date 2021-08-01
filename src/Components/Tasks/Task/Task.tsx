@@ -11,6 +11,7 @@ import * as Styled from "./Task.styles";
 import { TaskProps } from "./Task.types";
 import { useSidebarComplementary } from "../../../Context/SidebarContext";
 import { Sidebar } from "../../Sidebar/Sidebar/Sidebar";
+import { EditTaskForm } from "../EditTaskForm/EditTaskForm";
 
 export const Task = ({
   task,
@@ -48,41 +49,35 @@ export const Task = ({
   const taskClickedHandler = () => {
     setSidebar(
       <Sidebar position="right" width="300px">
-        <div>HERE IS TASK EDIT</div>
-        <p>{task.name}</p>
+        <EditTaskForm task={task} />
       </Sidebar>
     );
   };
 
   return (
-    <>
-      <Styled.Container
-        progressBar={totalTaskTime}
-        categoryColor={categoryColor}
+    <Styled.Container progressBar={totalTaskTime} categoryColor={categoryColor}>
+      <Styled.CheckboxWrapper onClick={completeCheckboxHandler}>
+        {task.isCompleted ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
+      </Styled.CheckboxWrapper>
+
+      <Styled.TextWrapper
+        isCompleted={task.isCompleted}
+        onClick={taskClickedHandler}
       >
-        <Styled.CheckboxWrapper onClick={completeCheckboxHandler}>
-          {task.isCompleted ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
-        </Styled.CheckboxWrapper>
+        {task.name}
+      </Styled.TextWrapper>
 
-        <Styled.TextWrapper
-          isCompleted={task.isCompleted}
-          onClick={taskClickedHandler}
-        >
-          {task.name}
-        </Styled.TextWrapper>
-
-        {task.isCompleted || isTimerPage ? (
-          <Styled.TimeCounterWrapper>
-            {secondsToString(totalTaskTime)}
-          </Styled.TimeCounterWrapper>
-        ) : (
-          <Styled.PlayWrapper>
-            <Link to={`/timer/${task.id}`}>
-              <MdPlayCircleOutline />
-            </Link>
-          </Styled.PlayWrapper>
-        )}
-      </Styled.Container>
-    </>
+      {task.isCompleted || isTimerPage ? (
+        <Styled.TimeCounterWrapper>
+          {secondsToString(totalTaskTime)}
+        </Styled.TimeCounterWrapper>
+      ) : (
+        <Styled.PlayWrapper>
+          <Link to={`/timer/${task.id}`}>
+            <MdPlayCircleOutline />
+          </Link>
+        </Styled.PlayWrapper>
+      )}
+    </Styled.Container>
   );
 };

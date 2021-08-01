@@ -16,6 +16,7 @@ export const theme: DefaultTheme = {
     white: "#ffffff",
     black: "#000000",
     warningRed: "#df0806",
+    inputBackground: "#d2d2d2",
 
     inactiveGray: "#202020",
     neutralGray: "#424242",
