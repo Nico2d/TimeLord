@@ -1,6 +1,6 @@
 import axiosInst from "../axiosConfig";
 
-type updateTaskProps = {
+export type updateTaskProps = {
   id: string | number;
   isCompleted: boolean;
 };

@@ -25,7 +25,7 @@ export const Select: React.FC<SelectTypes> = ({
 
   const selectOption = (item: any) => {
     setValue(item);
-    method(item.value);
+    method(item.name);
     setIsHidden(true);
   };
 
@@ -40,7 +40,7 @@ export const Select: React.FC<SelectTypes> = ({
           return (
             <li
               key={index}
-              value={item.value}
+              value={item.name}
               onClick={() => {
                 selectOption(item);
               }}

@@ -11,18 +11,14 @@ export const Timer = () => {
     taskId: string;
   } = useParams();
 
-  const { data, error, isLoading } = useQuery(
-    ["task", params.taskId],
-    fetchTask
-  );
+  const {
+    data: task,
+    error,
+    isLoading,
+  } = useQuery(["task", params.taskId], fetchTask);
 
-  const task: TaskType = data;
-
-  if (error) {
-    return <FetchError />;
-  } else if (isLoading) {
-    return <LoadingSpinner />;
-  }
+  if (error) return <FetchError />;
+  if (isLoading) return <LoadingSpinner />;
 
   return <TimerController task={task} />;
 };

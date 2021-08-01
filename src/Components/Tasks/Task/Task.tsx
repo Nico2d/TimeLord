@@ -49,7 +49,7 @@ export const Task = ({
   const taskClickedHandler = () => {
     setSidebar(
       <Sidebar position="right" width="300px">
-        <EditTaskForm task={task} />
+        <EditTaskForm task={task} updateTask={mutate} />
       </Sidebar>
     );
   };

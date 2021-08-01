@@ -1,34 +1,36 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { TaskType } from "../../../Types/Task.type";
 import { StyledLabel } from "../../Projects/AddNewProjectForm/AddNewProjectForm.style";
 import { StyledButton } from "../../Shared/StyledComponents/StyledButton";
-import { EditTaskFormProps } from "./EditTaskForm.types";
+import { EditTaskFormInputs, EditTaskFormProps } from "./EditTaskForm.types";
 import * as Styled from "./EditTaskForm.styles";
 import { IoMdTrash } from "react-icons/io";
 import { InputField } from "../../Shared/Forms/InputField/InputField";
-import { EmptyCategory } from "../../Categories/EmptyCategory";
 import { Select } from "../../Shared/Forms/Select/Select";
+import { useTaskList } from "../../../API/Hooks/useTaskList";
+import { useEffect } from "react";
 
-export const EditTaskForm = ({ task }: EditTaskFormProps) => {
+export const EditTaskForm = ({ task, updateTask }: EditTaskFormProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm({ mode: "onChange" });
+  } = useForm<EditTaskFormInputs>({ mode: "onChange" });
 
-  const onSubmit: SubmitHandler<TaskType> = async (submitData) => {
-    console.log(submitData);
+  const { categoriesList } = useTaskList(String(task.time_lord_project));
+
+  const onSubmit: SubmitHandler<EditTaskFormInputs> = async (submitData) => {
+    updateTask({
+      ...task,
+      ...submitData,
+    });
   };
 
-  setValue("name", task.name, { shouldValidate: false });
-  setValue("description", task.description ?? "", { shouldValidate: false });
-
-  const categoryList = [
-    { value: EmptyCategory.id, name: EmptyCategory.name },
-    { value: "cat1", name: "Cat2" },
-    { value: "cat2", name: "Cat3" },
-  ];
+  useEffect(() => {
+    setValue("name", task.name, { shouldValidate: false });
+    setValue("description", task.description ?? "", { shouldValidate: false });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [task]);
 
   return (
     <Styled.Form onSubmit={handleSubmit(onSubmit)}>
@@ -53,15 +55,11 @@ export const EditTaskForm = ({ task }: EditTaskFormProps) => {
 
       <Styled.Field>
         <StyledLabel>Kategoria</StyledLabel>
-        {/* <Styled.Select {...register("category", { required: true })}>
-          <option value={EmptyCategory.id}>{EmptyCategory.name}</option>
-          <option value="cat1">cat1</option>
-        </Styled.Select> */}
-
         <Select
-          optionList={categoryList}
+          optionList={categoriesList}
           method={(value) => {
-            console.log("zmiana na:", value);
+            console.log(value);
+            setValue("category", String(value));
           }}
         />
       </Styled.Field>

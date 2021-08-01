@@ -36,6 +36,8 @@ export const TimerController = ({ task }: TimeControllerProps) => {
     mutate(body);
   };
 
+  console.log(task);
+
   let projectName = "/";
   if (typeof task.time_lord_project === "object") {
     projectName = task.time_lord_project.name;
