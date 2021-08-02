@@ -9,6 +9,7 @@ import { Select } from "../../Shared/Forms/Select/Select";
 import { useTaskList } from "../../../API/Hooks/useTaskList";
 import { useEffect } from "react";
 import { EmptyCategory } from "../../Categories/EmptyCategory";
+import { useDeleteTask } from "../../../API/Hooks/useDeleteTask";
 
 export const EditTaskForm = ({ task, updateTask }: EditTaskFormProps) => {
   const {
@@ -18,7 +19,7 @@ export const EditTaskForm = ({ task, updateTask }: EditTaskFormProps) => {
     setValue,
     watch,
   } = useForm<EditTaskFormInputs>({ mode: "onChange" });
-
+  const mutate = useDeleteTask();
   const { categoriesList } = useTaskList(String(task.time_lord_project));
   const watchSelect = watch("category", task.category ?? EmptyCategory.name);
 
@@ -27,6 +28,10 @@ export const EditTaskForm = ({ task, updateTask }: EditTaskFormProps) => {
       ...task,
       ...submitData,
     });
+  };
+
+  const deleteHandler = () => {
+    mutate.mutate(String(task.id));
   };
 
   useEffect(() => {
@@ -85,7 +90,7 @@ export const EditTaskForm = ({ task, updateTask }: EditTaskFormProps) => {
 
       <StyledButton type="submit">Zapisz zmiany</StyledButton>
 
-      <StyledButton type="button">
+      <StyledButton type="button" onClick={deleteHandler}>
         <IoMdTrash />
         Usuń zadanie
       </StyledButton>
