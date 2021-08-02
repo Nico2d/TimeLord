@@ -10,6 +10,11 @@ import { colorList } from "../ColorList";
 import { CategoryType } from "../Categories/Categories.types";
 import { AddNewCategoryFormProps } from "./AddNewCategoryForm.types";
 import * as Styled from "./AddNewCategoryForm.styles";
+import { EmptyCategory } from "../EmptyCategory";
+
+const removedEmptyCategory = (categoryList: CategoryType[]): CategoryType[] => {
+  return categoryList.filter((item) => item.id !== EmptyCategory.id);
+};
 
 export const AddNewCategoryForm = ({
   projectID,
@@ -39,17 +44,14 @@ export const AddNewCategoryForm = ({
   });
 
   const onSubmit: SubmitHandler<CategoryType> = async (submitData) => {
+    const categoriesList = removedEmptyCategory(categories);
     submitData.id = uuidv4();
     submitData.name = submitData.name.toUpperCase();
 
-    console.log(submitData);
-
-    const Project = {
+    mutate({
       id: projectID,
-      categories: [...(categories ?? []), submitData],
-    };
-
-    mutate(Project);
+      categories: [...categoriesList, submitData],
+    });
 
     setSelectedColor("");
     reset();
@@ -66,7 +68,7 @@ export const AddNewCategoryForm = ({
         {...register("name", { required: true })}
       />
       {errors.name && (
-        <ErrorMessage message="Twója kategoria musi mieć nazwę" />
+        <ErrorMessage message="Twoja kategoria musi mieć nazwę" />
       )}
 
       <p>Wybierz kolor</p>
