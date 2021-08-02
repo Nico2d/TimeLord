@@ -3,9 +3,8 @@ import { CategoryItem } from "../CategoryItem/CategoryItem";
 import * as Styled from "./Categories.styles";
 import { CategoriesProps, CategoryType } from "./Categories.types";
 import { AddNewCategoryForm } from "../AddNewCategoryForm/AddNewCategoryForm";
-import { useSidebarComplementary } from "../../../Context/SidebarContext";
 import { Sidebar } from "../../Sidebar/Sidebar/Sidebar";
-import { useState } from "react";
+import { useSidebarComplementary } from "../../../Hooks/useSidebarComplementary/useSidebarComplementary";
 
 export const Categories = ({
   categories,
@@ -13,8 +12,7 @@ export const Categories = ({
   setFilterList,
   projectID,
 }: CategoriesProps) => {
-  const { setSidebar, restartSidebar } = useSidebarComplementary();
-  const [openForm, setOpenForm] = useState(false);
+  const { swapSidebarComplementary, closeForm } = useSidebarComplementary();
 
   const isEmpty = categories == null || categories.length === 0;
 
@@ -32,25 +30,15 @@ export const Categories = ({
     }
   };
 
-  const closeForm = () => {
-    restartSidebar();
-    setOpenForm(false);
-  };
-
   const addNewCategoryHandler = () => {
-    if (openForm) {
-      closeForm();
-    } else {
-      setSidebar(
-        <Sidebar width="300px" position="right" onClickAway={closeForm}>
-          <AddNewCategoryForm
-            categories={categories}
-            projectID={String(projectID)}
-          />
-        </Sidebar>
-      );
-      setOpenForm(true);
-    }
+    swapSidebarComplementary(
+      <Sidebar width="300px" position="right" onClickAway={closeForm}>
+        <AddNewCategoryForm
+          categories={categories}
+          projectID={String(projectID)}
+        />
+      </Sidebar>
+    );
   };
 
   return (

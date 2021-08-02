@@ -11,8 +11,7 @@ export const Sidebar = ({
   onClickAway = () => {},
 }: SidebarProps) => {
   const ref = useRef(null);
-
-  useClickAway(ref, onClickAway);
+  useClickAway(ref, onClickAway, ["mouseup", "touchstart"]);
 
   return (
     <Styled.StyledSidebar ref={ref} position={position} isMobile={isMobile}>

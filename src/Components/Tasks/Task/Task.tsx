@@ -9,9 +9,9 @@ import { useMutation, useQueryClient } from "react-query";
 import { updateTask } from "../../../API/updateTask";
 import * as Styled from "./Task.styles";
 import { TaskProps } from "./Task.types";
-import { useSidebarComplementary } from "../../../Context/SidebarContext";
 import { Sidebar } from "../../Sidebar/Sidebar/Sidebar";
 import { EditTaskForm } from "../EditTaskForm/EditTaskForm";
+import { useSidebarComplementary } from "../../../Hooks/useSidebarComplementary/useSidebarComplementary";
 
 export const Task = ({
   task,
@@ -31,7 +31,7 @@ export const Task = ({
       alert("there was an error");
     },
   });
-  const { setSidebar } = useSidebarComplementary();
+  const { swapSidebarComplementary, closeForm } = useSidebarComplementary();
 
   const isTimerPage = location.pathname.split("/")[1] === "timer";
 
@@ -47,8 +47,8 @@ export const Task = ({
   }
 
   const taskClickedHandler = () => {
-    setSidebar(
-      <Sidebar position="right" width="300px">
+    swapSidebarComplementary(
+      <Sidebar position="right" width="300px" onClickAway={closeForm}>
         <EditTaskForm task={task} updateTask={mutate} />
       </Sidebar>
     );

@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext } from "react";
 import { Sidebar } from "../Components/Sidebar/Sidebar/Sidebar";
 
 type SidebarContextTypes = {
@@ -21,13 +21,3 @@ const SidebarContextInit = {
 
 export const SidebarContext =
   createContext<SidebarContextTypes>(SidebarContextInit);
-
-export const useSidebarComplementary = () => {
-  const context = useContext(SidebarContext);
-
-  if (context === undefined) {
-    throw new Error("useSidebarComplementary must be nested in PersonProvider");
-  }
-
-  return context;
-};
