@@ -8,6 +8,7 @@ import { InputField } from "../../Shared/Forms/InputField/InputField";
 import { Select } from "../../Shared/Forms/Select/Select";
 import { useTaskList } from "../../../API/Hooks/useTaskList";
 import { useEffect } from "react";
+import { EmptyCategory } from "../../Categories/EmptyCategory";
 
 export const EditTaskForm = ({ task, updateTask }: EditTaskFormProps) => {
   const {
@@ -15,9 +16,11 @@ export const EditTaskForm = ({ task, updateTask }: EditTaskFormProps) => {
     handleSubmit,
     formState: { errors },
     setValue,
+    watch,
   } = useForm<EditTaskFormInputs>({ mode: "onChange" });
 
   const { categoriesList } = useTaskList(String(task.time_lord_project));
+  const watchSelect = watch("category", task.category ?? EmptyCategory.name);
 
   const onSubmit: SubmitHandler<EditTaskFormInputs> = async (submitData) => {
     updateTask({
@@ -28,6 +31,9 @@ export const EditTaskForm = ({ task, updateTask }: EditTaskFormProps) => {
 
   useEffect(() => {
     setValue("name", task.name, { shouldValidate: false });
+    setValue("category", task.category ?? EmptyCategory.name, {
+      shouldValidate: false,
+    });
     setValue("description", task.description ?? "", { shouldValidate: false });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [task]);
@@ -57,10 +63,13 @@ export const EditTaskForm = ({ task, updateTask }: EditTaskFormProps) => {
         <StyledLabel>Kategoria</StyledLabel>
         <Select
           optionList={categoriesList}
-          method={(value) => {
-            console.log(value);
-            setValue("category", String(value));
+          register={{
+            ...register("category", {
+              required: false,
+            }),
           }}
+          setValue={setValue}
+          value={watchSelect}
         />
       </Styled.Field>
 

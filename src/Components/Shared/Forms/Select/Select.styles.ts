@@ -2,6 +2,10 @@ import styled from "styled-components";
 
 const SELECT_HEIGHT = 45;
 
+export const HiddenSelect = styled.select`
+  display: none;
+`;
+
 export const Container = styled.div`
   position: relative;
   cursor: pointer;

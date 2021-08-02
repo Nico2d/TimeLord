@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { TaskType } from "../Types/Task.type";
 import { useQuery } from "react-query";
 import { fetchTask } from "../API/fetchTask";
 import { TimerController } from "../Components/Timer/TimerContainer";
