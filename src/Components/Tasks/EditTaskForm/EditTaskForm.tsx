@@ -60,7 +60,8 @@ export const EditTaskForm = ({ task, updateTask }: EditTaskFormProps) => {
 
       <Styled.Field>
         <StyledLabel>
-          Poświęcony czas na zadanie: <b>{task.time.slice(0, -4)}</b>
+          {`Poświęcony czas na zadanie: `}
+          <b>{task.time?.slice(0, -4) ?? "00:00:00"}</b>
         </StyledLabel>
       </Styled.Field>
 

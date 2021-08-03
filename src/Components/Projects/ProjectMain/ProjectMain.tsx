@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ProjectType } from "../../../Types/Project.type";
 import { Categories } from "../../Categories/Categories/Categories";
@@ -14,6 +14,16 @@ type ProjectMainProps = {
 export const ProjectMain = ({ project }: ProjectMainProps) => {
   const categoryList = [EmptyCategory, ...(project.categories ?? [])];
   const [filterList, setFilterList] = useState<CategoryType[]>(categoryList);
+
+  useEffect(() => {
+    if (project.categories) {
+      const newAddedCategory =
+        project.categories[project.categories.length - 1];
+      setFilterList((prev) => [...prev, newAddedCategory]);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [project.categories]);
 
   return (
     <ContentWrapper>
