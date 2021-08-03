@@ -91,8 +91,9 @@ export const EditTaskForm = ({ task, updateTask }: EditTaskFormProps) => {
       <StyledButton type="submit">Zapisz zmiany</StyledButton>
 
       <StyledButton type="button" onClick={deleteHandler}>
-        <IoMdTrash />
-        Usuń zadanie
+        <Styled.ContentWrapper>
+          <IoMdTrash size={20} /> Usuń zadanie
+        </Styled.ContentWrapper>
       </StyledButton>
     </Styled.Form>
   );

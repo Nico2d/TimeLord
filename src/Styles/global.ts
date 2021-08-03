@@ -12,9 +12,9 @@ export const GlobalStyle = createGlobalStyle`
         sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      font-size: ${({ theme }) => theme.font.normal};
       background-color: ${({ theme }) => theme.colors.background};
       color: ${({ theme }) => theme.colors.fontColor};
-      font-size: ${({ theme }) => theme.font.normal};
     }
 
     li {
@@ -27,6 +27,15 @@ export const GlobalStyle = createGlobalStyle`
 
     a {
       color: inherit;
+    }
+
+    textarea {
+      font-family: -apple-system, Roboto, 'Segoe UI', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-size: ${({ theme }) => theme.font.normal};
     }
 
     h1 {

@@ -19,6 +19,7 @@ export const Input = styled.input`
 export const Textarea = styled.textarea`
   ${basicInput}
   resize: vertical;
+  padding: 0.5rem 1rem;
 `;
 
 export const Label = styled.label`

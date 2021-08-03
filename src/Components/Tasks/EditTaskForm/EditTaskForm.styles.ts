@@ -24,3 +24,12 @@ export const Field = styled.div`
 export const Select = styled.select`
   width: 100%;
 `;
+
+export const ContentWrapper = styled.div`
+  display: inline-flex;
+
+  svg {
+    margin: auto;
+    margin-right: 5px;
+  }
+`;
