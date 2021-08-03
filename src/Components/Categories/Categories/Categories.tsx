@@ -33,10 +33,7 @@ export const Categories = ({
   const addNewCategoryHandler = () => {
     swapSidebarComplementary(
       <Sidebar width="300px" position="right" onClickAway={closeForm}>
-        <AddNewCategoryForm
-          categories={categories}
-          projectID={String(projectID)}
-        />
+        <AddNewCategoryForm projectID={String(projectID)} />
       </Sidebar>
     );
   };

@@ -11,16 +11,15 @@ import { CategoryType } from "../Categories/Categories.types";
 import { AddNewCategoryFormProps } from "./AddNewCategoryForm.types";
 import * as Styled from "./AddNewCategoryForm.styles";
 import { EmptyCategory } from "../EmptyCategory";
+import { useTaskList } from "../../../API/Hooks/useTaskList";
 
 const removedEmptyCategory = (categoryList: CategoryType[]): CategoryType[] => {
   return categoryList.filter((item) => item.id !== EmptyCategory.id);
 };
 
-export const AddNewCategoryForm = ({
-  projectID,
-  categories,
-}: AddNewCategoryFormProps) => {
+export const AddNewCategoryForm = ({ projectID }: AddNewCategoryFormProps) => {
   const [selectedColor, setSelectedColor] = useState<string>("");
+  const { categoriesList } = useTaskList(projectID);
 
   const {
     register,
@@ -39,18 +38,18 @@ export const AddNewCategoryForm = ({
       alert("there was an error");
     },
     onSettled: () => {
-      queryClient.invalidateQueries("project");
+      queryClient.invalidateQueries(["project", projectID]);
+      queryClient.invalidateQueries(["taskList", projectID]);
     },
   });
 
   const onSubmit: SubmitHandler<CategoryType> = async (submitData) => {
-    const categoriesList = removedEmptyCategory(categories);
     submitData.id = uuidv4();
     submitData.name = submitData.name.toUpperCase();
 
     mutate({
       id: projectID,
-      categories: [...categoriesList, submitData],
+      categories: [...removedEmptyCategory(categoriesList), submitData],
     });
 
     setSelectedColor("");
