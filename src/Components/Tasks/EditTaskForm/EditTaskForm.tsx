@@ -68,7 +68,7 @@ export const EditTaskForm = ({ task, updateTask }: EditTaskFormProps) => {
       <Styled.Field>
         <StyledLabel>Kategoria</StyledLabel>
         <Select
-          optionList={categoriesList}
+          optionList={[EmptyCategory, ...categoriesList]}
           register={{
             ...register("category", {
               required: false,

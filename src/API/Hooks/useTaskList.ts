@@ -1,6 +1,5 @@
 import { useQuery } from "react-query";
 import { CategoryType } from "../../Components/Categories/Categories/Categories.types";
-import { EmptyCategory } from "../../Components/Categories/EmptyCategory";
 import { TaskType } from "../../Types/Task.type";
 import { fetchTaskList } from "../fetchTaskList";
 
@@ -15,10 +14,7 @@ export const useTaskList = (projectID: string): useTaskListReturn => {
     fetchTaskList(projectID)
   );
   const taskList: TaskType[] = data?.data.time_lord_tasks ?? [];
-  const categoriesList: CategoryType[] = [
-    EmptyCategory,
-    ...(data?.data.categories ?? []),
-  ];
+  const categoriesList: CategoryType[] = [...(data?.data.categories ?? [])];
 
   return { taskList, status, categoriesList };
 };

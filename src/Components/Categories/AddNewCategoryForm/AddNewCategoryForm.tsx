@@ -10,12 +10,7 @@ import { colorList } from "../ColorList";
 import { CategoryType } from "../Categories/Categories.types";
 import { AddNewCategoryFormProps } from "./AddNewCategoryForm.types";
 import * as Styled from "./AddNewCategoryForm.styles";
-import { EmptyCategory } from "../EmptyCategory";
 import { useTaskList } from "../../../API/Hooks/useTaskList";
-
-const removedEmptyCategory = (categoryList: CategoryType[]): CategoryType[] => {
-  return categoryList.filter((item) => item.id !== EmptyCategory.id);
-};
 
 export const AddNewCategoryForm = ({ projectID }: AddNewCategoryFormProps) => {
   const [selectedColor, setSelectedColor] = useState<string>("");
@@ -49,7 +44,7 @@ export const AddNewCategoryForm = ({ projectID }: AddNewCategoryFormProps) => {
 
     mutate({
       id: projectID,
-      categories: [...removedEmptyCategory(categoriesList), submitData],
+      categories: [...categoriesList, submitData],
     });
 
     setSelectedColor("");
