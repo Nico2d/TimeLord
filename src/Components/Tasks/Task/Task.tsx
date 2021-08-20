@@ -21,7 +21,7 @@ export const Task = ({
 }: TaskProps) => {
   const location = useLocation();
   const queryClient = useQueryClient();
-  const [countToSeconds, secondsToString] = useTime("");
+  const { countToSeconds, secondsToString } = useTime();
   const { mutate } = useMutation(updateTask, {
     onSuccess: (data) => {
       console.log("Update task [Success]:", data);
@@ -31,6 +31,7 @@ export const Task = ({
       alert("there was an error");
     },
   });
+
   const { swapSidebarComplementary, closeForm } = useSidebarComplementary();
 
   const isTimerPage = location.pathname.split("/")[1] === "timer";

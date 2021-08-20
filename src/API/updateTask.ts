@@ -6,7 +6,5 @@ export type updateTaskProps = {
 };
 
 export const updateTask = async (task: updateTaskProps) => {
-  const res = await axiosInst.put(`/time-lord-tasks/${task.id}`, task);
-
-  return res;
+  return await axiosInst.put(`/time-lord-tasks/${task.id}`, task);
 };

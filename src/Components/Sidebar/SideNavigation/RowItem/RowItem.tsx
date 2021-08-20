@@ -22,7 +22,11 @@ export const RowItem = ({
   }
 
   return (
-    <Styled.Container as={NavLink} to={link} exact>
+    <Styled.Container
+      as={link === "#" ? Styled.ContainerWithoutLink : NavLink}
+      to={link}
+      exact
+    >
       {icon && <Styled.IconWrapper>{icon}</Styled.IconWrapper>}
 
       <Styled.RowItemText>{text}</Styled.RowItemText>

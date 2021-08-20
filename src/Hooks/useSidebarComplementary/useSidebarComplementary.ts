@@ -4,13 +4,21 @@ import { SidebarContext } from "../../Context/SidebarContext";
 export const useSidebarComplementary = (): {
   swapSidebarComplementary: (sidebarNode: JSX.Element) => void;
   closeForm: () => void;
+  changeProject: (id: string) => void;
 } => {
   const [openForm, setOpenForm] = useState(false);
-  const { restartSidebar, setSidebar } = useContext(SidebarContext);
+  const { restartSidebar, setSidebar, setProjectId } =
+    useContext(SidebarContext);
 
   const closeForm = () => {
     restartSidebar();
     setOpenForm(false);
+  };
+
+  const changeProject = (id: string) => {
+    if (id === undefined) return;
+
+    setProjectId(id);
   };
 
   const swapSidebarComplementary = (sidebarNode: JSX.Element) => {
@@ -22,5 +30,5 @@ export const useSidebarComplementary = (): {
     }
   };
 
-  return { swapSidebarComplementary, closeForm };
+  return { swapSidebarComplementary, closeForm, changeProject };
 };

@@ -1,36 +1,37 @@
-import { useState } from "react";
-import { SidebarContext } from "../../../Context/SidebarContext";
-import { Sidebar } from "../Sidebar/Sidebar";
+import { useEffect, useState } from "react";
+import {
+  ISidebarContextTypes,
+  SidebarContext,
+  SidebarContextInit,
+} from "../../../Context/SidebarContext";
+import { SidebarComplementary } from "../SidebarComplementary/SidebarComplementary/SidebarComplementary";
 import * as Styles from "./SidebarComplementaryContextProvider.styles";
 import { SidebarComplementaryContextProviderProps } from "./SidebarComplementaryContextProvider.types";
 
 export const SidebarComplementaryContextProvider = ({
   children,
 }: SidebarComplementaryContextProviderProps) => {
+  const [projectId, setProjectId] = useState<string | undefined>(undefined);
   const [sidebarContent, setSidebarContent] = useState(
-    <Sidebar position="right" width="250px">
-      My super sidebar
-    </Sidebar>
+    SidebarContextInit.sidebar
   );
 
-  const restartSidebar = () => {
-    setSidebarContent(
-      <Sidebar position="right" width="250px">
-        My super sidebar
-      </Sidebar>
-    );
-  };
-
-  const value = {
+  const initValue: ISidebarContextTypes = {
     sidebar: sidebarContent,
-    sidebarType: "disable",
+    setProjectId: setProjectId,
     setSidebar: (sidebarContent: JSX.Element) =>
       setSidebarContent(sidebarContent),
-    restartSidebar: restartSidebar,
+    restartSidebar: () => {
+      setSidebarContent(<SidebarComplementary projectID={projectId} />);
+    },
   };
 
+  useEffect(() => {
+    setSidebarContent(<SidebarComplementary projectID={projectId} />);
+  }, [projectId]);
+
   return (
-    <SidebarContext.Provider value={value}>
+    <SidebarContext.Provider value={initValue}>
       <Styles.Container>
         {children}
         {sidebarContent}

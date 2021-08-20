@@ -1,23 +1,19 @@
 import { createContext } from "react";
-import { Sidebar } from "../Components/Sidebar/Sidebar/Sidebar";
+import { SidebarComplementary } from "../Components/Sidebar/SidebarComplementary/SidebarComplementary/SidebarComplementary";
 
-type SidebarContextTypes = {
+export interface ISidebarContextTypes {
   sidebar: JSX.Element | null;
-  sidebarType: string;
   setSidebar: (sidebarContent: JSX.Element) => void;
-  restartSidebar: () => void;
-};
+  restartSidebar: (projectID?: string | undefined) => void;
+  setProjectId: (value: string) => void;
+}
 
-const SidebarContextInit = {
-  sidebar: (
-    <Sidebar position="right" width="300px">
-      My super sidebar
-    </Sidebar>
-  ),
-  sidebarType: "disable",
+export const SidebarContextInit: ISidebarContextTypes = {
+  sidebar: <SidebarComplementary />,
   setSidebar: () => {},
   restartSidebar: () => {},
+  setProjectId: () => {},
 };
 
 export const SidebarContext =
-  createContext<SidebarContextTypes>(SidebarContextInit);
+  createContext<ISidebarContextTypes>(SidebarContextInit);

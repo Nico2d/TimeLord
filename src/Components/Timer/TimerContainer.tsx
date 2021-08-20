@@ -12,7 +12,7 @@ type TimeControllerProps = {
 };
 
 export const TimerController = ({ task }: TimeControllerProps) => {
-  const [stringToSeconds, secondsToString] = useTime("");
+  const { countToSeconds, secondsToString } = useTime();
 
   const queryClient = useQueryClient();
   const { mutate } = useMutation(updateTask, {
@@ -50,7 +50,7 @@ export const TimerController = ({ task }: TimeControllerProps) => {
 
       <CountdownContainer
         onFinishHandleUpdateTime={onFinishHandleUpdateTime}
-        startTime={stringToSeconds(task.time)}
+        startTime={countToSeconds(task.time)}
       />
     </Container>
   );
