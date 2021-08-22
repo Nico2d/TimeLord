@@ -6,15 +6,12 @@ export const Section = styled.section`
   text-align: left;
 
   h4 {
+    margin-top: 2.5rem;
     margin-bottom: 0.5rem;
     letter-spacing: 1px;
-  }
-
-  h5 {
-    margin-bottom: 0;
     font-size: ${({ theme }) => theme.font.normal};
     opacity: 0.9;
-    font-weight: lighter;
+    font-weight: normal;
   }
 `;
 

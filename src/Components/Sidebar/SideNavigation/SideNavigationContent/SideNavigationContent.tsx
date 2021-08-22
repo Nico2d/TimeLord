@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   IoIosArrowForward,
   IoIosArrowBack,
@@ -11,11 +11,12 @@ import { useSignOutUser } from "../../../../Hooks/useSignOutUser/useSignOutUser"
 import { ProjectsList } from "../../../Projects/NavigationProjectsList";
 import { Sidebar } from "../../Sidebar/Sidebar";
 import { RowItem } from "../RowItem/RowItem";
-import { SideNavigationContentProps } from "./SideNavigationContent.types";
 import * as Styled from "./SideNavigationContent.styles";
 import { Avatar } from "../Avatar/Avatar";
+import { UserContext } from "../../../../Context/UserContext";
 
-export const SideNavigationContent = ({ user }: SideNavigationContentProps) => {
+export const SideNavigationContent = () => {
+  const user = useContext(UserContext);
   const [SignOutUser] = useSignOutUser();
   const isMobile = useMedia("(max-width: 460px)");
   const isTablet = useMedia("(min-width: 461px) and (max-width:1060px)");
@@ -32,7 +33,7 @@ export const SideNavigationContent = ({ user }: SideNavigationContentProps) => {
       isMobile={isMobile}
     >
       <Avatar
-        src={user.avatar.url}
+        src={user.avatar?.url}
         username={user.username}
         isHidden={isShorted}
       />

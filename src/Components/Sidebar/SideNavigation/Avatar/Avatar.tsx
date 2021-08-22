@@ -1,9 +1,9 @@
 import { RowItem } from "../RowItem/RowItem";
 import * as Styled from "./Avatar.styles";
-import { AvatarProps } from "./Avatar.types";
+import { IAvatarProps } from "./Avatar.types";
 import defaultUser from "../../../../Assets/default_user.png";
 
-export const Avatar = ({ src, username, isHidden }: AvatarProps) => {
+export const Avatar = ({ src, username, isHidden }: IAvatarProps) => {
   const addDefaultSrc = (ev: any) => {
     ev.target.src = defaultUser;
   };

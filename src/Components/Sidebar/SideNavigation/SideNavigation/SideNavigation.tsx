@@ -1,24 +1,13 @@
 import { useState } from "react";
-import { useUser } from "../../../../API/Hooks/useUser";
-import { LoadingSpinner } from "../../../Shared/LoadingSpinner";
-import { FetchError } from "../../../Shared/FetchError";
 import { useMedia } from "react-use";
 import * as Styled from "./SideNavigation.styles";
 import { MobileTopNavigation } from "../MobileTopNavigation/MobileTopNavigation";
 import { SideNavigationContent } from "../SideNavigationContent/SideNavigationContent";
 
-type SidebarProps = {
-  userID: string;
-};
-
-export const SideNavigation = ({ userID }: SidebarProps) => {
-  const [status, user] = useUser(userID);
+export const SideNavigation = () => {
   const isMobile = useMedia("(max-width: 460px)");
   const [isShowMobileSideNavigation, setIsShowMobileSideNavigation] =
     useState(false);
-
-  if (status === "loading") return <LoadingSpinner />;
-  else if (status === "error") return <FetchError />;
 
   if (isMobile) {
     return (
@@ -33,7 +22,7 @@ export const SideNavigation = ({ userID }: SidebarProps) => {
 
         {isShowMobileSideNavigation && (
           <>
-            <SideNavigationContent user={user} />
+            <SideNavigationContent />
             <Styled.Backdrop
               onClick={() => setIsShowMobileSideNavigation(false)}
             />
@@ -43,5 +32,5 @@ export const SideNavigation = ({ userID }: SidebarProps) => {
     );
   }
 
-  return <SideNavigationContent user={user} />;
+  return <SideNavigationContent />;
 };

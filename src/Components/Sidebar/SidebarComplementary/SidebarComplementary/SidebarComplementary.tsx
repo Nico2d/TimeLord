@@ -39,13 +39,19 @@ export const SidebarComplementary = ({
             <b>{secondsToString(getSumTimeOfAllTaskList())}</b>
           </Styled.SidebarParagraph>
 
-          <h5>Osoby w projekcie:</h5>
-          <Styled.SidebarParagraph>
+          <h4>Osoby w projekcie:</h4>
+          <div>
             <RowItem text="Dodaj osobę" icon={<MdAdd />} />
             {permissionUserList.map((user) => {
-              return <RowItem text={user.username} icon={<MdPerson />} />;
+              return (
+                <RowItem
+                  key={user.id}
+                  text={user.username}
+                  icon={<MdPerson />}
+                />
+              );
             })}
-          </Styled.SidebarParagraph>
+          </div>
         </Styled.Section>
       )}
 
