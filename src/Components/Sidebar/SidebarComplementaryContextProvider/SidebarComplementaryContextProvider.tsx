@@ -11,7 +11,7 @@ import { SidebarComplementaryContextProviderProps } from "./SidebarComplementary
 export const SidebarComplementaryContextProvider = ({
   children,
 }: SidebarComplementaryContextProviderProps) => {
-  const [projectId, setProjectId] = useState<string | undefined>(undefined);
+  const [projectId, setProjectId] = useState<string>("");
   const [sidebarContent, setSidebarContent] = useState(
     SidebarContextInit.sidebar
   );

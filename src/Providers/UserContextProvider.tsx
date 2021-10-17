@@ -13,7 +13,7 @@ export const UserContextProvider = ({
   children,
   userId,
 }: IUserContextProviderProps) => {
-  const [status, user] = useUser(userId);
+  const { status, user } = useUser(userId);
 
   if (status === "loading") return <LoadingSpinner />;
   if (status === "error") return <FetchError />;

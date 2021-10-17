@@ -1,5 +1,6 @@
 import { useQueryClient, useMutation } from "react-query";
 import styled from "styled-components";
+import { useUpdateUser } from "../../API/Hooks/useUpdateUser";
 import { updateTask } from "../../API/updateTask";
 import { useTime } from "../../Hooks/useTime";
 import { TaskType } from "../../Types/Task.type";
@@ -9,12 +10,13 @@ import { TaskDisplay } from "./TaskDisplay";
 
 type TimeControllerProps = {
   task: TaskType;
+  userID?: string;
 };
 
-export const TimerController = ({ task }: TimeControllerProps) => {
+export const TimerController = ({ task, userID }: TimeControllerProps) => {
   const { countToSeconds, secondsToString } = useTime();
-
   const queryClient = useQueryClient();
+  const updateUser = useUpdateUser();
   const { mutate } = useMutation(updateTask, {
     onSuccess: (data) => {
       console.log("Update task [Success]:", data);
@@ -26,17 +28,17 @@ export const TimerController = ({ task }: TimeControllerProps) => {
       alert("there was an error");
     },
   });
+  // const {mutate} = useMutation(updateU)
 
   const onFinishHandleUpdateTime = (addedTime: number) => {
-    console.log("onFinishHandleUpdateTime [addedTime]: ", addedTime);
-    let body = task;
-    body.time = secondsToString(addedTime);
+    let body = { ...task, time: secondsToString(addedTime) };
 
-    console.log("onFinishHandleUpdateTime:", body.time);
+    // console.log("User finished task", userID);
+
+    // userID &&
+    //   updateUser.mutate({ id: userID, time_lord_user_dailies: [{ id: }] });
     mutate(body);
   };
-
-  console.log(task);
 
   let projectName = "/";
   if (typeof task.time_lord_project === "object") {

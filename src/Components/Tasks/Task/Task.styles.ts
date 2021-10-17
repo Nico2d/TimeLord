@@ -18,6 +18,14 @@ export const CheckboxWrapper = styled.div`
   > * {
     margin: auto;
   }
+
+  > div:last-child {
+    background-color: red !important;
+
+    > div:last-child {
+      margin-top: 0 !important;
+    }
+  }
 `;
 
 export const PlayWrapper = styled(CheckboxWrapper)`

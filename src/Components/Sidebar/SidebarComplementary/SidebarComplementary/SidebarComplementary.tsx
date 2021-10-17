@@ -27,9 +27,6 @@ export const SidebarComplementary = ({
   return (
     <Sidebar position="right" width="250px">
       <DailyProgressCircle />
-      <Styled.SidebarParagraph>
-        W tym tygodniu wykonałeś <b>18</b> zadań
-      </Styled.SidebarParagraph>
 
       {projectID !== "" && (
         <Styled.Section>
@@ -42,15 +39,9 @@ export const SidebarComplementary = ({
           <h4>Osoby w projekcie:</h4>
           <div>
             <RowItem text="Dodaj osobę" icon={<MdAdd />} />
-            {permissionUserList.map((user) => {
-              return (
-                <RowItem
-                  key={user.id}
-                  text={user.username}
-                  icon={<MdPerson />}
-                />
-              );
-            })}
+            {permissionUserList.map((user) => (
+              <RowItem key={user.id} text={user.username} icon={<MdPerson />} />
+            ))}
           </div>
         </Styled.Section>
       )}

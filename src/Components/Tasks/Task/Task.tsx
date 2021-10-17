@@ -12,6 +12,8 @@ import { TaskProps } from "./Task.types";
 import { Sidebar } from "../../Sidebar/Sidebar/Sidebar";
 import { EditTaskForm } from "../EditTaskForm/EditTaskForm";
 import { useSidebarComplementary } from "../../../Hooks/useSidebarComplementary/useSidebarComplementary";
+import { UserContext } from "../../../Context/UserContext";
+import { useContext } from "react";
 
 export const Task = ({
   task,
@@ -19,28 +21,28 @@ export const Task = ({
   handleComplete,
   categoryColor,
 }: TaskProps) => {
-  const location = useLocation();
-  const queryClient = useQueryClient();
+  const { swapSidebarComplementary, closeForm } = useSidebarComplementary();
   const { countToSeconds, secondsToString } = useTime();
+  const { pathname } = useLocation();
+  const { refetchQueries } = useQueryClient();
+  const user = useContext(UserContext);
   const { mutate } = useMutation(updateTask, {
     onSuccess: (data) => {
       console.log("Update task [Success]:", data);
-      queryClient.refetchQueries(["taskList"], { active: true });
+      refetchQueries(["taskList"], { active: true });
     },
     onError: () => {
       alert("there was an error");
     },
   });
 
-  const { swapSidebarComplementary, closeForm } = useSidebarComplementary();
-
-  const isTimerPage = location.pathname.split("/")[1] === "timer";
+  const isTimerPage = pathname.split("/")[1] === "timer";
 
   const completeCheckboxHandler = () => {
     const body = { id: task.id, isCompleted: !task.isCompleted };
     mutate(body);
 
-    if (handleComplete) handleComplete();
+    handleComplete && handleComplete();
   };
 
   if (!isTimerPage) {
@@ -74,7 +76,9 @@ export const Task = ({
         </Styled.TimeCounterWrapper>
       ) : (
         <Styled.PlayWrapper>
-          <Link to={`/timer/${task.id}`}>
+          <Link
+            to={{ pathname: `/timer/${task.id}`, state: { userId: user.id } }}
+          >
             <MdPlayCircleOutline />
           </Link>
         </Styled.PlayWrapper>
