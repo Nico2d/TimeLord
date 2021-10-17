@@ -9,11 +9,11 @@ import { TaskDisplay } from "./TaskDisplay";
 
 type TimeControllerProps = {
   task: TaskType;
+  userID?: string;
 };
 
-export const TimerController = ({ task }: TimeControllerProps) => {
-  const [stringToSeconds, secondsToString] = useTime("");
-
+export const TimerController = ({ task, userID }: TimeControllerProps) => {
+  const { countToSeconds, secondsToString } = useTime();
   const queryClient = useQueryClient();
   const { mutate } = useMutation(updateTask, {
     onSuccess: (data) => {
@@ -28,11 +28,8 @@ export const TimerController = ({ task }: TimeControllerProps) => {
   });
 
   const onFinishHandleUpdateTime = (addedTime: number) => {
-    console.log("onFinishHandleUpdateTime [addedTime]: ", addedTime);
-    let body = task;
-    body.time = secondsToString(addedTime);
+    const body = { ...task, time: secondsToString(addedTime) };
 
-    console.log("onFinishHandleUpdateTime:", body.time);
     mutate(body);
   };
 
@@ -48,7 +45,7 @@ export const TimerController = ({ task }: TimeControllerProps) => {
 
       <CountdownContainer
         onFinishHandleUpdateTime={onFinishHandleUpdateTime}
-        startTime={stringToSeconds(task.time)}
+        startTime={countToSeconds(task.time)}
       />
     </Container>
   );

@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { CategoryType } from "../../../Types/Category.type";
 import { ProjectType } from "../../../Types/Project.type";
-import { Categories } from "../../Categories/Categories";
+import { Categories } from "../../Categories/Categories/Categories";
+import { CategoryType } from "../../Categories/Categories/Categories.types";
 import { EmptyCategory } from "../../Categories/EmptyCategory";
 import { AddNewTaskForm } from "../../Tasks/AddNewTaskForm";
-import { TaskList } from "../../Tasks/TaskList";
+import { TaskList } from "../../Tasks/TaskList/TaskList";
 
 type ProjectMainProps = {
   project: ProjectType;
@@ -14,6 +14,16 @@ type ProjectMainProps = {
 export const ProjectMain = ({ project }: ProjectMainProps) => {
   const categoryList = [EmptyCategory, ...(project.categories ?? [])];
   const [filterList, setFilterList] = useState<CategoryType[]>(categoryList);
+
+  useEffect(() => {
+    if (project.categories) {
+      const newAddedCategory =
+        project.categories[project.categories.length - 1];
+      setFilterList((prev) => [...prev, newAddedCategory]);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [project.categories]);
 
   return (
     <ContentWrapper>

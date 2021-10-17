@@ -1,32 +1,6 @@
-import React from "react";
 import styled from "styled-components";
-import { CategoryType } from "../../Types/Category.type";
 
-type CategoryItemProps = {
-  category: CategoryType;
-  onClickHandler: () => void;
-  isActive?: boolean;
-};
-
-export const CategoryItem: React.FC<CategoryItemProps> = ({
-  category,
-  onClickHandler,
-  isActive = true,
-}) => {
-  return (
-    <Category
-      key={category.id}
-      color={category.color}
-      onClick={onClickHandler}
-      role="button"
-      isActive={isActive}
-    >
-      <div>{category.name}</div>
-    </Category>
-  );
-};
-
-const Category = styled.div<{ color?: string; isActive: boolean }>`
+export const Category = styled.div<{ color?: string; isActive: boolean }>`
   background: ${({ isActive, color, theme }) =>
     isActive ? color : theme.colors.panelColor};
   margin-right: 5px;

@@ -14,12 +14,16 @@ export const RowItemText = styled.span`
   white-space: nowrap;
 `;
 
+export const ContainerWithoutLink = styled.li`
+  cursor: move;
+`;
+
 export const Container = styled.li`
   display: flex;
   line-height: 24px;
   margin-bottom: 7px;
   font-size: 14px;
-  opacity: 0.6;
+  opacity: 0.75;
   cursor: pointer;
   color: white;
   text-decoration: none;

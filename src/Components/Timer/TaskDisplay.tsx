@@ -10,7 +10,7 @@ type TaskDisplayProps = {
 
 export const TaskDisplay = ({ task }: TaskDisplayProps) => {
   const [isTaskCompleted, setIsTaskCompleted] = useState(false);
-  const [countToSeconds] = useTime("");
+  const { countToSeconds } = useTime();
 
   const onCompleteHandle = () => {
     console.log("Task completed");

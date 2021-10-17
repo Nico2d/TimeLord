@@ -1,25 +1,20 @@
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
-import styled from "styled-components";
-import { updateCategories } from "../../API/updateCategories";
-import { CategoryType } from "../../Types/Category.type";
-import { ErrorMessage } from "../Shared/ErrorMessage";
-import { StyledButton } from "../Shared/StyledComponents/StyledButton";
-import { StyledInput } from "../Shared/StyledComponents/StyledInput";
+import { updateCategories } from "../../../API/updateCategories";
+import { ErrorMessage } from "../../Shared/ErrorMessage";
+import { StyledButton } from "../../Shared/StyledComponents/StyledButton";
+import { StyledInput } from "../../Shared/StyledComponents/StyledInput";
 import { v4 as uuidv4 } from "uuid";
-import { colorList } from "./ColorList";
+import { colorList } from "../ColorList";
+import { CategoryType } from "../Categories/Categories.types";
+import { AddNewCategoryFormProps } from "./AddNewCategoryForm.types";
+import * as Styled from "./AddNewCategoryForm.styles";
+import { useTaskList } from "../../../API/Hooks/useTaskList";
 
-type AddNewCategoryFormProps = {
-  categories: CategoryType[];
-  projectID: string;
-};
-
-export const AddNewCategoryForm = ({
-  projectID,
-  categories,
-}: AddNewCategoryFormProps) => {
+export const AddNewCategoryForm = ({ projectID }: AddNewCategoryFormProps) => {
   const [selectedColor, setSelectedColor] = useState<string>("");
+  const { categoriesList } = useTaskList(projectID);
 
   const {
     register,
@@ -38,7 +33,8 @@ export const AddNewCategoryForm = ({
       alert("there was an error");
     },
     onSettled: () => {
-      queryClient.invalidateQueries("project");
+      queryClient.invalidateQueries(["project", projectID]);
+      queryClient.invalidateQueries(["taskList", projectID]);
     },
   });
 
@@ -46,14 +42,10 @@ export const AddNewCategoryForm = ({
     submitData.id = uuidv4();
     submitData.name = submitData.name.toUpperCase();
 
-    console.log(submitData);
-
-    const Project = {
+    mutate({
       id: projectID,
-      categories: [...(categories ?? []), submitData],
-    };
-
-    mutate(Project);
+      categories: [...categoriesList, submitData],
+    });
 
     setSelectedColor("");
     reset();
@@ -70,69 +62,31 @@ export const AddNewCategoryForm = ({
         {...register("name", { required: true })}
       />
       {errors.name && (
-        <ErrorMessage message="Twója kategoria musi mieć nazwę" />
+        <ErrorMessage message="Twoja kategoria musi mieć nazwę" />
       )}
 
       <p>Wybierz kolor</p>
-      <ColorContainer>
+      <Styled.ColorContainer>
         {colorList.map((color, idx) => (
-          <ColorSampleWrapper
+          <Styled.ColorSampleWrapper
             key={idx}
             onClick={() => setSelectedColor(color)}
             className={selectedColor === color ? "isActive" : ""}
           >
-            <StyleRadioInput
+            <Styled.StyleRadioInput
               type="radio"
               {...register("color", { required: true })}
               value={color}
             />
-            <ColorSample background={color} />
-          </ColorSampleWrapper>
+            <Styled.ColorSample background={color} />
+          </Styled.ColorSampleWrapper>
         ))}
-      </ColorContainer>
+      </Styled.ColorContainer>
       {errors.color && <ErrorMessage message="Wybierz kolor" />}
 
-      <ButtonWrapper>
+      <Styled.ButtonWrapper>
         <StyledButton isFocus={!isEmpty}>Dodaj</StyledButton>
-      </ButtonWrapper>
+      </Styled.ButtonWrapper>
     </form>
   );
 };
-
-const ButtonWrapper = styled.div`
-  margin-top: 2rem;
-`;
-
-const ColorContainer = styled.ul`
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 0;
-`;
-
-const ColorSampleWrapper = styled.label`
-  padding: 10px;
-  cursor: pointer;
-  border-radius: 8px;
-  border: 1px solid transparent;
-
-  :hover {
-    background: #191919;
-  }
-
-  &.isActive {
-    border-color: #ddd;
-  }
-`;
-
-const ColorSample = styled.div<{
-  background: string;
-}>`
-  width: 25px;
-  height: 25px;
-  border-radius: 5px;
-  background: ${({ background }) => background};
-`;
-
-const StyleRadioInput = styled.input.attrs({ type: "radio" })`
-  display: none;
-`;

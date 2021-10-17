@@ -1,5 +1,5 @@
-export type AvatarProps = {
-  src: string;
+export interface IAvatarProps {
+  src: string | undefined;
   isHidden: boolean;
   username: string;
-};
+}

@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useTime } from "../../Hooks/useTime";
 import { TimerModes } from "../../Types/TimerModes.type";
+import { ProgressCircle } from "../Shared/ProgressCircle/ProgressCircle";
 import { RunningType } from "./RunningType";
-import { useDrawProgressCircle } from "./useDrawProgressCircle";
 
 type TimerProps = {
   countdown: number;
@@ -18,9 +18,7 @@ export const Countdown: React.FC<TimerProps> = ({
   getElapsedTime,
 }) => {
   const [time, setTime] = useState(countdown);
-  const [, secondsToString] = useTime("");
-  const [radius, radiusOffset, circumference, circumferenceOffset] =
-    useDrawProgressCircle((time / countdown) * 100);
+  const { secondsToString } = useTime();
 
   useEffect(() => {
     const CountdownTimeHandler = () => {
@@ -53,16 +51,7 @@ export const Countdown: React.FC<TimerProps> = ({
 
   return (
     <CountdownWrapper>
-      <svg width={radiusOffset * 2} height={radiusOffset * 2}>
-        <StyledCircle
-          fill="transparent"
-          r={radius}
-          cx={radiusOffset}
-          cy={radiusOffset}
-          strokeDasharray={`${circumference} ${circumference}`}
-          strokeDashoffset={circumferenceOffset}
-        />
-      </svg>
+      <ProgressCircle radius={150} procent={(time / countdown) * 100} />
       <Display>
         {secondsToString(time)}
         <p> Time to {RunningType[countdown]} </p>
@@ -70,15 +59,6 @@ export const Countdown: React.FC<TimerProps> = ({
     </CountdownWrapper>
   );
 };
-
-const StyledCircle = styled.circle`
-  transition: 0.35s stroke-dashoffset;
-  transform: rotate(-90deg);
-  transform-origin: 50% 50%;
-  stroke-width: 6;
-  stroke: white;
-  stroke-linecap: round;
-`;
 
 const CountdownWrapper = styled.div`
   position: relative;

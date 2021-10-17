@@ -7,7 +7,7 @@ import { useTime } from "../Hooks/useTime";
 import { TaskType } from "../Types/Task.type";
 
 export const TimerWithoutAuth = () => {
-  const [stringToSeconds, secondsToString] = useTime("");
+  const { countToSeconds, secondsToString } = useTime();
   const [task, setTask] = useState<TaskType>({
     name: "Twoje super zadanie",
   } as TaskType);
@@ -22,7 +22,7 @@ export const TimerWithoutAuth = () => {
   return (
     <Container>
       <StyledWrapper>
-        <Task task={task} totalTaskTime={stringToSeconds(task.time)} />
+        <Task task={task} totalTaskTime={countToSeconds(task.time)} />
       </StyledWrapper>
 
       <CountdownContainerWrapper>

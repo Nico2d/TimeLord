@@ -6,5 +6,5 @@ export type SidebarProps = {
   children: React.ReactNode;
   variant?: string;
   isMobile?: boolean;
-  ref?: React.RefObject<HTMLDivElement>;
+  onClickAway?: () => void;
 };

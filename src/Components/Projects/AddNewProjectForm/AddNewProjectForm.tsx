@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useProjectList } from "../../../API/Hooks/useProjectList";
-import { ProjectType } from "../../../Types/Project.type";
+import { IProject } from "../../../Types/Project.type";
 import { slugify } from "../../../Utils/slugify";
 import { ErrorMessage } from "../../Shared/ErrorMessage";
 import { StyledButton } from "../../Shared/StyledComponents/StyledButton";
@@ -29,7 +29,7 @@ export const AddNewProjectForm = ({ userID }: AddNewProjectFormProps) => {
     setSelectedIcon(iconName);
   };
 
-  const onSubmit: SubmitHandler<ProjectType> = async (data) => {
+  const onSubmit: SubmitHandler<IProject> = async (data) => {
     data.users_permissions_users = userID;
     data.slug = slugify(data.name);
 

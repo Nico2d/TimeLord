@@ -2,27 +2,19 @@ import { Route, Switch } from "react-router-dom";
 import { slugify } from "../../Utils/slugify";
 import { Project } from "../Projects/Project";
 import { ProjectManagementForm } from "../Projects/ProjectManagment/ProjectManagementForm";
-import { useUser } from "../../API/Hooks/useUser";
-import { LoadingSpinner } from "../Shared/LoadingSpinner";
-import { FetchError } from "../Shared/FetchError";
 import styled from "styled-components";
 import { AddNewProjectForm } from "../Projects/AddNewProjectForm/AddNewProjectForm";
+import { useContext } from "react";
+import { UserContext } from "../../Context/UserContext";
 
-type MainProps = {
-  userID: string;
-};
-
-export const Main = ({ userID }: MainProps) => {
-  const [status, user] = useUser(userID);
-
-  if (status === "loading") return <LoadingSpinner />;
-  if (status === "error") return <FetchError />;
+export const Main = () => {
+  const user = useContext(UserContext);
 
   return (
     <StyledWrapper>
       <Switch>
         <Route path={`/projects/add-new`}>
-          <AddNewProjectForm userID={userID} />
+          <AddNewProjectForm userID={user.id} />
         </Route>
         <Route path={`/projects/manage`}>
           <ProjectManagementForm projectList={user.time_lord_projects} />

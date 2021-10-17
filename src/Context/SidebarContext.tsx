@@ -1,14 +1,19 @@
-import React from "react";
-import { useContext, useState } from "react";
+import { createContext } from "react";
+import { SidebarComplementary } from "../Components/Sidebar/SidebarComplementary/SidebarComplementary/SidebarComplementary";
 
-// export const SidebarContext = createContext<
-//   [Session, (session: Session) => void]
-// >([initialSession, () => {}]);
+export interface ISidebarContextTypes {
+  sidebar: JSX.Element | null;
+  setSidebar: (sidebarContent: JSX.Element) => void;
+  restartSidebar: (projectID?: string | undefined) => void;
+  setProjectId: (value: string) => void;
+}
 
-export const SidebarContext = React.createContext("hidden");
-
-// export const SidebarContext = () => useContext();
-
-export const SidebarContextProvider = () => {
-  const [sidebarVariant, setSidebarVariant] = useState("hidden");
+export const SidebarContextInit: ISidebarContextTypes = {
+  sidebar: <SidebarComplementary />,
+  setSidebar: () => {},
+  restartSidebar: () => {},
+  setProjectId: () => {},
 };
+
+export const SidebarContext =
+  createContext<ISidebarContextTypes>(SidebarContextInit);

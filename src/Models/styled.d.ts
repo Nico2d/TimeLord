@@ -17,6 +17,7 @@ declare module "styled-components" {
       white: string;
       black: string;
       warningRed: string;
+      inputBackground: string;
 
       inactiveGray: string;
       neutralGray: string;

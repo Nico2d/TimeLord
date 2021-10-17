@@ -7,4 +7,5 @@ export type TaskType = {
   isCompleted: boolean;
   time_lord_project: ProjectType | string | number;
   time: string;
+  description: string;
 };
