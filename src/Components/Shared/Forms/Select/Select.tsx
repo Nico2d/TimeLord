@@ -4,12 +4,12 @@ import { useClickAway } from "react-use";
 import * as Styled from "./Select.styles";
 import { SelectTypes } from "./Select.types";
 
-export const Select: React.FC<SelectTypes> = ({
+export const Select = ({
   optionList,
   register,
   value,
   setValue,
-}) => {
+}: SelectTypes) => {
   const [isHidden, setIsHidden] = useState<boolean>(true);
   const ref = useRef(null);
   useClickAway(ref, () => setIsHidden(true));

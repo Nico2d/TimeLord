@@ -10,7 +10,6 @@ import { UserContext } from "../../Context/UserContext";
 export const Main = () => {
   const user = useContext(UserContext);
 
-  console.log("MAIN: ", user);
   return (
     <StyledWrapper>
       <Switch>

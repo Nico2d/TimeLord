@@ -40,15 +40,13 @@ export const TaskList = ({ projectID, flirtedCategoryList }: TaskListProps) => {
         <p>Lista jest pusta. Dodaj nowe zadanie lub wyłącz filtry</p>
       )}
 
-      {filteredCompletedTaskList.map((task) => {
-        return (
-          <Task
-            key={task.id}
-            task={task}
-            categoryColor={getCategoryColor(categoriesList, task.category)}
-          />
-        );
-      })}
+      {filteredCompletedTaskList.map((task) => (
+        <Task
+          key={task.id}
+          task={task}
+          categoryColor={getCategoryColor(categoriesList, task.category)}
+        />
+      ))}
 
       <UncompletedTaskList
         taskList={filteredUncompletedTaskList}
