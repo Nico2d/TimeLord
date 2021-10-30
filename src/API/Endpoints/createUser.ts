@@ -1,6 +1,5 @@
-import axios from "axios";
-import { API_URL } from "../../constants";
 import { RegisterType } from "../../Pages/Register";
+import axiosInst from "../../axiosConfig";
 
 interface UserType {
   user: {};
@@ -8,10 +7,5 @@ interface UserType {
 }
 
 export const createUser = async (submitData: RegisterType) => {
-  const res = axios.post<UserType>(
-    `${API_URL}/auth/local/register`,
-    submitData
-  );
-
-  return res;
+  return await axiosInst.post<UserType>(`/auth/local/register`, submitData);
 };

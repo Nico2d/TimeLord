@@ -13,7 +13,7 @@ export const StyledButton = styled.button<{ isFocus?: boolean }>`
   z-index: 0;
   border-radius: 10px;
   width: auto;
-  margin: 8px;
+  margin: 8px 0;
 
   :before {
     content: "";

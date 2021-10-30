@@ -2,7 +2,6 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { updateCategories } from "../../../API/updateCategories";
-import { ErrorMessage } from "../../Shared/ErrorMessage";
 import { StyledButton } from "../../Shared/StyledComponents/StyledButton";
 import { StyledInput } from "../../Shared/StyledComponents/StyledInput";
 import { v4 as uuidv4 } from "uuid";
@@ -11,6 +10,7 @@ import { CategoryType } from "../Categories/Categories.types";
 import { AddNewCategoryFormProps } from "./AddNewCategoryForm.types";
 import * as Styled from "./AddNewCategoryForm.styles";
 import { useTaskList } from "../../../API/Hooks/useTaskList";
+import { ErrorMessage } from "../../FormAssets/ErrorMessage/ErrorMessage";
 
 export const AddNewCategoryForm = ({ projectID }: AddNewCategoryFormProps) => {
   const [selectedColor, setSelectedColor] = useState<string>("");

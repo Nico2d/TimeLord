@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
 import { postTask } from "../../API/postTask";
 import { TaskType } from "../../Types/Task.type";
-import { ErrorMessage } from "../Shared/ErrorMessage";
+import { ErrorMessage } from "../FormAssets/ErrorMessage/ErrorMessage";
 import { StyledInput } from "../Shared/StyledComponents/StyledInput";
 
 type AddNewTaskFormProps = {

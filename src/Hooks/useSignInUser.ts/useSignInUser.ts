@@ -11,21 +11,15 @@ export const useSignInUser = () => {
 
   const handleLogin = () => {
     setSession({ ...session, isAuthenticated: true });
-    history.push(session.redirectPath);
+    history.push("/dashboard");
   };
 
-  const mutate = useMutation(signInUser, {
+  const mutate = useMutation<any, any, any>(signInUser, {
     onSuccess: (data) => {
-      console.log("SignIn user [Success]:", data);
-
       setValue(data.data.jwt);
       handleLogin();
     },
-    onError: () => {
-      alert("there was an error");
-    },
-    onSettled: () => {},
   });
 
-  return [mutate];
+  return mutate;
 };

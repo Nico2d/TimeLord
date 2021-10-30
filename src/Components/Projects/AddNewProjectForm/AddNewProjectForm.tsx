@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useProjectList } from "../../../API/Hooks/useProjectList";
 import { IProject } from "../../../Types/Project.type";
 import { slugify } from "../../../Utils/slugify";
-import { ErrorMessage } from "../../Shared/ErrorMessage";
+import { ErrorMessage } from "../../FormAssets/ErrorMessage/ErrorMessage";
 import { StyledButton } from "../../Shared/StyledComponents/StyledButton";
 import { StyledInput } from "../../Shared/StyledComponents/StyledInput";
 import { IconsArray } from "../ProjectIconsArray";

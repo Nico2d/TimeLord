@@ -1,17 +1,17 @@
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { slugify } from "../../Utils/slugify";
 
 type BackwardProps = {
-  projectName: string;
+  text: string;
+  to: string;
 };
 
-export const Backward = ({ projectName }: BackwardProps) => {
+export const Backward = ({ text, to }: BackwardProps) => {
   return (
-    <BackwardWrapper as={Link} to={`/projects/${slugify(projectName)}`}>
+    <BackwardWrapper as={Link} to={to}>
       <MdKeyboardArrowLeft size="24px" />
-      {projectName}
+      {text}
     </BackwardWrapper>
   );
 };
