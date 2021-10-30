@@ -1,3 +1,4 @@
+import { ReactElement } from "react";
 import { FieldError } from "react-hook-form";
 
 export type InputFieldProps = {
@@ -5,4 +6,6 @@ export type InputFieldProps = {
   type: string;
   register: any;
   error?: FieldError;
+  tip?: ReactElement;
+  placeholder?: string;
 };

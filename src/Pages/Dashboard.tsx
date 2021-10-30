@@ -11,7 +11,8 @@ export const Dashboard = () => {
   const { status, data } = useQuery("me", fetchMe);
   const user = data?.data;
 
-  if (status === "loading" || !user) return <LoadingSpinner />;
+  if (status === "loading" || !user)
+    return <LoadingSpinner size={100} absoluteCenter={true} />;
   if (status === "error") return <FetchError />;
 
   return (

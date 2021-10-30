@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { updateTask } from "../../API/updateTask";
 import { useTime } from "../../Hooks/useTime";
 import { TaskType } from "../../Types/Task.type";
+import { slugify } from "../../Utils/slugify";
 import { Backward } from "./Backward";
 import { CountdownContainer } from "./Countdown/CountdownContainer";
 import { TaskDisplay } from "./TaskDisplay";
@@ -40,7 +41,7 @@ export const TimerController = ({ task, userID }: TimeControllerProps) => {
 
   return (
     <Container>
-      <Backward projectName={projectName} />
+      <Backward text={projectName} to={`/projects/${slugify(projectName)}`} />
       <TaskDisplay task={task} />
 
       <CountdownContainer

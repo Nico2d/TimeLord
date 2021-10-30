@@ -16,10 +16,6 @@ export const DailyProgressCircle = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
-  console.log("data", data);
-
-  console.log(workedHours);
-
   return (
     <Styled.DailyProgressCircle>
       <h4>Cel na dzisiaj</h4>

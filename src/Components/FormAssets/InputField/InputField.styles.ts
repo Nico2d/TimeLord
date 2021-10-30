@@ -37,6 +37,11 @@ export const WarningMessage = styled.p<{ position?: string }>`
 export const FieldWrapper = styled.div`
   display: flex;
   flex-flow: column;
-  margin-bottom: 2rem;
   text-align: left;
+  margin-bottom: 1.2rem;
+`;
+
+export const TipWrapper = styled.div`
+  margin-top: 10px;
+  margin-left: 2px;
 `;

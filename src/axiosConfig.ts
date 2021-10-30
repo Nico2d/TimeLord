@@ -1,21 +1,36 @@
-// First we need to import axios.js
 import axios from "axios";
 import { API_URL } from "./constants";
-// Next we make an 'instance' of it
+
 const instance = axios.create({
-  // .. where we make our configurations
   baseURL: `${API_URL}`,
 });
 
-// const [value] = useLocalStorage("token");
-// Where you would set stuff like your 'Authorization' header, etc ...
-let token: string = localStorage.getItem("token") ?? "";
-token = token.substring(1).slice(0, -1);
+instance.interceptors.request.use(
+  function (config) {
+    let token = localStorage.getItem("token");
+    token = token?.substring(1).slice(0, -1) || null;
 
-instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
 
-// Also add/ configure interceptors && all the other cool stuff
+    return config;
+  },
 
-// instance.interceptors.request...
+  function (error) {
+    return Promise.reject(error);
+  }
+);
+
+instance.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  function (error) {
+    const inst = error.response.data;
+
+    return Promise.reject(inst.message[0].messages[0] ?? error.response.data);
+  }
+);
 
 export default instance;

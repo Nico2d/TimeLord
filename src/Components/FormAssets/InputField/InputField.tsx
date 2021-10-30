@@ -1,11 +1,14 @@
-import * as Styled from "./InputField.styles";
+import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 import { InputFieldProps } from "./InputField.types";
+import * as Styled from "./InputField.styles";
 
 export const InputField = ({
   label,
   type,
   register,
   error,
+  tip,
+  placeholder,
 }: InputFieldProps) => {
   return (
     <Styled.FieldWrapper>
@@ -14,9 +17,14 @@ export const InputField = ({
       {type === "textarea" ? (
         <Styled.Textarea {...register} rows={8} />
       ) : (
-        <Styled.Input placeholder={label} type={type} {...register} />
+        <Styled.Input placeholder={placeholder} type={type} {...register} />
       )}
-      {error && <Styled.WarningMessage>{error.message}</Styled.WarningMessage>}
+
+      {error && (
+        <ErrorMessage message={error.message || "To pole jest wymagane"} />
+      )}
+
+      {tip && <Styled.TipWrapper>{tip}</Styled.TipWrapper>}
     </Styled.FieldWrapper>
   );
 };

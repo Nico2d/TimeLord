@@ -10,4 +10,5 @@ export const StyledInput = styled.input`
   height: 50px;
   padding: 0 1rem;
   width: 100%;
+  margin-bottom: 5px;
 `;
