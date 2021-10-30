@@ -1,10 +1,11 @@
 import { MdAdd } from "react-icons/md";
 import { CategoryItem } from "../CategoryItem/CategoryItem";
-import * as Styled from "./Categories.styles";
 import { CategoriesProps, CategoryType } from "./Categories.types";
 import { AddNewCategoryForm } from "../AddNewCategoryForm/AddNewCategoryForm";
 import { Sidebar } from "../../Sidebar/Sidebar/Sidebar";
 import { useSidebarComplementary } from "../../../Hooks/useSidebarComplementary/useSidebarComplementary";
+import * as Styled from "./Categories.styles";
+import { useRef } from "react";
 
 export const Categories = ({
   categories,
@@ -13,6 +14,7 @@ export const Categories = ({
   projectID,
 }: CategoriesProps) => {
   const { swapSidebarComplementary, closeForm } = useSidebarComplementary();
+  const ref = useRef<HTMLDivElement>({} as HTMLDivElement);
 
   const isEmpty = categories == null || categories.length === 0;
 
@@ -38,10 +40,18 @@ export const Categories = ({
     );
   };
 
+  const handleScroll = (event: any) => {
+    if (event.deltaY > 0) {
+      ref.current.scrollLeft -= 20;
+    } else {
+      ref.current.scrollLeft += 20;
+    }
+  };
+
   return (
     <Styled.Container>
       {!isEmpty && (
-        <Styled.Scroll>
+        <Styled.Scroll onWheel={handleScroll} ref={ref}>
           {categories.map((category, idx) => {
             return (
               <CategoryItem
