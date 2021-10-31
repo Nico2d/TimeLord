@@ -6,6 +6,7 @@ import { useFormHelper } from "../../Hooks/useIsAllFieldsFilled/useIsAllFieldsFi
 import { useSignInUser } from "../../Hooks/useSignInUser.ts/useSignInUser";
 import { ErrorMessage } from "../FormAssets/ErrorMessage/ErrorMessage";
 import { InputField } from "../FormAssets/InputField/InputField";
+import { LoadingSpinner } from "../Shared/LoadingSpinner";
 import { StyledButton } from "../Shared/StyledComponents/StyledButton";
 import * as S from "./Form.styles";
 
@@ -16,7 +17,7 @@ export const LoginForm = () => {
     watch,
     formState: { errors },
   } = useForm<signInModel>();
-  const { mutate, error } = useSignInUser();
+  const { mutate, error, isLoading } = useSignInUser();
   const { isAllFieldsFilled } = useFormHelper(watch);
   const [isErrorVisible, setIsErrorVisible] = useState(false);
 
@@ -54,7 +55,7 @@ export const LoginForm = () => {
 
       <S.FormButtonWrapper>
         <StyledButton type="submit" isFocus={isAllFieldsFilled()}>
-          Login
+          {isLoading ? <LoadingSpinner /> : <span>Login</span>}
         </StyledButton>
       </S.FormButtonWrapper>
 

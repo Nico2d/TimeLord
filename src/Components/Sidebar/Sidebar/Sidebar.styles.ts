@@ -39,6 +39,7 @@ export const StyledSidebar = styled.div<{
   z-index: 500;
   top: 0;
   bottom: 0;
+  right: ${({ position }) => (position === "right" ? 0 : "auto")};
   display: flex;
   flex-flow: column;
   color: white;

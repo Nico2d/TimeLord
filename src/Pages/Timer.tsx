@@ -1,17 +1,14 @@
-import { RouteComponentProps, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { fetchTask } from "../API/fetchTask";
 import { TimerController } from "../Components/Timer/TimerContainer";
 import { LoadingSpinner } from "../Components/Shared/LoadingSpinner";
 import { FetchError } from "../Components/Shared/FetchError";
 
-type TParams = { userId: string };
-
-export const Timer = (props: RouteComponentProps<any, any, TParams>) => {
+export const Timer = () => {
   const params: {
     taskId: string;
   } = useParams();
-  const routerState = props.location.state;
 
   const {
     data: task,
@@ -20,7 +17,7 @@ export const Timer = (props: RouteComponentProps<any, any, TParams>) => {
   } = useQuery(["task", params.taskId], fetchTask);
 
   if (error) return <FetchError />;
-  if (isLoading) return <LoadingSpinner />;
+  if (isLoading) return <LoadingSpinner size={100} absoluteCenter={true} />;
 
-  return <TimerController task={task} userID={routerState.userId} />;
+  return <TimerController task={task} />;
 };

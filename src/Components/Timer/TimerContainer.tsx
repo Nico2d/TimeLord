@@ -10,10 +10,9 @@ import { TaskDisplay } from "./TaskDisplay";
 
 type TimeControllerProps = {
   task: TaskType;
-  userID?: string;
 };
 
-export const TimerController = ({ task, userID }: TimeControllerProps) => {
+export const TimerController = ({ task }: TimeControllerProps) => {
   const { countToSeconds, secondsToString } = useTime();
   const queryClient = useQueryClient();
   const { mutate } = useMutation(updateTask, {
