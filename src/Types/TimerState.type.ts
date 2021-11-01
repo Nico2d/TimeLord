@@ -1,4 +1,4 @@
-export enum TimerModes {
+export enum TimerState {
   running,
   stop,
   finished,

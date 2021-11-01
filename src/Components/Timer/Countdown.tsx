@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useTime } from "../../Hooks/useTime";
-import { TimerModes } from "../../Types/TimerModes.type";
+import { TimerState } from "../../Types/TimerState.type";
 import { ProgressCircle } from "../Shared/ProgressCircle/ProgressCircle";
-import { RunningType } from "./RunningType";
+import { PomodoroTimers } from "./RunningType";
 
 type TimerProps = {
   countdown: number;
-  isRunning: TimerModes;
+  isRunning: TimerState;
   getElapsedTime: (v: number) => void;
   restart?: () => void;
 };
@@ -34,7 +34,7 @@ export const Countdown: React.FC<TimerProps> = ({
 
     const interval = setInterval(CountdownTimeHandler, 1000);
 
-    if (isRunning !== TimerModes.running) {
+    if (isRunning !== TimerState.running) {
       clearInterval(interval);
     }
 
@@ -45,7 +45,7 @@ export const Countdown: React.FC<TimerProps> = ({
     setTime(countdown);
   }, [countdown]);
 
-  if (isRunning === TimerModes.finished) {
+  if (isRunning === TimerState.finished) {
     getElapsedTime(countdown - time);
   }
 
@@ -54,7 +54,7 @@ export const Countdown: React.FC<TimerProps> = ({
       <ProgressCircle radius={150} procent={(time / countdown) * 100} />
       <Display>
         {secondsToString(time)}
-        <p> Time to {RunningType[countdown]} </p>
+        <p> Time to {PomodoroTimers[countdown]} </p>
       </Display>
     </CountdownWrapper>
   );

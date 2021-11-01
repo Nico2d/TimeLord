@@ -15,12 +15,18 @@ type TimeControllerProps = {
 export const TimerController = ({ task }: TimeControllerProps) => {
   const { countToSeconds, secondsToString } = useTime();
   const queryClient = useQueryClient();
+
+  //dwu ktornie wywyłuje się PUT - WHY????
   const { mutate } = useMutation(updateTask, {
+    mutationKey: "updateTask",
+    onMutate: () => {
+      console.log("onMutate");
+    },
+
     onSuccess: (data) => {
       console.log("Update task [Success]:", data);
-
-      queryClient.invalidateQueries(["task", task.id]);
-      queryClient.refetchQueries(["task", task.id]);
+      queryClient.refetchQueries("daily");
+      queryClient.invalidateQueries(["task", task.id.toString()]);
     },
     onError: () => {
       alert("there was an error");
@@ -30,6 +36,7 @@ export const TimerController = ({ task }: TimeControllerProps) => {
   const onFinishHandleUpdateTime = (addedTime: number) => {
     const body = { ...task, time: secondsToString(addedTime) };
 
+    console.log("onFinishHandleUpdateTime... init Mutate");
     mutate(body);
   };
 

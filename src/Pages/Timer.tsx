@@ -16,6 +16,8 @@ export const Timer = () => {
     isLoading,
   } = useQuery(["task", params.taskId], fetchTask);
 
+  console.log("Timer[taskId]: ", params.taskId);
+
   if (error) return <FetchError />;
   if (isLoading) return <LoadingSpinner size={100} absoluteCenter={true} />;
 

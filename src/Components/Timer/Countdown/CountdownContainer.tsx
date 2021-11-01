@@ -1,9 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { TimerModes } from "../../../Types/TimerModes.type";
+import { TimerState } from "../../../Types/TimerState.type";
 import { StyledButton } from "../../Shared/StyledComponents/StyledButton";
 import { Countdown } from "../Countdown";
-import { RunningType } from "../RunningType";
+import { PomodoroTimers } from "../RunningType";
 
 type CountdownContainerProps = {
   onFinishHandleUpdateTime: (time: number) => void;
@@ -14,54 +14,54 @@ export const CountdownContainer = ({
   onFinishHandleUpdateTime,
   startTime = 0,
 }: CountdownContainerProps) => {
-  const [runningMode, setRunningMode] = useState<TimerModes>(TimerModes.stop);
+  const [countdownState, setCountdownState] = useState<TimerState>(
+    TimerState.stop
+  );
   const [totalTaskTime, setTotalTaskTime] = useState<number>(startTime);
-  const [runningType, setRunningType] = useState<RunningType>(
-    RunningType.working
+  const [pomodoroTimers, setPomodoroTimers] = useState<PomodoroTimers>(
+    PomodoroTimers.working
   );
 
   const playButtonHandler = () => {
-    setRunningMode((runningMode) =>
-      runningMode === TimerModes.running ? TimerModes.stop : TimerModes.running
+    setCountdownState((runningMode) =>
+      runningMode === TimerState.running ? TimerState.stop : TimerState.running
     );
-  };
-
-  const endButtonHandler = () => {
-    setRunningMode(TimerModes.finished);
   };
 
   const finishButtonHandleUpdateTime = (elapsedTime: number) => {
     console.log("finished handler");
-    if (runningType === RunningType.working) {
+    if (pomodoroTimers === PomodoroTimers.working) {
       let addedTime = totalTaskTime + elapsedTime;
 
       onFinishHandleUpdateTime(addedTime);
       setTotalTaskTime(addedTime);
     }
 
-    setRunningType(
-      runningType === RunningType.working
-        ? RunningType.break
-        : RunningType.working
+    setPomodoroTimers(
+      pomodoroTimers === PomodoroTimers.working
+        ? PomodoroTimers.break
+        : PomodoroTimers.working
     );
-    setRunningMode(TimerModes.stop);
+    setCountdownState(TimerState.stop);
   };
 
   return (
     <>
       <Countdown
-        countdown={runningType}
-        isRunning={runningMode}
+        countdown={pomodoroTimers}
+        isRunning={countdownState}
         getElapsedTime={finishButtonHandleUpdateTime}
       />
 
       <ButtonWrapper
         onClick={playButtonHandler}
-        isFocus={runningMode !== TimerModes.running}
+        isFocus={countdownState !== TimerState.running}
       >
-        {runningMode === TimerModes.running ? "Pause" : "Start"}
+        {countdownState === TimerState.running ? "Pause" : "Start"}
       </ButtonWrapper>
-      <ButtonWrapper onClick={endButtonHandler}>Zakończ</ButtonWrapper>
+      <ButtonWrapper onClick={() => setCountdownState(TimerState.finished)}>
+        Zakończ
+      </ButtonWrapper>
     </>
   );
 };

@@ -18,9 +18,7 @@ export const SidebarComplementary = ({
 }: ISidebarComplementaryProps) => {
   const { taskList, permissionUserList } = useTaskList(projectID);
   const { countToSeconds, secondsToString } = useTime();
-
   const [isSidebarHidden, setIsSidebarHidden] = useState(true);
-
   const isMobile = useMedia("(max-width: 800px)");
 
   const getSumTimeOfAllTaskList = () => {
