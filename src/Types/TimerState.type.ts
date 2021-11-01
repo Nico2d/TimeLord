@@ -1,5 +1,5 @@
 export enum TimerState {
   running,
-  stop,
+  paused,
   finished,
 }

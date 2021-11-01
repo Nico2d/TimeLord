@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useQueryClient, useMutation } from "react-query";
 import styled from "styled-components";
 import { updateTask } from "../../API/updateTask";
@@ -5,7 +6,7 @@ import { useTime } from "../../Hooks/useTime";
 import { TaskType } from "../../Types/Task.type";
 import { slugify } from "../../Utils/slugify";
 import { Backward } from "./Backward";
-import { CountdownContainer } from "./Countdown/CountdownContainer";
+import { CountdownContainer } from "./CountdownContainer/CountdownContainer";
 import { TaskDisplay } from "./TaskDisplay";
 
 type TimeControllerProps = {
@@ -22,9 +23,8 @@ export const TimerController = ({ task }: TimeControllerProps) => {
     onMutate: () => {
       console.log("onMutate");
     },
-
     onSuccess: (data) => {
-      console.log("Update task [Success]:", data);
+      console.log("Update task in TimerContainer [Success]:", data);
       queryClient.refetchQueries("daily");
       queryClient.invalidateQueries(["task", task.id.toString()]);
     },
@@ -33,12 +33,22 @@ export const TimerController = ({ task }: TimeControllerProps) => {
     },
   });
 
-  const onFinishHandleUpdateTime = (addedTime: number) => {
-    const body = { ...task, time: secondsToString(addedTime) };
+  const onFinishHandleUpdateTime = useCallback(
+    (addedTime: number) => {
+      const body = { ...task, time: secondsToString(addedTime) };
 
-    console.log("onFinishHandleUpdateTime... init Mutate");
-    mutate(body);
-  };
+      console.log("onFinishHandleUpdateTime... init Mutate");
+      mutate(body);
+    },
+    [mutate, secondsToString, task]
+  );
+
+  // (addedTime: number) => {
+  //   const body = { ...task, time: secondsToString(addedTime) };
+
+  //   console.log("onFinishHandleUpdateTime... init Mutate");
+  //   mutate(body);
+  // };
 
   let projectName = "/";
   if (typeof task.time_lord_project === "object") {

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Task } from "../Components/Tasks/Task/Task";
-import { CountdownContainer } from "../Components/Timer/Countdown/CountdownContainer";
+import { CountdownContainer } from "../Components/Timer/CountdownContainer/CountdownContainer";
 import { useTime } from "../Hooks/useTime";
 import { TaskType } from "../Types/Task.type";
 

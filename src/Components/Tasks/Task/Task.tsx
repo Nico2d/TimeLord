@@ -28,7 +28,7 @@ export const Task = ({
   const user = useContext(UserContext);
   const { mutate } = useMutation(updateTask, {
     onSuccess: (data) => {
-      console.log("Update task [Success]:", data);
+      console.log("Update task in Task.tsx [Success]:", data);
       refetchQueries(["taskList"], { active: true });
     },
     onError: () => {
